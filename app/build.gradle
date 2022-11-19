@@ -8,8 +8,9 @@ android {
 
     defaultConfig {
         applicationId "es.unex.propuesta_proyecto"
-        minSdk 33
-        targetSdk 33
+        //minSdk 33
+        minSdk 29
+        targetSdk 29
         versionCode 1
         versionName "1.0"
 
