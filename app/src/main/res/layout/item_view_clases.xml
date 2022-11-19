@@ -14,5 +14,5 @@
         android:text="Clase"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        android:onClick="accederClases"/>
+        android:onClick="onClick"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

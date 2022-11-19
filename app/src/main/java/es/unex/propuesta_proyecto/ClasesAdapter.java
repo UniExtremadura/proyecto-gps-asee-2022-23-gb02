@@ -1,5 +1,7 @@
 package es.unex.propuesta_proyecto;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,9 @@ import java.util.ArrayList;
 
 public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder> {
 
-    ArrayList<String> alClases;
+    private ArrayList<String> alClases;
+    View.OnClickListener listener;
+    Context context;
 
     public ClasesAdapter(ArrayList<String> alClases) {
         this.alClases = alClases;
@@ -36,13 +40,24 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
         return alClases.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         Button bClase;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            context = itemView.getContext();
+            //buttons
             bClase = itemView.findViewById(R.id.bClase);
+            bClase.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent actClase = new Intent(context, DetalleClaseActivity.class);
+                    actClase.putExtra("className", bClase.getText());
+                    context.startActivity(actClase);
+                }
+            });
         }
 
         public Button getBClase() {
