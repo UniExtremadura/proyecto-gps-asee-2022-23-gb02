@@ -1,4 +1,4 @@
-package es.unex.propuesta_proyecto;
+package es.unex.propuesta_proyecto.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+
+import es.unex.propuesta_proyecto.R;
+import es.unex.propuesta_proyecto.activities.ActualizarCuentaActivity;
+import es.unex.propuesta_proyecto.activities.ClasesAdapter;
 
 public class ClasesActivity extends AppCompatActivity {
 
@@ -54,7 +58,7 @@ public class ClasesActivity extends AppCompatActivity {
 
 
     public void perfilUsuario(View view){
-        Intent perfil = new Intent(this,ActualizarCuentaActivity.class);
+        Intent perfil = new Intent(this, ActualizarCuentaActivity.class);
         startActivity(perfil);
     }
 }

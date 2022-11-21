@@ -1,15 +1,10 @@
-package es.unex.propuesta_proyecto;
+package es.unex.propuesta_proyecto.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-
-import java.util.ArrayList;
+import androidx.appcompat.app.AppCompatActivity;
+import es.unex.propuesta_proyecto.R;
 
 public class PantallaInicialActivity extends AppCompatActivity {
 
@@ -20,18 +15,18 @@ public class PantallaInicialActivity extends AppCompatActivity {
     }
 
     public void iniciarSesion(View view){
-        Intent actClasses = new Intent(this,ClasesActivity.class);
+        Intent actClasses = new Intent(this, ClasesActivity.class);
         actClasses.putExtra("estado",true);
         startActivity(actClasses);
     }
 
     public void crearCuenta(View view){
-        Intent actCrear = new Intent(this,CrearCuentaActivity.class);
+        Intent actCrear = new Intent(this, CrearCuentaActivity.class);
         startActivity(actCrear);
     }
 
     public void entrarSinCuenta(View view){
-        Intent actClassSinCuenta = new Intent(this,ClasesActivity.class);
+        Intent actClassSinCuenta = new Intent(this, ClasesActivity.class);
         actClassSinCuenta.putExtra("estado",false);
         startActivity(actClassSinCuenta);
     }

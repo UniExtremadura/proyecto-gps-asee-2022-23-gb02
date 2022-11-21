@@ -1,4 +1,4 @@
-package es.unex.propuesta_proyecto;
+package es.unex.propuesta_proyecto.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import es.unex.propuesta_proyecto.R;
+
 public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder> {
 
     private ArrayList<String> alClases;
     View.OnClickListener listener;
     Context context;
-
+        
     public ClasesAdapter(ArrayList<String> alClases) {
         this.alClases = alClases;
     }

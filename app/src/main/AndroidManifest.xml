@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,49 +13,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Propuesta_Proyecto"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <activity
-            android:name=".DetalleClaseActivity"
-            android:exported="false">
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-
-        </activity>
-
-        <activity
-            android:name=".ClasesActivity"
-            android:exported="false">
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-
-        <activity
-            android:name=".ActualizarCuentaActivity"
-            android:exported="false">
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-
-        </activity>
-
-        <activity
-            android:name=".CrearCuentaActivity"
-            android:exported="false">
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-
-        </activity>
-
-        <activity
-            android:name=".PantallaInicialActivity"
+            android:name=".activities.PruebaApi"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
@@ -65,6 +27,52 @@
             </intent-filter>
         </activity>
 
-    </application>
+        <activity
+            android:name=".activities.DetalleClaseActivity"
+            android:exported="false">
 
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+
+        </activity>
+
+        <activity
+            android:name=".activities.ClasesActivity"
+            android:exported="false">
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
+            android:name=".activities.ActualizarCuentaActivity"
+            android:exported="false">
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+
+        </activity>
+
+        <activity
+            android:name=".activities.CrearCuentaActivity"
+            android:exported="false">
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+
+        </activity>
+
+        <activity
+            android:name=".activities.PantallaInicialActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+
+        </activity>
+    </application>
 </manifest>

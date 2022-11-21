@@ -1,10 +1,12 @@
-package es.unex.propuesta_proyecto;
-
-import androidx.appcompat.app.AppCompatActivity;
+package es.unex.propuesta_proyecto.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import es.unex.propuesta_proyecto.R;
 
 public class DetalleClaseActivity extends AppCompatActivity {
 
@@ -51,7 +53,7 @@ public class DetalleClaseActivity extends AppCompatActivity {
     }
 
     public void perfilUsuario(View view){
-        Intent perfil = new Intent(this,ActualizarCuentaActivity.class);
+        Intent perfil = new Intent(this, ActualizarCuentaActivity.class);
         startActivity(perfil);
     }
 
