@@ -9,12 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import es.unex.propuesta_proyecto.R;
+import es.unex.propuesta_proyecto.model.Armas;
 
 public class ArmasSecundariasActivity extends AppCompatActivity {
 
-    ArrayList<Arma> alPistolas = new ArrayList<Arma>();
-    ArrayList<Arma> alLanzamisiles = new ArrayList<Arma>();
-    ArrayList<Arma> alCuerpoACuerpo = new ArrayList<Arma>();
+    ArrayList<Armas> alPistolas = new ArrayList<Armas>();
+    ArrayList<Armas> alLanzamisiles = new ArrayList<Armas>();
+    ArrayList<Armas> alCuerpoACuerpo = new ArrayList<Armas>();
 
     RecyclerView rvPistolas;
     RecyclerView rvLanzamisiles;

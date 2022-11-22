@@ -12,15 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
+import es.unex.propuesta_proyecto.model.Armas;
+import es.unex.propuesta_proyecto.model.Repo;
 
 public class ArmasAdapter extends RecyclerView.Adapter<ArmasAdapter.ViewHolder> {
 
-    private ArrayList<Arma> alArmas;
+    private ArrayList<Armas> alArmas;
     Context context;
 
-    public ArmasAdapter(ArrayList<Arma> alArmas) {
+    public ArmasAdapter(ArrayList<Armas> alArmas) {
         this.alArmas = alArmas;
     }
 
@@ -34,13 +37,13 @@ public class ArmasAdapter extends RecyclerView.Adapter<ArmasAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getTvNombre().setText(alArmas.get(position).getNombre());
-        holder.getIvArma().setImageURI(alArmas.get(position).getImagen());
-        holder.getPbPrecisionArma().setProgress(alArmas.get(position).getPrecision());
-        holder.getPbDañoArma().setProgress(alArmas.get(position).getDaño());
-        holder.getPbAlcanceArma().setProgress(alArmas.get(position).getAlcance());
-        holder.getPbCadenciaArma().setProgress(alArmas.get(position).getCadencia());
-        holder.getPbMovilidadArma().setProgress(alArmas.get(position).getMovilidad());
+        holder.getTvNombre().setText(alArmas.get(position).getName());
+        //holder.getIvArma().setImageURI(alArmas.get(position).getImagen());
+        holder.getPbPrecisionArma().setProgress(alArmas.get(position).getAccuracy());
+        holder.getPbDañoArma().setProgress(alArmas.get(position).getDamage());
+        holder.getPbAlcanceArma().setProgress(alArmas.get(position).getRange());
+        holder.getPbCadenciaArma().setProgress(alArmas.get(position).getFire_rate());
+        holder.getPbMovilidadArma().setProgress(alArmas.get(position).getMobility());
         holder.getPbControlArma().setProgress(alArmas.get(position).getControl());
     }
 
@@ -137,6 +140,8 @@ public class ArmasAdapter extends RecyclerView.Adapter<ArmasAdapter.ViewHolder> 
         public void setPbControlArma(ProgressBar pbControlArma) {
             this.pbControlArma = pbControlArma;
         }
+
+
     }
 
 }

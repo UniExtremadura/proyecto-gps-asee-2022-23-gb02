@@ -75,9 +75,7 @@ public class Repo {
         this.weapon = weapon;
     }
 
-    public String getAccuracy() {
-        return accuracy;
-    }
+    public String getAccuracy() {return accuracy;}
 
     public void setAccuracy(String accuracy) {
         this.accuracy = accuracy;

@@ -1,13 +1,10 @@
 package es.unex.propuesta_proyecto.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
 import java.util.List;
-
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.api.ReposNetworkLoaderRunnable;
@@ -25,28 +22,22 @@ public class PruebaApi extends AppCompatActivity {
 
         tvClase = findViewById(R.id.apiTest);
         
-        List<Armas> listaClases;
+        //List<Armas> listaClases;
 
-        AppDatabase appDatabase = Room.databaseBuilder(
-                getApplicationContext(),
-                AppDatabase.class,
-                "dbPruebas"
-        ).allowMainThreadQueries().build();
+      /*  AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase database = AppDatabase.getInstance(PruebaApi.this);
+                Armas a = new Armas("ARMA DAVID","MATADORA","FUEGO",100,2,3,1,3,4,"NO","SI");
+                database.daoJuego().insertarClase(a);
+                // No se pueden actualizar hilos de la vista desde un hilo que no sea el principal
+                // Para ello se hace uso de runOnUiThread(() -> mAdapter.add(item));
+                runOnUiThread(() -> tvClase.setText(a.getName()));
+            }
+        }); */
 
-        // appDatabase.daoJuego().insertarClase(new Clases("Arma David","Metralleta","Mortal",10,9,6,2,4,3,"Buena","Lenta"));
-        // appDatabase.daoJuego().insertarClase(new Clases("Arma Carlos","Lanzallamas","Mortal",10,9,6,2,4,3,"Buena","Lenta"));
-        // appDatabase.daoJuego().insertarClase(new Clases("Arma Adrián","K.O.","Mortal",10,9,6,2,4,3,"Buena","Lenta"));
-        // appDatabase.daoJuego().insertarClase(new Clases("Arma Javier","Puñetazo","Mortal",10,9,6,2,4,3,"Buena","Lenta"));
-
-        listaClases = appDatabase.daoJuego().obtenerClases();
-
-        String txt = " ";
-        for (int i = 0; i < listaClases.size(); i++){
-            txt = txt + "Clase" +i+ " = " + listaClases.get(i).getName() +", "+ listaClases.get(i).getType()+"\n";
-        }
-
-
+        // Llamada a la API:
         AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(1,(repos) -> tvClase.setText(repos.get(0).getName())));
-
     }
+
 }

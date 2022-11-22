@@ -20,10 +20,10 @@ public interface DaoJuego {
     @Insert
     void insertarClase(Armas...armas);
 
-    @Query("UPDATE Armas set type = :type, subtype = :subtype, accuracy = :accuracy, damage = :damage, range = :range, fire_rate = :fire_rate, mobility = :mobility, control = :control, prons = :prons, cons = :cons WHERE name = :name")
-    void actualizarClase(String name,String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String prons, String cons);
+    @Query("UPDATE Armas set type = :type, subtype = :subtype, accuracy = :accuracy, damage = :damage, range = :range, fire_rate = :fire_rate, mobility = :mobility, control = :control, prons = :prons, cons = :cons, name = :name WHERE id = :id")
+    void actualizarClase(String name,String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String prons, String cons, int id);
 
-    @Query("DELETE FROM Armas WHERE name = :name")
-    void borrarClase(String name);
+    @Query("DELETE FROM Armas WHERE id = :id")
+    void borrarClase(int id);
 
 }

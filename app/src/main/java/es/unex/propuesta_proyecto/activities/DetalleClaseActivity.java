@@ -3,17 +3,17 @@ package es.unex.propuesta_proyecto.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.room.Room;
 import es.unex.propuesta_proyecto.R;
+import es.unex.propuesta_proyecto.dao.AppDatabase;
 
 public class DetalleClaseActivity extends AppCompatActivity {
-    ImageView bEditArPrin;
-    ImageView bEditArSec;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        AppDatabase appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "Armas").allowMainThreadQueries().build();
 
         super.onCreate(savedInstanceState);
         Bundle parametros = this.getIntent().getExtras();
@@ -53,30 +53,23 @@ public class DetalleClaseActivity extends AppCompatActivity {
             }
         }
 
-        bEditArPrin = findViewById(R.id.ivEditarArmaPrincipal);
-        bEditArPrin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent armaP = new Intent(DetalleClaseActivity.this, ArmasPrincipalesActivity.class);
-                startActivity(armaP);
-            }
-        });
-
-        bEditArSec = findViewById(R.id.ivEditarArmaSecundaria);
-        bEditArSec.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent armaS = new Intent(DetalleClaseActivity.this, ArmasSecundariasActivity.class);
-                startActivity(armaS);
-            }
-        });
-
-
     }
 
-    public void perfilUsuario(View view) {
+    public void editarClase(View view){
+        Intent editar = new Intent(this, EditarClaseActivity.class);
+        //editar.putExtra();
+        startActivity(editar);
+    }
+
+
+    public void perfilUsuario(View view){
         Intent perfil = new Intent(this, ActualizarCuentaActivity.class);
         startActivity(perfil);
     }
+
+
+
+
+
 
 }

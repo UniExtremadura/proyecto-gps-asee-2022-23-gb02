@@ -14,7 +14,7 @@ enum Tipo {
     CUERPO_A_CUERPO
 };
 
-public class Arma {
+public class ArmasAntigua {
 
     String nombre;
     Uri imagen;
@@ -26,7 +26,7 @@ public class Arma {
     Integer movilidad;
     Integer control;
 
-    public Arma() {
+    public ArmasAntigua() {
     }
 
     public String getNombre() {
@@ -100,5 +100,6 @@ public class Arma {
     public void setControl(Integer control) {
         this.control = control;
     }
+
 
 }
