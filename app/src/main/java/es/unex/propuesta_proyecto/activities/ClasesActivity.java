@@ -57,7 +57,6 @@ public class ClasesActivity extends AppCompatActivity {
             }
         });
         // Acceso a clases
-
     }
 
     public void perfilUsuario(View view){

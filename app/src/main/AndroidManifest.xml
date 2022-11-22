@@ -53,6 +53,26 @@
         </activity>
 
         <activity
+            android:name=".activities.ArmasPrincipalesActivity"
+            android:exported="false">
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+
+        </activity>
+
+        <activity
+            android:name=".activities.ArmasSecundariasActivity"
+            android:exported="false">
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+
+        </activity>
+
+        <activity
             android:name=".activities.CrearCuentaActivity"
             android:exported="false">
 
