@@ -3,10 +3,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ConstraintLayout"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<!--    android:background="@drawable/background">-->
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".activities.PantallaInicialActivity">
 
     <ImageView
         android:id="@+id/ivIcono"
@@ -95,8 +96,7 @@
                 android:backgroundTint="#006400"
                 android:text="Crear Cuenta"
                 android:textSize="16sp"
-                android:onClick="crearCuenta"
-                />
+                android:onClick="crearCuenta" />
 
             <Button
                 android:id="@+id/bEntrarSinCuenta"

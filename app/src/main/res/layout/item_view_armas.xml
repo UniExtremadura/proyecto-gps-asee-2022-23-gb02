@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clArma"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AK-47"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivArma"
+            android:layout_width="0dp"
+            android:layout_height="210dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvNombre"
+            app:srcCompat="@drawable/ak_47" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clAtributosArma"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivArma">
+
+            <TextView
+                android:id="@+id/tvPrecisionArma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Precisión:"
+                android:textColor="#006400"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/pbPrecisionArma"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginEnd="10dp"
+                android:max="100"
+                android:progress="50"
+                android:progressTint="#006400"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPrecisionArma"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvPrecisionArma" />
+
+            <TextView
+                android:id="@+id/tvDañoArma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daño:"
+                android:textColor="#006400"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tvPrecisionArma"
+                app:layout_constraintTop_toBottomOf="@+id/tvPrecisionArma" />
+
+            <ProgressBar
+                android:id="@+id/pbDañoArma"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:max="100"
+                android:progress="50"
+                android:progressTint="#006400"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDañoArma"
+                app:layout_constraintEnd_toEndOf="@+id/pbPrecisionArma"
+                app:layout_constraintStart_toStartOf="@+id/pbPrecisionArma"
+                app:layout_constraintTop_toTopOf="@+id/tvDañoArma" />
+
+            <TextView
+                android:id="@+id/tvAlcanceArma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alcance:"
+                android:textColor="#006400"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tvDañoArma"
+                app:layout_constraintTop_toBottomOf="@+id/tvDañoArma" />
+
+            <ProgressBar
+                android:id="@+id/pbAlcanceArma"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:max="100"
+                android:progress="50"
+                android:progressTint="#006400"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAlcanceArma"
+                app:layout_constraintEnd_toEndOf="@+id/pbDañoArma"
+                app:layout_constraintStart_toStartOf="@+id/pbDañoArma"
+                app:layout_constraintTop_toTopOf="@+id/tvAlcanceArma" />
+
+            <TextView
+                android:id="@+id/tvCadenciaArma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cadencia:"
+                android:textColor="#006400"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tvAlcanceArma"
+                app:layout_constraintTop_toBottomOf="@+id/tvAlcanceArma" />
+
+            <ProgressBar
+                android:id="@+id/pbCadenciaArma"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:max="100"
+                android:progress="50"
+                android:progressTint="#006400"
+                app:layout_constraintBottom_toBottomOf="@+id/tvCadenciaArma"
+                app:layout_constraintEnd_toEndOf="@+id/pbAlcanceArma"
+                app:layout_constraintStart_toStartOf="@+id/pbAlcanceArma"
+                app:layout_constraintTop_toTopOf="@+id/tvCadenciaArma" />
+
+            <TextView
+                android:id="@+id/tvMovilidadArma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Movilidad:"
+                android:textColor="#006400"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tvCadenciaArma"
+                app:layout_constraintTop_toBottomOf="@+id/tvCadenciaArma" />
+
+            <ProgressBar
+                android:id="@+id/pbMovilidadArma"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:max="100"
+                android:progress="50"
+                android:progressTint="#006400"
+                app:layout_constraintBottom_toBottomOf="@+id/tvMovilidadArma"
+                app:layout_constraintEnd_toEndOf="@+id/pbCadenciaArma"
+                app:layout_constraintStart_toStartOf="@+id/pbCadenciaArma"
+                app:layout_constraintTop_toTopOf="@+id/tvMovilidadArma" />
+
+            <TextView
+                android:id="@+id/tvControlArma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Control:"
+                android:textColor="#006400"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/tvMovilidadArma"
+                app:layout_constraintTop_toBottomOf="@+id/tvMovilidadArma" />
+
+            <ProgressBar
+                android:id="@+id/pbControlArma"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:max="100"
+                android:progress="50"
+                android:progressTint="#006400"
+                app:layout_constraintBottom_toBottomOf="@+id/tvControlArma"
+                app:layout_constraintEnd_toEndOf="@+id/pbMovilidadArma"
+                app:layout_constraintStart_toStartOf="@+id/pbMovilidadArma"
+                app:layout_constraintTop_toTopOf="@+id/tvControlArma" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

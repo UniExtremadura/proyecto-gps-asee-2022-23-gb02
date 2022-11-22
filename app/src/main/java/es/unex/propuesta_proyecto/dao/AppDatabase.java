@@ -3,10 +3,10 @@ package es.unex.propuesta_proyecto.dao;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import es.unex.propuesta_proyecto.model.Clases;
+import es.unex.propuesta_proyecto.model.Armas;
 
 @Database(
-        entities = {Clases.class},
+        entities = {Armas.class},
         version = 1
 )
 public abstract class AppDatabase extends RoomDatabase {

@@ -45,7 +45,7 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     setContentView(R.layout.activity_detalle_clase10);
                     break;
                 default:
-                    setContentView(R.layout.activity_detalle_clases);
+                    setContentView(R.layout.activity_detalle_clase1);
                     break;
             }
         }

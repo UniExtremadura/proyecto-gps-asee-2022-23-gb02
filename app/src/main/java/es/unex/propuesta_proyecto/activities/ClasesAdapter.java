@@ -34,7 +34,7 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getBClase().setText(alClases.get(position));
+        holder.getbClase().setText(alClases.get(position));
     }
 
     @Override
@@ -50,7 +50,6 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             context = itemView.getContext();
-            //buttons
             bClase = itemView.findViewById(R.id.bClase);
             bClase.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -62,8 +61,12 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
             });
         }
 
-        public Button getBClase() {
+        public Button getbClase() {
             return bClase;
+        }
+
+        public void setbClase(Button bClase) {
+            this.bClase = bClase;
         }
 
     }
