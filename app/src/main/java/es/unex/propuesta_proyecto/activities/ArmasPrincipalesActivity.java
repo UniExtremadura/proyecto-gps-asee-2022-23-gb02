@@ -36,14 +36,6 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
     RecyclerView rvFusilesDeFrancotirador;
 
     private MyAdapter fusiles,subfusiles,escopetas,ametrelladoraLigera,fusilesDePrecision,fusilesDeFrancotirador;
-    /*public Armas getArma(){
-        Armas a = new Armas();
-        String precision
-        AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(0,(repos) ->   precision [0] = repos.get(0).getAccuracy()));
-        //a.setAccuracy(Integer.parseInt(precision.toString()));
-        Log.d("NOMBRE",precision.toString());
-        return a;
-    } */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,45 +52,56 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         // Carga del RecyclerView de los fusiles de asalto
         rvFusilesDeAsalto = findViewById(R.id.rvFusilesDeAsalto);
         rvFusilesDeAsalto.setLayoutManager(new LinearLayoutManager(this));
-        // TODO: Inserción de los fusiles de asalto de la API en alFusilesDeAsalto
-        AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(0,(repos) ->  fusiles.swap((repos))));
+        // Inserción de los fusiles de asalto de la API en alFusilesDeAsalto
+        for (int i = 0 ; i < 3; i++){
+           // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusiles.swap((repos))));
+        }
         rvFusilesDeAsalto.setAdapter(fusiles);
-
 
 
         // Carga del RecyclerView de los subfusiles
         rvSubfusiles = findViewById(R.id.rvSubfusiles);
         rvSubfusiles.setLayoutManager(new LinearLayoutManager(this));
-        // TODO: Inserción de los subfusiles de la API en alSubfusiles
-        AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(1,(repos) ->  subfusiles.swap((repos))));
+        // Inserción de los subfusiles de la API en alSubfusiles
+        for (int i = 0 ; i < 3; i++){
+          //  AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  subfusiles.swap((repos))));
+        }
         rvSubfusiles.setAdapter(subfusiles);
 
         // Carga del RecyclerView de las escopetas
         rvEscopetas = findViewById(R.id.rvEscopetas);
         rvEscopetas.setLayoutManager(new LinearLayoutManager(this));
-        // TODO: Inserción de las escopetas de la API en alEscopetas
-        AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(2,(repos) ->  escopetas.swap((repos))));
+        // Inserción de las escopetas de la API en alEscopetas
+        for (int i = 0 ; i < 3; i++){
+           // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  escopetas.swap((repos))));
+        }
         rvEscopetas.setAdapter(escopetas);
 
         // Carga del RecyclerView de las ametralladoras ligeras
         rvAmetralladorasLigeras = findViewById(R.id.rvAmetralladorasLigeras);
         rvAmetralladorasLigeras.setLayoutManager(new LinearLayoutManager(this));
-        // TODO: Inserción de las ametralladoras ligeras de la API en alAmetralladorasLigeras
-        AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(3,(repos) ->  ametrelladoraLigera.swap((repos))));
+        // Inserción de las ametralladoras ligeras de la API en alAmetralladorasLigeras
+        for (int i = 0 ; i < 3; i++){
+           // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  ametrelladoraLigera.swap((repos))));
+        }
         rvAmetralladorasLigeras.setAdapter(ametrelladoraLigera);
 
         // Carga del RecyclerView de los fusiles de precision
         rvFusilesDePrecision = findViewById(R.id.rvFusilesDePrecision);
         rvFusilesDePrecision.setLayoutManager(new LinearLayoutManager(this));
-        // TODO: Inserción de los fusiles de precision de la API en alFusilesDePrecision
-        AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(4,(repos) ->  fusilesDePrecision.swap((repos))));
+        //Inserción de los fusiles de precision de la API en alFusilesDePrecision
+        for (int i = 0 ; i < 3; i++){
+          //  AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusilesDePrecision.swap((repos))));
+        }
         rvFusilesDePrecision.setAdapter(fusilesDePrecision);
 
         // Carga del RecyclerView de los fusiles de francotirador
         rvFusilesDeFrancotirador = findViewById(R.id.rvFusilesDeFrancotirador);
         rvFusilesDeFrancotirador.setLayoutManager(new LinearLayoutManager(this));
-        // TODO: Inserción de los fusiles de francotirador de la API en alFusilesDeFrancotirador
-        AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(5,(repos) ->  fusilesDeFrancotirador.swap((repos))));
+        //Inserción de los fusiles de francotirador de la API en alFusilesDeFrancotirador
+        for (int i = 0 ; i < 3; i++){
+           // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusilesDeFrancotirador.swap((repos))));
+        }
         rvFusilesDeFrancotirador.setAdapter(fusilesDeFrancotirador);
 
     }

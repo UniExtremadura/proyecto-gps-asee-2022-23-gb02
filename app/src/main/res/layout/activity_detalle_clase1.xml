@@ -120,7 +120,9 @@
                     android:layout_marginTop="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvArmaPrincipal"
-                    app:srcCompat="@drawable/editar" />
+                    app:srcCompat="@drawable/editar"
+                    android:onClick="cambiarArmaPrincipal"
+                    />
 
                 <ImageView
                     android:id="@+id/ivArma"

@@ -86,7 +86,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public int getItemCount() { return mDataset.size();}
 
     public void swap(List<Repo> dataset){
-        mDataset = dataset;
+        mDataset.add(dataset.get(0));
         notifyDataSetChanged();
     }
 }

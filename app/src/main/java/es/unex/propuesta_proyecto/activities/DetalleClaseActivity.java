@@ -3,12 +3,16 @@ package es.unex.propuesta_proyecto.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.dao.AppDatabase;
 
 public class DetalleClaseActivity extends AppCompatActivity {
+
+    Button bPrimaria, bSecundaria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +57,22 @@ public class DetalleClaseActivity extends AppCompatActivity {
             }
         }
 
+        bPrimaria = findViewById(R.id.bAccesoriosArmaPrincipal);
+        bPrimaria.setOnClickListener(v -> {
+            Intent i = new Intent(DetalleClaseActivity.this,AccesoriosActivity.class);
+            // Valores intent primaria
+            startActivity(i);
+        });
+        bSecundaria = findViewById(R.id.bAccesoriosArmaSecundaria);
+        bSecundaria.setOnClickListener(v -> {
+            Intent i = new Intent(DetalleClaseActivity.this,AccesoriosActivity.class);
+            // Valores intent secundaria
+            startActivity(i);
+        });
     }
 
-    public void editarClase(View view){
-        Intent editar = new Intent(this, EditarClaseActivity.class);
+    public void cambiarArmaPrincipal(View view){
+        Intent editar = new Intent(this, ArmasPrincipalesActivity.class);
         //editar.putExtra();
         startActivity(editar);
     }

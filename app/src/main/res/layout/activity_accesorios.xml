@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".activities.AccesoriosActivity">
+
+    <ImageView
+        android:id="@+id/ivIcono"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icono" />
+
+    <ImageView
+        android:id="@+id/ivUsuario"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivIcono"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivIcono"
+        app:srcCompat="@drawable/usuario"
+        android:onClick="perfilUsuario"/>
+
+    <TextView
+        android:id="@+id/tvAccesorios"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Accesorios"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivIcono" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clAtributosArma"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAccesorios">
+
+        <TextView
+            android:id="@+id/tvPrecisionArma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Precisión:"
+            android:textColor="#006400"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/pbPrecisionArma"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="10dp"
+            android:max="100"
+            android:progress="50"
+            android:progressTint="#006400"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPrecisionArma"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvPrecisionArma" />
+
+        <TextView
+            android:id="@+id/tvDañoArma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daño:"
+            android:textColor="#006400"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/tvPrecisionArma"
+            app:layout_constraintTop_toBottomOf="@+id/tvPrecisionArma" />
+
+        <ProgressBar
+            android:id="@+id/pbDañoArma"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:max="100"
+            android:progress="50"
+            android:progressTint="#006400"
+            app:layout_constraintBottom_toBottomOf="@+id/tvDañoArma"
+            app:layout_constraintEnd_toEndOf="@+id/pbPrecisionArma"
+            app:layout_constraintStart_toStartOf="@+id/pbPrecisionArma"
+            app:layout_constraintTop_toTopOf="@+id/tvDañoArma" />
+
+        <TextView
+            android:id="@+id/tvAlcanceArma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alcance:"
+            android:textColor="#006400"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/tvDañoArma"
+            app:layout_constraintTop_toBottomOf="@+id/tvDañoArma" />
+
+        <ProgressBar
+            android:id="@+id/pbAlcanceArma"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:max="100"
+            android:progress="50"
+            android:progressTint="#006400"
+            app:layout_constraintBottom_toBottomOf="@+id/tvAlcanceArma"
+            app:layout_constraintEnd_toEndOf="@+id/pbDañoArma"
+            app:layout_constraintStart_toStartOf="@+id/pbDañoArma"
+            app:layout_constraintTop_toTopOf="@+id/tvAlcanceArma" />
+
+        <TextView
+            android:id="@+id/tvCadenciaArma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cadencia:"
+            android:textColor="#006400"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/tvAlcanceArma"
+            app:layout_constraintTop_toBottomOf="@+id/tvAlcanceArma" />
+
+        <ProgressBar
+            android:id="@+id/pbCadenciaArma"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:max="100"
+            android:progress="50"
+            android:progressTint="#006400"
+            app:layout_constraintBottom_toBottomOf="@+id/tvCadenciaArma"
+            app:layout_constraintEnd_toEndOf="@+id/pbAlcanceArma"
+            app:layout_constraintStart_toStartOf="@+id/pbAlcanceArma"
+            app:layout_constraintTop_toTopOf="@+id/tvCadenciaArma" />
+
+        <TextView
+            android:id="@+id/tvMovilidadArma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Movilidad:"
+            android:textColor="#006400"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/tvCadenciaArma"
+            app:layout_constraintTop_toBottomOf="@+id/tvCadenciaArma" />
+
+        <ProgressBar
+            android:id="@+id/pbMovilidadArma"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:max="100"
+            android:progress="50"
+            android:progressTint="#006400"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMovilidadArma"
+            app:layout_constraintEnd_toEndOf="@+id/pbCadenciaArma"
+            app:layout_constraintStart_toStartOf="@+id/pbCadenciaArma"
+            app:layout_constraintTop_toTopOf="@+id/tvMovilidadArma" />
+
+        <TextView
+            android:id="@+id/tvControlArma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Control:"
+            android:textColor="#006400"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/tvMovilidadArma"
+            app:layout_constraintTop_toBottomOf="@+id/tvMovilidadArma" />
+
+        <ProgressBar
+            android:id="@+id/pbControlArma"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:max="100"
+            android:progress="50"
+            android:progressTint="#006400"
+            app:layout_constraintBottom_toBottomOf="@+id/tvControlArma"
+            app:layout_constraintEnd_toEndOf="@+id/pbMovilidadArma"
+            app:layout_constraintStart_toStartOf="@+id/pbMovilidadArma"
+            app:layout_constraintTop_toTopOf="@+id/tvControlArma" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clAtributosArma">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tvBocacha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bocacha:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/sBocacha"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvBocacha"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvBocacha"
+                    app:layout_constraintTop_toTopOf="@+id/tvBocacha" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/tvCañon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cañón:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/sCañon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvCañon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvCañon"
+                    app:layout_constraintTop_toTopOf="@+id/tvCañon" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/tvLaser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Láser:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/sLaser"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvLaser"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvLaser"
+                    app:layout_constraintTop_toTopOf="@+id/tvLaser" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/tvMira"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mira:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/sMira"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvMira"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvMira"
+                    app:layout_constraintTop_toTopOf="@+id/tvMira" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/tvCulata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Culata:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/sCulata"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvCulata"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvCulata"
+                    app:layout_constraintTop_toTopOf="@+id/tvCulata" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/tvAcople"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Acople:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/sAcople"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvAcople"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvAcople"
+                    app:layout_constraintTop_toTopOf="@+id/tvAcople" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/tvMunicion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Munición:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/sMunicion"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvMunicion"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvMunicion"
+                    app:layout_constraintTop_toTopOf="@+id/tvMunicion" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/tvEmpuñaduraTrasera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Empuñadura trasera:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/sEmpuñaduraTrasera"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvEmpuñaduraTrasera"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvEmpuñaduraTrasera"
+                    app:layout_constraintTop_toTopOf="@+id/tvEmpuñaduraTrasera" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/tvVentaja"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ventaja:"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/sVentaja"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:backgroundTint="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvVentaja"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvVentaja"
+                    app:layout_constraintTop_toTopOf="@+id/tvVentaja" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
