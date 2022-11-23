@@ -8,7 +8,7 @@ import es.unex.propuesta_proyecto.R;
 
 public class PantallaInicialActivity extends AppCompatActivity {
 
-    @Override
+   /* @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_inicial);
@@ -29,6 +29,6 @@ public class PantallaInicialActivity extends AppCompatActivity {
         Intent actClassSinCuenta = new Intent(this, ClasesActivity.class);
         actClassSinCuenta.putExtra("estado",false);
         startActivity(actClassSinCuenta);
-    }
+    }*/
 
 }

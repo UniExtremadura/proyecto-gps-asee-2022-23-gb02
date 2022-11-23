@@ -8,6 +8,7 @@ import es.unex.propuesta_proyecto.R;
 
 public class CrearCuentaActivity extends AppCompatActivity {
 
+    /*
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +18,6 @@ public class CrearCuentaActivity extends AppCompatActivity {
     public void iniciarSesion(View view){
         Intent actClasses = new Intent(this, ClasesActivity.class);
         startActivity(actClasses);
-    }
+    } */
 
 }
