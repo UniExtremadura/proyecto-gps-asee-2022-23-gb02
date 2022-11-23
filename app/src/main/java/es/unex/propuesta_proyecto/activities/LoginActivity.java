@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.Toast;//Los Toast deben ser lanzados desde el hilo de la Activity, no en un hilo secundario
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
@@ -69,12 +69,12 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-                        }
+                        }//Fin run() del onClick()
                     });
                 }
-            }
+            }//Fin onClick()
         });
-    }
+    }//Fin onCreate()
 
     public void crearCuenta(View view){
         Intent actCrear = new Intent(getApplicationContext(), RegistroActivity.class);

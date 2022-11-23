@@ -14,7 +14,7 @@ import es.unex.propuesta_proyecto.dao.AppDatabase;
 public class DetalleClaseActivity extends AppCompatActivity {
 
     Button bPrimaria;
-    ImageView bEditarClase;
+    ImageView bEditarClase;//este es el icono del lapiz para editar la clase
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class DetalleClaseActivity extends AppCompatActivity {
         AppDatabase appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "Armas").allowMainThreadQueries().build();
 
         super.onCreate(savedInstanceState);
-        Bundle parametros = this.getIntent().getExtras();
+        Bundle parametros = this.getIntent().getExtras();//se recupera el Bundle de la Intent recibida
         if(parametros != null) {
             String valor = parametros.getString("className");
             switch (valor) {
@@ -72,7 +72,7 @@ public class DetalleClaseActivity extends AppCompatActivity {
             startActivity(editar);
         });
 
-    }
+    }//Fin onCreate()
 
     public void cambiarArmaPrincipal(View view){
         Intent editar = new Intent(this, ArmasPrincipalesActivity.class);

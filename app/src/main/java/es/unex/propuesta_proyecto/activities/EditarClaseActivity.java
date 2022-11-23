@@ -13,7 +13,7 @@ import es.unex.propuesta_proyecto.dao.AppDatabase;
 
 public class EditarClaseActivity extends AppCompatActivity {
 
-    ImageView bCorrecto;
+    ImageView bCorrecto;//este es el icono del tick
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,26 +23,29 @@ public class EditarClaseActivity extends AppCompatActivity {
         ImageView button;
         button = findViewById(R.id.ivEditarArmaPrincipal);
         //GetIntent
-        button.setOnClickListener(new View.OnClickListener()
-        { public void onClick(View v) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            Intent editar = new Intent(EditarClaseActivity.this,DetalleClaseActivity.class);
-            TextView tvNameArma;
-            tvNameArma = findViewById(R.id.tvNameArma);
-            String name = tvNameArma.getText().toString();
+                Intent editar = new Intent(EditarClaseActivity.this,DetalleClaseActivity.class);
+                TextView tvNameArma;
+                tvNameArma = findViewById(R.id.tvNameArma);
+                String name = tvNameArma.getText().toString();
 
-            AppDatabase appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "Armas").build();
+                AppDatabase appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "Armas").build();
 
-            appDatabase.daoJuego().actualizarClase("ARMA DAVID","D1","",1,42,23,12,3,4,"","",1);
+                appDatabase.daoJuego().actualizarClase("ARMA DAVID","D1","",1,42,23,12,3,4,1);
 
-            finish();
-        } });
+                finish();
+            }
+        });
 
         bCorrecto = findViewById(R.id.ivEditarArmaPrincipal);
         bCorrecto.setOnClickListener(v-> {
             finish(); 
         });
-    }
+
+    }//Fin onCreate()
 
 
 

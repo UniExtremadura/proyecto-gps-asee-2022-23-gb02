@@ -36,12 +36,9 @@ public class Repo {
     @SerializedName("Control")
     @Expose
     private String control;
-    @SerializedName("Pros")
+    @SerializedName("TipoArma")
     @Expose
-    private Object pros;
-    @SerializedName("Cons")
-    @Expose
-    private Object cons;
+    private String tipoArma;
 
     public String getType() {
         return type;
@@ -121,20 +118,11 @@ public class Repo {
         this.control = control;
     }
 
-    public Object getPros() {
-        return pros;
+    public String getTipoArma() {
+        return tipoArma;
     }
 
-    public void setPros(Object pros) {
-        this.pros = pros;
+    public void setTipoArma(String tipoArma) {
+        this.tipoArma = tipoArma;
     }
-
-    public Object getCons() {
-        return cons;
-    }
-
-    public void setCons(Object cons) {
-        this.cons = cons;
-    }
-
 }

@@ -19,7 +19,7 @@ import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.api.ReposNetworkLoaderRunnable;
-
+//Esta clase es igual que ArmasPrincipalesActivity, hace lo mismo pero con las armas secundarias
 public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAdapter.OnListInteractionListener {
 
     ArrayList<Armas> alPistolas = new ArrayList<Armas>();
@@ -46,7 +46,7 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         for (int i = 0 ; i < 3; i++){
             // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  pistolas.swap((repos))));
         }
-        rvPistolas.setAdapter(pistolas);
+        rvPistolas.setAdapter(pistolas);//se carga el ArrayList de pistolas recuperado de la API en el RecyclerView
 
         // Carga del RecyclerView de las armas cuerpo a cuerpo
         rvCuerpoACuerpo = findViewById(R.id.rvCuerpoACuerpo);
@@ -55,7 +55,7 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         for (int i = 0 ; i < 3; i++){
             // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cuerpo.swap((repos))));
         }
-        rvCuerpoACuerpo.setAdapter(cuerpo);
+        rvCuerpoACuerpo.setAdapter(cuerpo);//se carga el ArrayList de armas cuerpo a cuerpo recuperado de la API en el RecyclerView
 
     }
 

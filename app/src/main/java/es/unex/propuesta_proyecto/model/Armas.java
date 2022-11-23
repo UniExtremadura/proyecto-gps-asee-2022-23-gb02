@@ -4,7 +4,7 @@ package es.unex.propuesta_proyecto.model;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
+//Esta clase define los atributos y metodos de la tabla de Armas en Room
 @Entity(tableName = "Armas")
 public class Armas {
 
@@ -28,12 +28,10 @@ public class Armas {
     private int mobility;
     @ColumnInfo(name = "control")
     private int control;
-    @ColumnInfo(name = "prons")
-    private String prons;
-    @ColumnInfo(name = "cons")
-    private String cons;
+    @ColumnInfo(name="tipoArma")
+    private String tipoArma;
 
-    public Armas(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String prons, String cons) {
+    public Armas(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String tipoArma) {
         this.name = name;
         this.type = type;
         this.subtype = subtype;
@@ -43,10 +41,9 @@ public class Armas {
         this.fire_rate = fire_rate;
         this.mobility = mobility;
         this.control = control;
-        this.prons = prons;
-        this.cons = cons;
+        this.tipoArma=tipoArma;
     }
-    public Armas() {
+    public Armas() {//cuando hay varios constructores validos, Room escoge por defecto el que no tiene argumentos porque hemos declarado los getter y setter. Sin embargo, si no usamos nunca alguno, le podemos poner @Ignore
         this.name = "";
         this.type = "";
         this.subtype = "";
@@ -56,8 +53,7 @@ public class Armas {
         this.fire_rate = 0;
         this.mobility = 0;
         this.control = 0;
-        this.prons = "";
-        this.cons = "";
+        this.tipoArma="";
     }
 
     public int getId() {
@@ -140,19 +136,11 @@ public class Armas {
         this.control = control;
     }
 
-    public String getProns() {
-        return prons;
+    public String getTipoArma() {
+        return tipoArma;
     }
 
-    public void setProns(String prons) {
-        this.prons = prons;
-    }
-
-    public String getCons() {
-        return cons;
-    }
-
-    public void setCons(String cons) {
-        this.cons = cons;
+    public void setTipoArma(String tipoArma) {
+        this.tipoArma = tipoArma;
     }
 }

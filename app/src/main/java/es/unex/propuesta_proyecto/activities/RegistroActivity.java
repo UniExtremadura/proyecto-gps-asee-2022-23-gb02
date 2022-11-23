@@ -22,11 +22,11 @@ public class RegistroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_cuenta);
 
-        username = findViewById(R.id.etUsuario);
-        password = findViewById(R.id.etContraseña);
-        repassword = findViewById(R.id.etContraseña1);
-        signup = findViewById(R.id.bCrearCuenta);
-        signin = findViewById(R.id.bTengoCuenta);
+        username = findViewById(R.id.etUsuario);//EditText
+        password = findViewById(R.id.etContraseña);//EditText
+        repassword = findViewById(R.id.etContraseña1);//EditText
+        signup = findViewById(R.id.bCrearCuenta);//Button
+        signin = findViewById(R.id.bTengoCuenta);//Button
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +49,7 @@ public class RegistroActivity extends AppCompatActivity {
                                     AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().insertarUsuario(usuario);
                                     Intent actClasses = new Intent(getApplicationContext(), ClasesActivity.class);
                                     actClasses.putExtra("estado",true);
+
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -73,9 +74,10 @@ public class RegistroActivity extends AppCompatActivity {
                     }
                 }
 
-            }
+            }//Fin onClick()
         });
 
+        //este onClick() es para el iniciar sesion
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,5 +85,5 @@ public class RegistroActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
+    }//Fin onCreate()
 }

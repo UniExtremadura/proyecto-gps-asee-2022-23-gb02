@@ -16,7 +16,7 @@ import es.unex.propuesta_proyecto.model.Usuarios;
 public class ActualizarCuentaActivity extends AppCompatActivity {
 
     EditText username,password;
-    Button actualizar;
+    Button actualizar;//HACER onCLICK()
 
 
     @Override
@@ -24,14 +24,15 @@ public class ActualizarCuentaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actualizar_cuenta);
 
-        username = findViewById(R.id.etUsuarioActualizar);
-        password = findViewById(R.id.etContraseñaActualizar);
+        username = findViewById(R.id.etUsuarioActualizar);//username es un Edit Text
+        password = findViewById(R.id.etContraseñaActualizar);//password es un Edit Text
 
-        String usuario;
-        Bundle parametros = getIntent().getExtras();
-        usuario = parametros.getString("usuario");
+        Bundle parametros = getIntent().getExtras();//extrae el Bundle de la Intent recibida y la guarda en "parametros".
+        String usuario = parametros.getString("usuario");//extrae del Bundle el String con la clave "usuario".
+        String contrasena = parametros.getString("contraseña");//extrae del Bundle el String con la clave "contraseña"
 
-        username.setText(usuario);
+        username.setText(usuario);//hace que se muestre en el EditText "username" el String pasado por parametros. En este caso es el nombre del usuario.
+        password.setText(contrasena);//hace que se muestre en el EditText "password" el String pasado por parametros. En este caso es la contraseña del usuario.
 
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -40,8 +41,7 @@ public class ActualizarCuentaActivity extends AppCompatActivity {
                 AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().actualizarUsuario(usuarios);
             }
         });
-
-    }
+    }//Fin onCreate
 
     public void cuentaActualizada(View view){
         Intent cuentaAct = new Intent(this, ClasesActivity.class);

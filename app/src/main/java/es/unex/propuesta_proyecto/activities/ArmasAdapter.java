@@ -142,6 +142,6 @@ public class ArmasAdapter extends RecyclerView.Adapter<ArmasAdapter.ViewHolder> 
         }
 
 
-    }
+    }//Fin class ViewHolder
 
 }

@@ -27,17 +27,17 @@ public class ClasesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clases);
 
-        Bundle parametros = this.getIntent().getExtras();
+        Bundle parametros = this.getIntent().getExtras();//se recupera el Bundle que viene de la Intent recibida
         if (parametros != null) {
             ImageView perfil = findViewById(R.id.ivUsuario);
-            boolean estado = parametros.getBoolean("estado");
+            boolean estado = parametros.getBoolean("estado");//se recupera del Bundle el boolean que indica el estado del ImageView
             if (estado) { // True -- visible
                 perfil.setVisibility(View.VISIBLE);
             } else { // False -- invisible
                 perfil.setVisibility(View.INVISIBLE);
             }
         }
-        usuario = parametros.getString("usuario");
+        usuario = parametros.getString("usuario");//se recupera el nombre del usuario del Bundle de la Intent recibida
 
         rvClases = findViewById(R.id.rvClases);
         rvClases.setLayoutManager(new LinearLayoutManager(this));
@@ -60,7 +60,7 @@ public class ClasesActivity extends AppCompatActivity {
             }
         });
         // Acceso a clases
-    }
+    }//Fin onCreate()
 
     public void perfilUsuario(View view){
         Intent perfil = new Intent(this, ActualizarCuentaActivity.class);
