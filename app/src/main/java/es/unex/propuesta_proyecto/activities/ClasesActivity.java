@@ -20,6 +20,7 @@ public class ClasesActivity extends AppCompatActivity {
     ArrayList<String> alClases = new ArrayList<String>();
     RecyclerView rvClases;
     ImageView bAgregar;
+    String usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class ClasesActivity extends AppCompatActivity {
                 perfil.setVisibility(View.INVISIBLE);
             }
         }
+        usuario = parametros.getString("usuario");
+
         rvClases = findViewById(R.id.rvClases);
         rvClases.setLayoutManager(new LinearLayoutManager(this));
         bAgregar = findViewById(R.id.ivAgregar);
@@ -61,6 +64,7 @@ public class ClasesActivity extends AppCompatActivity {
 
     public void perfilUsuario(View view){
         Intent perfil = new Intent(this, ActualizarCuentaActivity.class);
+        perfil.putExtra("usuario",usuario);
         startActivity(perfil);
     }
 }

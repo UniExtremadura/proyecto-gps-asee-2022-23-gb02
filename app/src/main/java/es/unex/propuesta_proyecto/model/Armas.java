@@ -1,18 +1,11 @@
 package es.unex.propuesta_proyecto.model;
 
-import android.util.Log;
-import android.widget.TextView;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import es.unex.propuesta_proyecto.R;
-import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.api.ReposNetworkLoaderRunnable;
-
-@Entity()
+@Entity(tableName = "Armas")
 public class Armas {
 
     @PrimaryKey(autoGenerate = true)

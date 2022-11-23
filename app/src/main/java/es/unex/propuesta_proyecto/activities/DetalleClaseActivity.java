@@ -76,18 +76,6 @@ public class DetalleClaseActivity extends AppCompatActivity {
 
     public void cambiarArmaPrincipal(View view){
         Intent editar = new Intent(this, ArmasPrincipalesActivity.class);
-        //editar.putExtra();
         startActivity(editar);
     }
-
-    public void perfilUsuario(View view){
-        Intent perfil = new Intent(this, ActualizarCuentaActivity.class);
-        startActivity(perfil);
-    }
-
-
-
-
-
-
 }

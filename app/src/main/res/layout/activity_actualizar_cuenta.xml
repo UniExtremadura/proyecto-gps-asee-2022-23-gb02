@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/etUsuario"
+            android:id="@+id/etUsuarioActualizar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
@@ -64,10 +64,10 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etUsuario" />
+            app:layout_constraintTop_toBottomOf="@+id/etUsuarioActualizar" />
 
         <EditText
-            android:id="@+id/etContraseña"
+            android:id="@+id/etContraseñaActualizar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -88,7 +88,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etContraseña"
+            app:layout_constraintTop_toBottomOf="@+id/etContraseñaActualizar"
             android:onClick="cuentaActualizada"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

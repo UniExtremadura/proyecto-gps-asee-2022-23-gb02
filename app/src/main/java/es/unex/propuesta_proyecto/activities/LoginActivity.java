@@ -1,22 +1,21 @@
 package es.unex.propuesta_proyecto.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import es.unex.propuesta_proyecto.R;
-import es.unex.propuesta_proyecto.api.DBHelper;
+import es.unex.propuesta_proyecto.api.AppExecutors;
+import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
+import es.unex.propuesta_proyecto.model.Usuarios;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText username,password;
     Button btnLogin;
-    DBHelper DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.etUsuarioLogin);
         password = findViewById(R.id.etContraseñaLogin);
         btnLogin = findViewById(R.id.bIniciarSesion);
-        DB = new DBHelper(this);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,14 +36,41 @@ public class LoginActivity extends AppCompatActivity {
                 if(user.equals("")||pass.equals(""))
                     Toast.makeText(LoginActivity.this,"Por favor, rellene todos los campos", Toast.LENGTH_SHORT).show();
                 else{
-                    Boolean checkuserpass = DB.checkUsernamePassword(user,pass);
-                    if(checkuserpass){
-                        Toast.makeText(LoginActivity.this,"Ha iniciado sesión!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(),ClasesActivity.class);
-                        startActivity(intent);
-                    } else{
-                        Toast.makeText(LoginActivity.this,"Credenciales incorrectas!", Toast.LENGTH_SHORT).show();
-                    }
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Usuarios usuario;
+                            usuario = AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(user);
+                            if(usuario != null){
+                                if(usuario.getName().equals(user) && usuario.getPassword().equals(pass)){
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(LoginActivity.this, "Ha iniciado sesión!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    Intent intent = new Intent(getApplicationContext(),ClasesActivity.class);
+                                    intent.putExtra("estado",true);
+                                    intent.putExtra("usuario",user);
+                                    startActivity(intent);
+                                } else{
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(LoginActivity.this,"Credenciales incorrectas!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            } else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(LoginActivity.this,"No existe usuario!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                    });
                 }
             }
         });

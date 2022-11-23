@@ -25,8 +25,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/ivIcono"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ivIcono"
-        app:srcCompat="@drawable/usuario"
-        android:onClick="perfilUsuario"/>
+        app:srcCompat="@drawable/usuario" />
 
     <TextView
         android:id="@+id/tvNombreClase"
