@@ -20,13 +20,11 @@
         app:srcCompat="@drawable/icono" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="359dp"
+        android:layout_height="428dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivIcono">
@@ -43,7 +41,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/etUsuarioActualizar"
+            android:id="@+id/etUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
@@ -64,10 +62,10 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etUsuarioActualizar" />
+            app:layout_constraintTop_toBottomOf="@+id/etUsuario" />
 
         <EditText
-            android:id="@+id/etContraseñaActualizar"
+            android:id="@+id/etContraseña"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -82,14 +80,28 @@
             android:id="@+id/bActualizarCuenta"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="32dp"
             android:backgroundTint="#006400"
+            android:onClick="cuentaActualizada"
             android:text="Actualizar cuenta"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etContraseñaActualizar"
-            android:onClick="cuentaActualizada"/>
+            app:layout_constraintTop_toBottomOf="@+id/etContraseña" />
+
+        <Button
+            android:id="@+id/bEliminarCuenta"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#006400"
+            android:text="Eliminar cuenta"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bActualizarCuenta" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -57,13 +57,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.CrearCuentaActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activities.AccesoriosActivity"
             android:exported="false">
             <meta-data

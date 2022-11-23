@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".activities.CrearCuentaActivity">
+    tools:context=".activities.RegistroActivity">
 
     <ImageView
         android:id="@+id/ivIcono"
@@ -34,11 +34,24 @@
         app:layout_constraintVertical_bias="0.0">
 
 
+        <TextView
+            android:id="@+id/tvContraseña3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="144dp"
+            android:text="Repetir Contraseña:"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etUsuario" />
+
         <Button
             android:id="@+id/bCrearCuenta"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="32dp"
             android:backgroundTint="#006400"
             android:onClick="iniciarSesion"
             android:text="Crear cuenta"
@@ -65,7 +78,7 @@
             android:id="@+id/etUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="16dp"
             android:inputType="textPersonName"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -78,7 +91,7 @@
             android:id="@+id/tvContraseña"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="24dp"
             android:text="Contraseña:"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -91,7 +104,7 @@
             android:id="@+id/etContraseña1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="28dp"
             android:inputType="textPassword"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -104,7 +117,7 @@
             android:id="@+id/etContraseña"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="116dp"
+            android:layout_marginTop="136dp"
             android:inputType="textPassword"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -117,7 +130,7 @@
             android:id="@+id/bTengoCuenta"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="104dp"
             android:backgroundTint="#006400"
             android:text="Ya tengo cuenta"
             android:textSize="16sp"
