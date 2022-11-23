@@ -74,21 +74,6 @@
                 android:layout_marginTop="25dp" />
 
             <TextView
-                android:id="@+id/tvLanzamisiles"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="Lanzamisiles"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvLanzamisiles"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="25dp" />
-
-            <TextView
                 android:id="@+id/tvCuerpoACuerpo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

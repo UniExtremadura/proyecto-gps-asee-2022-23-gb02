@@ -6,45 +6,63 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import android.content.Intent;
+import android.net.Uri;
 
+import android.util.Log;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.model.Armas;
+import es.unex.propuesta_proyecto.api.AppExecutors;
+import es.unex.propuesta_proyecto.api.ReposNetworkLoaderRunnable;
 
-public class ArmasSecundariasActivity extends AppCompatActivity {
+public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAdapter.OnListInteractionListener {
 
     ArrayList<Armas> alPistolas = new ArrayList<Armas>();
-    ArrayList<Armas> alLanzamisiles = new ArrayList<Armas>();
     ArrayList<Armas> alCuerpoACuerpo = new ArrayList<Armas>();
 
     RecyclerView rvPistolas;
-    RecyclerView rvLanzamisiles;
     RecyclerView rvCuerpoACuerpo;
+
+    private MyAdapter pistolas, cuerpo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_armas_secundarias);
+        /** INICIALIZACION DE LOS ADAPTERS **/
+        pistolas = new MyAdapter(new ArrayList<>(), this);
+        cuerpo = new MyAdapter(new ArrayList<>(), this);
+
 
         // Carga del RecyclerView de las pistolas
         rvPistolas = findViewById(R.id.rvPistolas);
         rvPistolas.setLayoutManager(new LinearLayoutManager(this));
-        // TODO: Inserción de las pistolas de la API en alPistolas
-        rvPistolas.setAdapter(new ArmasAdapter(alPistolas));
-
-        // Carga del RecyclerView de los lanzamisiles
-        rvLanzamisiles = findViewById(R.id.rvLanzamisiles);
-        rvLanzamisiles.setLayoutManager(new LinearLayoutManager(this));
-        // TODO: Inserción de los lanzamisiles de la API en alLanzamisiles
-        rvLanzamisiles.setAdapter(new ArmasAdapter(alLanzamisiles));
+        //Inserción de las pistolas de la API en pistolas
+        for (int i = 0 ; i < 3; i++){
+            // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  pistolas.swap((repos))));
+        }
+        rvPistolas.setAdapter(pistolas);
 
         // Carga del RecyclerView de las armas cuerpo a cuerpo
         rvCuerpoACuerpo = findViewById(R.id.rvCuerpoACuerpo);
         rvCuerpoACuerpo.setLayoutManager(new LinearLayoutManager(this));
-        // TODO: Inserción de las armas cuerpo a cuerpo de la API en alCuerpoACuerpo
-        rvCuerpoACuerpo.setAdapter(new ArmasAdapter(alCuerpoACuerpo));
+        //Inserción de las armas cuerpo a cuerpo de la API en cuerpo
+        for (int i = 0 ; i < 3; i++){
+            // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cuerpo.swap((repos))));
+        }
+        rvCuerpoACuerpo.setAdapter(cuerpo);
 
     }
 
+    @Override
+    public void onListInteraction(String url) {
+        Uri webpage = Uri.parse(url);
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+        startActivity(webIntent);
+    }
 }

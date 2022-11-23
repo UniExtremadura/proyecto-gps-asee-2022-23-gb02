@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -12,7 +13,8 @@ import es.unex.propuesta_proyecto.dao.AppDatabase;
 
 public class DetalleClaseActivity extends AppCompatActivity {
 
-    Button bPrimaria, bSecundaria;
+    Button bPrimaria;
+    ImageView bEditarClase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +65,13 @@ public class DetalleClaseActivity extends AppCompatActivity {
             // Valores intent primaria
             startActivity(i);
         });
-        bSecundaria = findViewById(R.id.bAccesoriosArmaSecundaria);
-        bSecundaria.setOnClickListener(v -> {
-            Intent i = new Intent(DetalleClaseActivity.this,AccesoriosActivity.class);
-            // Valores intent secundaria
-            startActivity(i);
+
+        bEditarClase = findViewById(R.id.ivEditarClase);
+        bEditarClase.setOnClickListener(v -> {
+            Intent editar = new Intent(DetalleClaseActivity.this, EditarClaseActivity.class);
+            startActivity(editar);
         });
+
     }
 
     public void cambiarArmaPrincipal(View view){
@@ -76,7 +79,6 @@ public class DetalleClaseActivity extends AppCompatActivity {
         //editar.putExtra();
         startActivity(editar);
     }
-
 
     public void perfilUsuario(View view){
         Intent perfil = new Intent(this, ActualizarCuentaActivity.class);

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,17 +24,15 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
     ArrayList<Armas> alSubfusiles = new ArrayList<Armas>();
     ArrayList<Armas> alEscopetas = new ArrayList<Armas>();
     ArrayList<Armas> alAmetralladorasLigeras = new ArrayList<Armas>();
-    ArrayList<Armas> alFusilesDePrecision = new ArrayList<Armas>();
     ArrayList<Armas> alFusilesDeFrancotirador = new ArrayList<Armas>();
 
     RecyclerView rvFusilesDeAsalto;
     RecyclerView rvSubfusiles;
     RecyclerView rvEscopetas;
     RecyclerView rvAmetralladorasLigeras;
-    RecyclerView rvFusilesDePrecision;
     RecyclerView rvFusilesDeFrancotirador;
 
-    private MyAdapter fusiles,subfusiles,escopetas,ametrelladoraLigera,fusilesDePrecision,fusilesDeFrancotirador;
+    private MyAdapter fusiles,subfusiles,escopetas,ametrelladoraLigera,fusilesDeFrancotirador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +43,6 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         subfusiles = new MyAdapter(new ArrayList<>(), this);
         escopetas = new MyAdapter(new ArrayList<>(), this);
         ametrelladoraLigera = new MyAdapter(new ArrayList<>(), this);
-        fusilesDePrecision = new MyAdapter(new ArrayList<>(), this);
         fusilesDeFrancotirador = new MyAdapter(new ArrayList<>(), this);
 
         // Carga del RecyclerView de los fusiles de asalto
@@ -85,15 +81,6 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
            // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  ametrelladoraLigera.swap((repos))));
         }
         rvAmetralladorasLigeras.setAdapter(ametrelladoraLigera);
-
-        // Carga del RecyclerView de los fusiles de precision
-        rvFusilesDePrecision = findViewById(R.id.rvFusilesDePrecision);
-        rvFusilesDePrecision.setLayoutManager(new LinearLayoutManager(this));
-        //Inserción de los fusiles de precision de la API en alFusilesDePrecision
-        for (int i = 0 ; i < 3; i++){
-          //  AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusilesDePrecision.swap((repos))));
-        }
-        rvFusilesDePrecision.setAdapter(fusilesDePrecision);
 
         // Carga del RecyclerView de los fusiles de francotirador
         rvFusilesDeFrancotirador = findViewById(R.id.rvFusilesDeFrancotirador);

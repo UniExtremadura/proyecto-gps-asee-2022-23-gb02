@@ -13,6 +13,8 @@ import es.unex.propuesta_proyecto.dao.AppDatabase;
 
 public class EditarClaseActivity extends AppCompatActivity {
 
+    ImageView bCorrecto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +37,17 @@ public class EditarClaseActivity extends AppCompatActivity {
 
             finish();
         } });
+
+        bCorrecto = findViewById(R.id.ivEditarArmaPrincipal);
+        bCorrecto.setOnClickListener(v-> {
+            finish(); 
+        });
     }
 
 
 
 
     public void editarArmaPrincipal(View view) {
-
         TextView tvNameArma;
         tvNameArma = findViewById(R.id.tvNameArma);
         String name = tvNameArma.getText().toString();

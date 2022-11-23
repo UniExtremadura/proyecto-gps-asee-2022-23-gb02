@@ -119,21 +119,6 @@
                 android:layout_marginTop="25dp" />
 
             <TextView
-                android:id="@+id/tvFusilesDePrecision"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="Fusiles de precisión"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvFusilesDePrecision"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="25dp" />
-
-            <TextView
                 android:id="@+id/tvFusilesDeFrancotirador"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
