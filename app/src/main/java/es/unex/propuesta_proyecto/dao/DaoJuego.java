@@ -12,18 +12,24 @@ import es.unex.propuesta_proyecto.model.Armas;
 public interface DaoJuego {
 
     @Query("SELECT * FROM Armas")
-    abstract List<Armas> obtenerClases();
+    abstract List<Armas> obtenerArmas();
 
     @Query("SELECT * FROM Armas WHERE name = :name")
-    Armas obtenerClase(String name);
+    Armas obtenerArma(String name);
+
+    @Query("SELECT * FROM Armas WHERE name = :nombreArma AND usuario = :nombreUsuario")
+    Armas obtenerArmaUsuario(String nombreArma, String nombreUsuario);
+
+    @Query("SELECT * FROM Armas WHERE usuario = :nombreUsuario")
+    abstract List<Armas> obtenerArmasPorNombreUsuario(String nombreUsuario);
 
     @Insert
-    void insertarClase(Armas...armas);
+    void insertarArmas(Armas...armas);
 
-    @Query("UPDATE Armas set type = :type, subtype = :subtype, accuracy = :accuracy, damage = :damage, range = :range, fire_rate = :fire_rate, mobility = :mobility, control = :control, name = :name WHERE id = :id")
-    void actualizarClase(String name,String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, int id);
+    @Query("UPDATE Armas set name = :name, type = :type, subtype = :subtype, accuracy = :accuracy, damage = :damage, range = :range, fire_rate = :fire_rate, mobility = :mobility, control = :control  WHERE id = :id AND idClase = :idClase")
+    void actualizarArma(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, int id, int idClase);
 
     @Query("DELETE FROM Armas WHERE id = :id")
-    void borrarClase(int id);
+    void borrarArma(int id);
 
 }

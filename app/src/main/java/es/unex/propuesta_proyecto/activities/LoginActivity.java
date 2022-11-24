@@ -1,7 +1,10 @@
 package es.unex.propuesta_proyecto.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;//Los Toast deben ser lanzados desde el hilo de la Activity, no en un hilo secundario
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
+import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
 import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
@@ -25,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.etUsuarioLogin);
         password = findViewById(R.id.etContraseñaLogin);
         btnLogin = findViewById(R.id.bIniciarSesion);
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                                     intent.putExtra("estado",true);
                                     intent.putExtra("usuario",user);
                                     intent.putExtra("password",pass);
+                                    guardarPreferencias();
                                     startActivity(intent);
                                 } else{
                                     runOnUiThread(new Runnable() {
@@ -77,6 +83,16 @@ public class LoginActivity extends AppCompatActivity {
         });
     }//Fin onCreate()
 
+
+    private void guardarPreferencias(){
+        SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+
+        String user = username.getText().toString();
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("user",user);
+
+        editor.commit();
+    }
     public void crearCuenta(View view){
         Intent actCrear = new Intent(getApplicationContext(), RegistroActivity.class);
         startActivity(actCrear);

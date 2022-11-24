@@ -9,12 +9,12 @@ import androidx.room.RoomDatabase;
 import es.unex.propuesta_proyecto.model.Armas;
 
 @Database(entities = {Armas.class}, version = 1)
-public abstract class AppDatabase extends RoomDatabase {
-    private static AppDatabase instance;
+public abstract class AppDatabaseArmas extends RoomDatabase {
+    private static AppDatabaseArmas instance;
 
-    public static AppDatabase getInstance(Context context){
+    public static AppDatabaseArmas getInstance(Context context){
         if(instance == null)
-            instance = Room.databaseBuilder(context, AppDatabase.class,"Armas.db").build();
+            instance = Room.databaseBuilder(context, AppDatabaseArmas.class,"Armas.db").build();
         return instance;
     }
 

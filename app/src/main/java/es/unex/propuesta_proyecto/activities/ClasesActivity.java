@@ -6,14 +6,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 
 import es.unex.propuesta_proyecto.R;
-import es.unex.propuesta_proyecto.activities.ActualizarCuentaActivity;
-import es.unex.propuesta_proyecto.activities.ClasesAdapter;
+import es.unex.propuesta_proyecto.api.AppExecutors;
+import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
+import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
+import es.unex.propuesta_proyecto.model.Armas;
+import es.unex.propuesta_proyecto.model.Clases;
 
 public class ClasesActivity extends AppCompatActivity {
 
@@ -21,6 +25,7 @@ public class ClasesActivity extends AppCompatActivity {
     RecyclerView rvClases;
     ImageView bAgregar;
     String usuario,pass;
+    private ClasesAdapter cogerUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +44,32 @@ public class ClasesActivity extends AppCompatActivity {
         }
         usuario = parametros.getString("usuario");//se recupera el nombre del usuario del Bundle de la Intent recibida
         pass = parametros.getString("password");
+        Log.d("USUARIO",usuario);
+
+        //cogerUsuario.obtenerUsuario(usuario); // Añadimos el usuario al ClasesAdapter
 
         rvClases = findViewById(R.id.rvClases);
         rvClases.setLayoutManager(new LinearLayoutManager(this));
         bAgregar = findViewById(R.id.ivAgregar);
 
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Clases aux;
+               if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 1",usuario) == null){
+                    aux = new Clases("Clase 1",usuario,0,0);
+                    AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+               }
+                if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 2",usuario) == null){
+                    aux = new Clases("Clase 2",usuario,0,0);
+                    AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+                }
+                if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 3",usuario) == null){
+                    aux = new Clases("Clase 3",usuario,0,0);
+                    AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+                }
+            }
+        });
         alClases.add("Clase 1");
         alClases.add("Clase 2");
         alClases.add("Clase 3");
@@ -53,6 +79,16 @@ public class ClasesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alClases.add("Clase "+i);
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Clases aux;
+                        if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + i,usuario) == null){
+                            aux = new Clases("Clase "+i,usuario,0,0);
+                            AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+                        }
+                    }
+                });
                 if (i == 10) {
                     bAgregar.setVisibility(View.INVISIBLE);
                 }

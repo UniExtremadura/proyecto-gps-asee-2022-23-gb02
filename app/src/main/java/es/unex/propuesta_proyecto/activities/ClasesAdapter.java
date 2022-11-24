@@ -2,6 +2,7 @@ package es.unex.propuesta_proyecto.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import es.unex.propuesta_proyecto.R;
 public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder> {
 
     private ArrayList<String> alClases;
+
     View.OnClickListener listener;
     Context context;
         
@@ -47,6 +49,8 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
 
         Button bClase;
 
+
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             context = itemView.getContext();
@@ -54,9 +58,7 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
             bClase.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent actClase = new Intent(context, DetalleClaseActivity.class);
-                   // actClase.putExtra("NOMBRE","AKKK");
-                    actClase.putExtra("NOMBREBOOL",false);
+                    Intent actClase = new Intent(context, DetalleClaseActivity.class);;
                     actClase.putExtra("className", bClase.getText());
                     context.startActivity(actClase);
                 }
@@ -72,5 +74,7 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
         }
 
     }
+
+
 
 }

@@ -154,7 +154,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ProgressBar
-                        android:id="@+id/pbPrecisionArmaPrincipal"
+                        android:id="@+id/pbPrecisionArmaPrincipal2"
                         style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -187,8 +187,8 @@
                         android:progress="50"
                         android:progressTint="#006400"
                         app:layout_constraintBottom_toBottomOf="@+id/tvDañoArmaPrincipal"
-                        app:layout_constraintEnd_toEndOf="@+id/pbPrecisionArmaPrincipal"
-                        app:layout_constraintStart_toStartOf="@+id/pbPrecisionArmaPrincipal"
+                        app:layout_constraintEnd_toEndOf="@+id/pbPrecisionArmaPrincipal2"
+                        app:layout_constraintStart_toStartOf="@+id/pbPrecisionArmaPrincipal2"
                         app:layout_constraintTop_toTopOf="@+id/tvDañoArmaPrincipal" />
 
                     <TextView

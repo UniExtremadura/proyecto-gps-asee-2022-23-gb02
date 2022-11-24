@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.dao.AppDatabase;
+import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
 
 public class EditarClaseActivity extends AppCompatActivity {
 
@@ -32,9 +32,9 @@ public class EditarClaseActivity extends AppCompatActivity {
                 tvNameArma = findViewById(R.id.tvNameArma);
                 String name = tvNameArma.getText().toString();
 
-                AppDatabase appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "Armas").build();
+              //  AppDatabaseArmas appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabaseArmas.class, "Armas").build();
 
-                appDatabase.daoJuego().actualizarClase("ARMA DAVID","D1","",1,42,23,12,3,4,1);
+               // appDatabase.daoJuego().actualizarArma("ARMA DAVID","D1","",1,42,23,12,3,4,1);
 
                 finish();
             }
@@ -46,8 +46,6 @@ public class EditarClaseActivity extends AppCompatActivity {
         });
 
     }//Fin onCreate()
-
-
 
 
     public void editarArmaPrincipal(View view) {
