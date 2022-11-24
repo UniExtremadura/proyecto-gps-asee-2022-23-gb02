@@ -2,9 +2,11 @@ package es.unex.propuesta_proyecto.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -15,14 +17,15 @@ public class DetalleClaseActivity extends AppCompatActivity {
 
     Button bPrimaria;
     ImageView bEditarClase;//este es el icono del lapiz para editar la clase
+    TextView bArma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        AppDatabase appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "Armas").allowMainThreadQueries().build();
-
+        String nombreArma;
         super.onCreate(savedInstanceState);
         Bundle parametros = this.getIntent().getExtras();//se recupera el Bundle de la Intent recibida
+        Boolean encontrado = parametros.getBoolean("NOMBREBOOL");
         if(parametros != null) {
             String valor = parametros.getString("className");
             switch (valor) {
@@ -55,9 +58,15 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     break;
                 default:
                     setContentView(R.layout.activity_detalle_clase1);
+
                     break;
             }
         }
+        bArma = findViewById(R.id.tvNombre1);
+        if(!encontrado){ nombreArma = "AKKK-47";}
+        else {nombreArma = parametros.getString("NOMBREARMA");}
+        Log.d("nombreDet",nombreArma);
+        bArma.setText(nombreArma);
 
         bPrimaria = findViewById(R.id.bAccesoriosArmaPrincipal);
         bPrimaria.setOnClickListener(v -> {

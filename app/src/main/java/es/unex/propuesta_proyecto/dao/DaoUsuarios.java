@@ -28,7 +28,7 @@ public interface DaoUsuarios {
     @Delete
     void borrarUsuario(Usuarios usuario);
 
-    @Update
-    void actualizarUsuario(Usuarios usuario);
+    @Query("UPDATE Usuarios SET password = :pass WHERE name = :nombre")
+    void actualizarContrasena(String nombre,String pass);
 
 }

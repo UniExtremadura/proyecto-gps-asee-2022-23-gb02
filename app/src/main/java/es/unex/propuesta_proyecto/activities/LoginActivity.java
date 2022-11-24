@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Intent intent = new Intent(getApplicationContext(),ClasesActivity.class);
                                     intent.putExtra("estado",true);
                                     intent.putExtra("usuario",user);
+                                    intent.putExtra("password",pass);
                                     startActivity(intent);
                                 } else{
                                     runOnUiThread(new Runnable() {

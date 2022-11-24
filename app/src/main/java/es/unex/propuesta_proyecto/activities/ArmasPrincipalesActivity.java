@@ -3,15 +3,9 @@ package es.unex.propuesta_proyecto.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.R;
@@ -45,12 +39,13 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         ametrelladoraLigera = new MyAdapter(new ArrayList<>(), this);
         fusilesDeFrancotirador = new MyAdapter(new ArrayList<>(), this);
 
+
         // Carga del RecyclerView de los fusiles de asalto
         rvFusilesDeAsalto = findViewById(R.id.rvFusilesDeAsalto);
         rvFusilesDeAsalto.setLayoutManager(new LinearLayoutManager(this));
         // Inserción de los fusiles de asalto de la API en alFusilesDeAsalto
-        for (int i = 0 ; i < 3; i++){
-           // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusiles.swap((repos))));
+        for (int i = 0 ; i < 1; i++){
+           AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusiles.swap((repos))));
         }
         rvFusilesDeAsalto.setAdapter(fusiles);//se carga el ArrayList de fusiles recuperado de la API en el RecyclerView
 
@@ -90,6 +85,7 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
            // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusilesDeFrancotirador.swap((repos))));
         }
         rvFusilesDeFrancotirador.setAdapter(fusilesDeFrancotirador);//se carga el ArrayList de fusiles de francotirador recuperado de la API en el RecyclerView
+
 
     }
 

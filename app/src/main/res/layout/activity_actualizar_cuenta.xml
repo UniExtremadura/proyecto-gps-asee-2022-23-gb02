@@ -21,9 +21,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="359dp"
-        android:layout_height="428dp"
+        android:layout_height="583dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,22 +33,26 @@
             android:id="@+id/tvUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
             android:text="Usuario:"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/etUsuarioActualizar"
+        <TextView
+            android:id="@+id/tvUsuarioActualizar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
             android:inputType="textPersonName"
             android:text="usuario1"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUsuario" />
 
@@ -57,30 +61,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
+            android:layout_marginBottom="32dp"
             android:text="Contraseña:"
             android:textColor="@color/black"
             android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/etContraseñaActualizar"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etUsuarioActualizar" />
+            app:layout_constraintTop_toBottomOf="@+id/tvUsuarioActualizar" />
 
         <EditText
             android:id="@+id/etContraseñaActualizar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="152dp"
             android:inputType="textPassword"
             android:text="contraseña1"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvContraseña" />
+            app:layout_constraintTop_toBottomOf="@+id/tvUsuario" />
 
         <Button
             android:id="@+id/bActualizarCuenta"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="68dp"
             android:backgroundTint="#006400"
             android:onClick="cuentaActualizada"
             android:text="Actualizar cuenta"
@@ -101,7 +110,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bActualizarCuenta" />
+            app:layout_constraintTop_toBottomOf="@+id/bActualizarCuenta"
+            app:layout_constraintVertical_bias="0.211" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

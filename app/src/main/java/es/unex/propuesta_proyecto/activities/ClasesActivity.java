@@ -20,7 +20,7 @@ public class ClasesActivity extends AppCompatActivity {
     ArrayList<String> alClases = new ArrayList<String>();
     RecyclerView rvClases;
     ImageView bAgregar;
-    String usuario;
+    String usuario,pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class ClasesActivity extends AppCompatActivity {
             }
         }
         usuario = parametros.getString("usuario");//se recupera el nombre del usuario del Bundle de la Intent recibida
+        pass = parametros.getString("password");
 
         rvClases = findViewById(R.id.rvClases);
         rvClases.setLayoutManager(new LinearLayoutManager(this));
@@ -65,6 +66,7 @@ public class ClasesActivity extends AppCompatActivity {
     public void perfilUsuario(View view){
         Intent perfil = new Intent(this, ActualizarCuentaActivity.class);
         perfil.putExtra("usuario",usuario);
+        perfil.putExtra("password",pass);
         startActivity(perfil);
     }
 }

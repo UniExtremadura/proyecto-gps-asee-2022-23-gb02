@@ -55,6 +55,8 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent actClase = new Intent(context, DetalleClaseActivity.class);
+                   // actClase.putExtra("NOMBRE","AKKK");
+                    actClase.putExtra("NOMBREBOOL",false);
                     actClase.putExtra("className", bClase.getText());
                     context.startActivity(actClase);
                 }

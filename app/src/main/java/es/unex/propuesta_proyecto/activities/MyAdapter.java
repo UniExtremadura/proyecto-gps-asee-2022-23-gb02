@@ -1,6 +1,7 @@
 package es.unex.propuesta_proyecto.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public MyViewHolder(View v) {
             super(v);
             context = itemView.getContext();
-            tvNombre = itemView.findViewById(R.id.tvNombre);
+            tvNombre = itemView.findViewById(R.id.tvNombreArmaItem);
             ivArma = itemView.findViewById(R.id.ivArma);
             pbPrecisionArma = itemView.findViewById(R.id.pbPrecisionArma);
             pbDanoArma = itemView.findViewById(R.id.pbDañoArma);
@@ -50,6 +51,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             pbCadenciaArma = itemView.findViewById(R.id.pbCadenciaArma);
             pbMovilidadArma = itemView.findViewById(R.id.pbMovilidadArma);
             pbControlArma = itemView.findViewById(R.id.pbControlArma);
+
+            tvNombre.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent detallesArma = new Intent(context,DetalleClaseActivity.class);
+                    detallesArma.putExtra("NOMBREARMA",tvNombre.getText());
+                    detallesArma.putExtra("NOMBREBOOL",true);
+                    context.startActivity(detallesArma);
+                }
+            });
 
         }
     }
