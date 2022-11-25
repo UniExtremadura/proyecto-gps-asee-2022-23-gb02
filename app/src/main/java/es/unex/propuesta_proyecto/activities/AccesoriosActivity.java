@@ -1,14 +1,30 @@
 package es.unex.propuesta_proyecto.activities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import es.unex.propuesta_proyecto.R;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AccesoriosActivity extends AppCompatActivity {
+import es.unex.propuesta_proyecto.R;
+import es.unex.propuesta_proyecto.api.AppExecutors;
+import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
+import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
+import es.unex.propuesta_proyecto.model.Armas;
+import es.unex.propuesta_proyecto.model.Clases;
+
+public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.OnListInteractionListener {
 
     Spinner sBocacha;
     Spinner sCañon;
@@ -20,10 +36,49 @@ public class AccesoriosActivity extends AppCompatActivity {
     Spinner sEmpuñaduraTrasera;
     Spinner sVentaja;
 
+    ProgressBar pbPrecisionArma;
+    ProgressBar pbDanoArma;
+    ProgressBar pbAlcanceArma;
+    ProgressBar pbCadenciaArma;
+    ProgressBar pbMovilidadArma;
+    ProgressBar pbControlArma;
+
+    private MyAdapter cogerUsuario;
+    private String usuarioActual, claseActual;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accesorios);
+
+        pbPrecisionArma = findViewById(R.id.pbPrecisionArmaAccesorios);
+        pbDanoArma = findViewById(R.id.pbDañoArmaAccesorios);
+        pbAlcanceArma = findViewById(R.id.pbAlcanceArmaAccesorios);
+        pbCadenciaArma = findViewById(R.id.pbCadenciaArmaAccesorios);
+        pbMovilidadArma = findViewById(R.id.pbMovilidadArmaAccesorios);
+        pbControlArma = findViewById(R.id.pbControlArmaAccesorios);
+
+        cargarPreferencias();
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase(claseActual,usuarioActual);
+                List<Armas> arma = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioActual);
+                if(arma != null && clase != null){
+                    for(int i = 0; i < arma.size(); i++){
+                        if(arma.get(i).getIdClase() == clase.getId()){ // Arma actual que esta empleando
+                            Armas armaActual = arma.get(i);
+                            pbPrecisionArma.setProgress(armaActual.getAccuracy());pbDanoArma.setProgress(armaActual.getDamage());
+                            pbAlcanceArma.setProgress(armaActual.getRange());pbCadenciaArma.setProgress(armaActual.getFire_rate());
+                            pbMovilidadArma.setProgress(armaActual.getMobility());pbControlArma.setProgress(armaActual.getControl());
+                        }
+                    }
+                } else{
+                    Log.d("ARMA NULA",arma.toString());
+                }
+            }
+        });
 
         // Carga del Spinner de las bocachas
         sBocacha = findViewById(R.id.sBocacha);
@@ -70,6 +125,28 @@ public class AccesoriosActivity extends AppCompatActivity {
         sVentaja.setAdapter(ArrayAdapter
                 .createFromResource(this, R.array.ventaja, android.R.layout.simple_spinner_item));
 
+
     }
 
+    private void cargarPreferencias() {
+        SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+
+        String usuario = preferences.getString("user","usuario vacio");
+        String clase = preferences.getString("clase","clases vacia");
+
+        this.usuarioActual = usuario;
+        this.claseActual = clase;
+
+        cogerUsuario = new MyAdapter(new ArrayList<>(),this);
+
+        cogerUsuario.usuarioActivo(usuario);
+        cogerUsuario.claseActiva(clase);
+    }
+
+    @Override
+    public void onListInteraction(String url) {
+        Uri webpage = Uri.parse(url);
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+        startActivity(webIntent);
+    }
 }

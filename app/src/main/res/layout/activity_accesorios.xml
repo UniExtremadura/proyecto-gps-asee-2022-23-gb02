@@ -9,7 +9,7 @@
     tools:context=".activities.AccesoriosActivity">
 
     <ImageView
-        android:id="@+id/ivIcono"
+        android:id="@+id/ivIconoAccesorios"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
@@ -19,18 +19,18 @@
         app:srcCompat="@drawable/icono" />
 
     <ImageView
-        android:id="@+id/ivUsuario"
+        android:id="@+id/ivUsuarioAccesorios"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginEnd="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivIcono"
+        app:layout_constraintBottom_toBottomOf="@+id/ivIconoAccesorios"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ivIcono"
+        app:layout_constraintTop_toTopOf="@+id/ivIconoAccesorios"
         app:srcCompat="@drawable/usuario"
         android:onClick="perfilUsuario"/>
 
     <TextView
-        android:id="@+id/tvAccesorios"
+        android:id="@+id/tvAccesoriosAccesorios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -40,10 +40,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivIcono" />
+        app:layout_constraintTop_toBottomOf="@+id/ivIconoAccesorios" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clAtributosArma"
+        android:id="@+id/clAtributosArmaAccesorios"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -52,10 +52,10 @@
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAccesorios">
+        app:layout_constraintTop_toBottomOf="@id/tvAccesoriosAccesorios">
 
         <TextView
-            android:id="@+id/tvPrecisionArma"
+            android:id="@+id/tvPrecisionArmaAccesorios"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -66,7 +66,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
-            android:id="@+id/pbPrecisionArma"
+            android:id="@+id/pbPrecisionArmaAccesorios"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -75,125 +75,125 @@
             android:max="100"
             android:progress="50"
             android:progressTint="#006400"
-            app:layout_constraintBottom_toBottomOf="@+id/tvPrecisionArma"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPrecisionArmaAccesorios"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvPrecisionArma" />
+            app:layout_constraintTop_toTopOf="@+id/tvPrecisionArmaAccesorios" />
 
         <TextView
-            android:id="@+id/tvDañoArma"
+            android:id="@+id/tvDañoArmaAccesorios"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Daño:"
             android:textColor="#006400"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/tvPrecisionArma"
-            app:layout_constraintTop_toBottomOf="@+id/tvPrecisionArma" />
+            app:layout_constraintStart_toStartOf="@+id/tvPrecisionArmaAccesorios"
+            app:layout_constraintTop_toBottomOf="@+id/tvPrecisionArmaAccesorios" />
 
         <ProgressBar
-            android:id="@+id/pbDañoArma"
+            android:id="@+id/pbDañoArmaAccesorios"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:max="100"
             android:progress="50"
             android:progressTint="#006400"
-            app:layout_constraintBottom_toBottomOf="@+id/tvDañoArma"
-            app:layout_constraintEnd_toEndOf="@+id/pbPrecisionArma"
-            app:layout_constraintStart_toStartOf="@+id/pbPrecisionArma"
-            app:layout_constraintTop_toTopOf="@+id/tvDañoArma" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvDañoArmaAccesorios"
+            app:layout_constraintEnd_toEndOf="@+id/pbPrecisionArmaAccesorios"
+            app:layout_constraintStart_toStartOf="@+id/pbPrecisionArmaAccesorios"
+            app:layout_constraintTop_toTopOf="@+id/tvDañoArmaAccesorios" />
 
         <TextView
-            android:id="@+id/tvAlcanceArma"
+            android:id="@+id/tvAlcanceArmaAccesorios"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Alcance:"
             android:textColor="#006400"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/tvDañoArma"
-            app:layout_constraintTop_toBottomOf="@+id/tvDañoArma" />
+            app:layout_constraintStart_toStartOf="@+id/tvDañoArmaAccesorios"
+            app:layout_constraintTop_toBottomOf="@+id/tvDañoArmaAccesorios" />
 
         <ProgressBar
-            android:id="@+id/pbAlcanceArma"
+            android:id="@+id/pbAlcanceArmaAccesorios"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:max="100"
             android:progress="50"
             android:progressTint="#006400"
-            app:layout_constraintBottom_toBottomOf="@+id/tvAlcanceArma"
-            app:layout_constraintEnd_toEndOf="@+id/pbDañoArma"
-            app:layout_constraintStart_toStartOf="@+id/pbDañoArma"
-            app:layout_constraintTop_toTopOf="@+id/tvAlcanceArma" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvAlcanceArmaAccesorios"
+            app:layout_constraintEnd_toEndOf="@+id/pbDañoArmaAccesorios"
+            app:layout_constraintStart_toStartOf="@+id/pbDañoArmaAccesorios"
+            app:layout_constraintTop_toTopOf="@+id/tvAlcanceArmaAccesorios" />
 
         <TextView
-            android:id="@+id/tvCadenciaArma"
+            android:id="@+id/tvCadenciaArmaAccesorios"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cadencia:"
             android:textColor="#006400"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/tvAlcanceArma"
-            app:layout_constraintTop_toBottomOf="@+id/tvAlcanceArma" />
+            app:layout_constraintStart_toStartOf="@+id/tvAlcanceArmaAccesorios"
+            app:layout_constraintTop_toBottomOf="@+id/tvAlcanceArmaAccesorios" />
 
         <ProgressBar
-            android:id="@+id/pbCadenciaArma"
+            android:id="@+id/pbCadenciaArmaAccesorios"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:max="100"
             android:progress="50"
             android:progressTint="#006400"
-            app:layout_constraintBottom_toBottomOf="@+id/tvCadenciaArma"
-            app:layout_constraintEnd_toEndOf="@+id/pbAlcanceArma"
-            app:layout_constraintStart_toStartOf="@+id/pbAlcanceArma"
-            app:layout_constraintTop_toTopOf="@+id/tvCadenciaArma" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvCadenciaArmaAccesorios"
+            app:layout_constraintEnd_toEndOf="@+id/pbAlcanceArmaAccesorios"
+            app:layout_constraintStart_toStartOf="@+id/pbAlcanceArmaAccesorios"
+            app:layout_constraintTop_toTopOf="@+id/tvCadenciaArmaAccesorios" />
 
         <TextView
-            android:id="@+id/tvMovilidadArma"
+            android:id="@+id/tvMovilidadArmaAccesorios"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Movilidad:"
             android:textColor="#006400"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/tvCadenciaArma"
-            app:layout_constraintTop_toBottomOf="@+id/tvCadenciaArma" />
+            app:layout_constraintStart_toStartOf="@+id/tvCadenciaArmaAccesorios"
+            app:layout_constraintTop_toBottomOf="@+id/tvCadenciaArmaAccesorios" />
 
         <ProgressBar
-            android:id="@+id/pbMovilidadArma"
+            android:id="@+id/pbMovilidadArmaAccesorios"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:max="100"
             android:progress="50"
             android:progressTint="#006400"
-            app:layout_constraintBottom_toBottomOf="@+id/tvMovilidadArma"
-            app:layout_constraintEnd_toEndOf="@+id/pbCadenciaArma"
-            app:layout_constraintStart_toStartOf="@+id/pbCadenciaArma"
-            app:layout_constraintTop_toTopOf="@+id/tvMovilidadArma" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvMovilidadArmaAccesorios"
+            app:layout_constraintEnd_toEndOf="@+id/pbCadenciaArmaAccesorios"
+            app:layout_constraintStart_toStartOf="@+id/pbCadenciaArmaAccesorios"
+            app:layout_constraintTop_toTopOf="@+id/tvMovilidadArmaAccesorios" />
 
         <TextView
-            android:id="@+id/tvControlArma"
+            android:id="@+id/tvControlArmaAccesorios"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Control:"
             android:textColor="#006400"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/tvMovilidadArma"
-            app:layout_constraintTop_toBottomOf="@+id/tvMovilidadArma" />
+            app:layout_constraintStart_toStartOf="@+id/tvMovilidadArmaAccesorios"
+            app:layout_constraintTop_toBottomOf="@+id/tvMovilidadArmaAccesorios" />
 
         <ProgressBar
-            android:id="@+id/pbControlArma"
+            android:id="@+id/pbControlArmaAccesorios"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:max="100"
             android:progress="50"
             android:progressTint="#006400"
-            app:layout_constraintBottom_toBottomOf="@+id/tvControlArma"
-            app:layout_constraintEnd_toEndOf="@+id/pbMovilidadArma"
-            app:layout_constraintStart_toStartOf="@+id/pbMovilidadArma"
-            app:layout_constraintTop_toTopOf="@+id/tvControlArma" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvControlArmaAccesorios"
+            app:layout_constraintEnd_toEndOf="@+id/pbMovilidadArmaAccesorios"
+            app:layout_constraintStart_toStartOf="@+id/pbMovilidadArmaAccesorios"
+            app:layout_constraintTop_toTopOf="@+id/tvControlArmaAccesorios" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -207,12 +207,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clAtributosArma">
+        app:layout_constraintTop_toBottomOf="@+id/clAtributosArmaAccesorios">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <Button
+                android:id="@+id/bActualizarAccesorios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                android:text="Button" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

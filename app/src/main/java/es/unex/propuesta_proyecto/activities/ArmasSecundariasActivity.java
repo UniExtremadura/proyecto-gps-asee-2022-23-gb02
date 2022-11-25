@@ -1,5 +1,7 @@
 package es.unex.propuesta_proyecto.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +31,7 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
     RecyclerView rvCuerpoACuerpo;
 
     private MyAdapter pistolas, cuerpo;
+    private MyAdapter cogerUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +41,14 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         pistolas = new MyAdapter(new ArrayList<>(), this);
         cuerpo = new MyAdapter(new ArrayList<>(), this);
 
+        cargarPreferencias();
 
         // Carga del RecyclerView de las pistolas
         rvPistolas = findViewById(R.id.rvPistolas);
         rvPistolas.setLayoutManager(new LinearLayoutManager(this));
         //Inserción de las pistolas de la API en pistolas
-        for (int i = 0 ; i < 3; i++){
-            // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  pistolas.swap((repos))));
+        for (int i = 5 ; i < 6; i++){
+            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  pistolas.swap((repos))));
         }
         rvPistolas.setAdapter(pistolas);//se carga el ArrayList de pistolas recuperado de la API en el RecyclerView
 
@@ -57,6 +61,19 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         }
         rvCuerpoACuerpo.setAdapter(cuerpo);//se carga el ArrayList de armas cuerpo a cuerpo recuperado de la API en el RecyclerView
 
+    }
+
+    private void cargarPreferencias() {
+
+        SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+
+        String usuario = preferences.getString("user","usuario vacio");
+        String clase = preferences.getString("clase","clases vacia");
+
+        cogerUsuario = new MyAdapter(new ArrayList<>(),this);
+
+        cogerUsuario.usuarioActivo(usuario);
+        cogerUsuario.claseActiva(clase);
     }
 
     @Override

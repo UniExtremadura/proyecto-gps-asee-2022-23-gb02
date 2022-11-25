@@ -23,7 +23,26 @@ public class Accesorio {
     Integer modMovilidad;
     Integer modControl;
 
+    public Accesorio(String nombre, TipoAccesorio tipo, Integer modPrecision, Integer modDaño, Integer modAlcance, Integer modCadencia, Integer modMovilidad, Integer modControl) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.modPrecision = modPrecision;
+        this.modDaño = modDaño;
+        this.modAlcance = modAlcance;
+        this.modCadencia = modCadencia;
+        this.modMovilidad = modMovilidad;
+        this.modControl = modControl;
+    }
+
     public Accesorio() {
+        this.nombre = "";
+        this.tipo = tipo;
+        this.modPrecision = 0;
+        this.modDaño = 0;
+        this.modAlcance = 0;
+        this.modCadencia = 0;
+        this.modMovilidad = 0;
+        this.modControl = 0;
     }
 
     public String getNombre() {

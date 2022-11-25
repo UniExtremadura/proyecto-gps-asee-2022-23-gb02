@@ -47,7 +47,7 @@ public class RegistroActivity extends AppCompatActivity {
                                 if(usuario == null){
                                     usuario = new Usuarios(user,pass);
                                     AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().insertarUsuario(usuario);
-                                    Intent actClasses = new Intent(getApplicationContext(), ClasesActivity.class);
+                                    Intent actClasses = new Intent(getApplicationContext(), LoginActivity.class);
                                     actClasses.putExtra("estado",true);
 
                                     runOnUiThread(new Runnable() {
@@ -77,7 +77,6 @@ public class RegistroActivity extends AppCompatActivity {
             }//Fin onClick()
         });
 
-        //este onClick() es para el iniciar sesion
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,5 +84,5 @@ public class RegistroActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }//Fin onCreate()
+    }
 }

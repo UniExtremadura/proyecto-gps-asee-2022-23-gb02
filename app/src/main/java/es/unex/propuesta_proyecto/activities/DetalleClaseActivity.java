@@ -4,17 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.List;
-
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
@@ -41,6 +37,7 @@ public class DetalleClaseActivity extends AppCompatActivity {
             switch (valor) {
                 case "Clase 2":
                     setContentView(R.layout.activity_detalle_clase2);
+
                     tvNameArma = findViewById(R.id.tvNameArma2);tvPrecision = findViewById(R.id.pbPrecisionArmaPrincipal2);tvDano = findViewById(R.id.pbDañoArmaPrincipal2);
                     tvAlcance = findViewById(R.id.pbAlcanceArmaPrincipal2);tvCadencia = findViewById(R.id.pbCadenciaArmaPrincipal2);tvMovilidad = findViewById(R.id.pbMovilidadArmaPrincipal2);
                     tvControl = findViewById(R.id.pbControlArmaPrincipal2);
@@ -93,6 +90,30 @@ public class DetalleClaseActivity extends AppCompatActivity {
                 default:
                     setContentView(R.layout.activity_detalle_clase1);
 
+                    tvNameArma = findViewById(R.id.tvNombre1);tvPrecision = findViewById(R.id.pbPrecisionArma1);tvDano = findViewById(R.id.pbDañoArma1);
+                    tvAlcance = findViewById(R.id.pbAlcanceArma1);tvCadencia = findViewById(R.id.pbCadenciaArma1);tvMovilidad = findViewById(R.id.pbMovilidadArma1);
+                    tvControl = findViewById(R.id.pbControlArma1);
+
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 1",usuarioRecuperado);
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,11,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId());
+                            actualizarCamposArmasPrincipales(a);
+                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
+                            if(armas != null){
+                                for(int i = 0; i < armas.size() ; i++){
+                                    if(armas.get(i).getIdClase() == clase.getId()){ // Seria el arma del usuario en esta clase
+                                        Armas armaActual = armas.get(i);
+                                        AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy(),armaActual.getDamage(),armaActual.getRange(),armaActual.getFire_rate(),armaActual.getMobility(),armaActual.getControl(), armaActual.getId(),clase.getId());
+                                        actualizarCamposArmasPrincipales(armaActual);
+                                    }
+                                }
+                            } else { // No tiene ningún arma
+                                AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                            }
+                        }
+                    });
                     break;
             }
         }
@@ -100,7 +121,6 @@ public class DetalleClaseActivity extends AppCompatActivity {
         bPrimaria = findViewById(R.id.bAccesoriosArmaPrincipal);
         bPrimaria.setOnClickListener(v -> {
             Intent i = new Intent(DetalleClaseActivity.this,AccesoriosActivity.class);
-            // Valores intent primaria
             startActivity(i);
         });
 
@@ -117,7 +137,14 @@ public class DetalleClaseActivity extends AppCompatActivity {
         tvPrecision.setProgress(actualizar.getAccuracy()); tvDano.setProgress(actualizar.getDamage()); tvAlcance.setProgress(actualizar.getRange());tvCadencia.setProgress(actualizar.getFire_rate());
         tvMovilidad.setProgress(actualizar.getMobility()); tvControl.setProgress(actualizar.getControl());
     }
+
+    public void actualizarCamposArmasSecundarias(Armas actualizar){
+
+
+    }
+
     private void cargarPreferencias() {
+
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         String usuario = preferences.getString("user","usuario");
         usuarioRecuperado = usuario;
@@ -129,6 +156,7 @@ public class DetalleClaseActivity extends AppCompatActivity {
         editor.putString("clase",valor);
 
         editor.commit();
+
     }
 
     public void cambiarArmaPrincipal(View view){

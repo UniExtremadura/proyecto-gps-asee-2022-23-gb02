@@ -25,7 +25,6 @@ public class ClasesActivity extends AppCompatActivity {
     RecyclerView rvClases;
     ImageView bAgregar;
     String usuario,pass;
-    private ClasesAdapter cogerUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +43,7 @@ public class ClasesActivity extends AppCompatActivity {
         }
         usuario = parametros.getString("usuario");//se recupera el nombre del usuario del Bundle de la Intent recibida
         pass = parametros.getString("password");
-        Log.d("USUARIO",usuario);
 
-        //cogerUsuario.obtenerUsuario(usuario); // Añadimos el usuario al ClasesAdapter
 
         rvClases = findViewById(R.id.rvClases);
         rvClases.setLayoutManager(new LinearLayoutManager(this));
