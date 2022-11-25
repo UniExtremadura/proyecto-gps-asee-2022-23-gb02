@@ -88,8 +88,10 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
 
         String user = username.getText().toString();
+        String pass = password.getText().toString();
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("user",user);
+        editor.putString("contrasena", pass);
 
         editor.commit();
     }
@@ -98,9 +100,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(actCrear);
     }
 
-    public void entrarSinCuenta(View view){
-        Intent actClassSinCuenta = new Intent(getApplicationContext(), ClasesActivity.class);
-        actClassSinCuenta.putExtra("estado",false);
-        startActivity(actClassSinCuenta);
-    }
 }

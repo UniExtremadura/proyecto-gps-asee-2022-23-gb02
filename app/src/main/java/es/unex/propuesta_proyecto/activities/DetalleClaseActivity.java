@@ -26,7 +26,7 @@ public class DetalleClaseActivity extends AppCompatActivity {
 
     Button bPrimaria;
     ImageView bEditarClase;//este es el icono del lapiz para editar la clase
-    String usuarioRecuperado;
+    String usuarioRecuperado, contrasenaRecuperada;
 
     TextView tvNameArma;
     ProgressBar tvPrecision,tvDano,tvAlcance,tvCadencia,tvMovilidad,tvControl;
@@ -70,11 +70,13 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                         AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy(),armaActual.getDamage(),armaActual.getRange(),armaActual.getFire_rate(),armaActual.getMobility(),armaActual.getControl(), armaActual.getId(),clase.getId(), armaActual.getPrincipal());
                                         if(armaActual.getPrincipal()== 1){
                                             actualizarCamposArmasPrincipales(armaActual);
+                                            String codigo = "cod: " + armaActual.getPrincipal();
+                                            Log.d("Codigo arma", codigo);
                                         }else{
                                             String codigo = "cod: " + armaActual.getPrincipal();
                                             Log.d("Codigo arma", codigo);
                                             if(armaActual.getPrincipal() == 0){
-                                                actualizarCamposArmasSecundarias(armaActual);
+                                                //actualizarCamposArmasSecundarias(armaActual);
                                             }
                                         }
                                     }
@@ -547,7 +549,9 @@ public class DetalleClaseActivity extends AppCompatActivity {
     private void cargarPreferencias() {
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         String usuario = preferences.getString("user","usuario");
+        String contrasena = preferences.getString("contrasena", "contrasenaVacia");
         usuarioRecuperado = usuario;
+        contrasenaRecuperada = contrasena;
 
         Bundle parametros = this.getIntent().getExtras();//se recupera el Bundle de la Intent recibida
         String valor = parametros.getString("className");
@@ -570,6 +574,8 @@ public class DetalleClaseActivity extends AppCompatActivity {
 
     public void perfilUsuario(View view){
         Intent perfil = new Intent(this, ActualizarCuentaActivity.class);
+        perfil.putExtra("usuario", usuarioRecuperado);
+        perfil.putExtra("password", contrasenaRecuperada);
         startActivity(perfil);
     }
 }
