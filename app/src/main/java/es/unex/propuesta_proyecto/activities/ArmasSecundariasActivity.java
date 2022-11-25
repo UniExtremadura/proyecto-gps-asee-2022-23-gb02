@@ -47,8 +47,10 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         rvPistolas = findViewById(R.id.rvPistolas);
         rvPistolas.setLayoutManager(new LinearLayoutManager(this));
         //Inserción de las pistolas de la API en pistolas
-        for (int i = 5 ; i < 6; i++){
+        for (int i = 76 ; i < 77; i++){
+            //int j=i;
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  pistolas.swap((repos))));
+            //AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
         }
         rvPistolas.setAdapter(pistolas);//se carga el ArrayList de pistolas recuperado de la API en el RecyclerView
 

@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivArma"
+            android:id="@+id/ivArmaItem"
             android:layout_width="0dp"
             android:layout_height="210dp"
             android:layout_marginTop="10dp"
@@ -40,7 +40,7 @@
             android:background="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivArma">
+            app:layout_constraintTop_toBottomOf="@+id/ivArmaItem">
 
             <TextView
                 android:id="@+id/tvPrecisionArma"
@@ -191,7 +191,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="18dp"
             android:text=""
-            app:layout_constraintBottom_toTopOf="@+id/ivArma"
+            app:layout_constraintBottom_toTopOf="@+id/ivArmaItem"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

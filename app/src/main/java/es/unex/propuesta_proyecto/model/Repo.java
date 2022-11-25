@@ -39,6 +39,9 @@ public class Repo {
     @SerializedName("TipoArma")
     @Expose
     private String tipoArma;
+    @SerializedName("Principal")
+    @Expose
+    private int principal;
 
     public String getType() {
         return type;
@@ -124,5 +127,13 @@ public class Repo {
 
     public void setTipoArma(String tipoArma) {
         this.tipoArma = tipoArma;
+    }
+
+    public int getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(int principal) {
+        this.principal = principal;
     }
 }

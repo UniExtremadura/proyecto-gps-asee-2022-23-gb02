@@ -54,8 +54,10 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         rvFusilesDeAsalto = findViewById(R.id.rvFusilesDeAsalto);
         rvFusilesDeAsalto.setLayoutManager(new LinearLayoutManager(this));
         // Inserción de los fusiles de asalto de la API en alFusilesDeAsalto
-        for (int i = 2; i < 3; i++){
+        for (int i = 0; i < 1; i++){
+            //int j=i;
            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusiles.swap((repos))));
+           //AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(j).getPrincipal()))));
         }
         rvFusilesDeAsalto.setAdapter(fusiles);//se carga el ArrayList de fusiles recuperado de la API en el RecyclerView
 

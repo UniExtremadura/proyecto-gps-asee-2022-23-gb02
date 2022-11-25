@@ -30,15 +30,13 @@ public class Armas {
     private int control;
     @ColumnInfo(name="tipoArma")
     private String tipoArma;
-    @ColumnInfo(name="usuario")
     private String usuario;
-    @ColumnInfo(name="idClase")
     private int idClase;
     @ColumnInfo(name="principal")
-    private boolean principal;
+    private int principal;
 
 
-    public Armas(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String tipoArma, String usuario,int idClase, boolean principal) {
+    public Armas(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String tipoArma, String usuario,int idClase, int principal) {
         this.name = name;
         this.type = type;
         this.subtype = subtype;
@@ -66,7 +64,6 @@ public class Armas {
         this.tipoArma="";
         this.usuario = "";
         this.idClase = 0;
-        this.principal = true;
     }
 
     public int getId() {
@@ -165,11 +162,11 @@ public class Armas {
 
     public void setIdClase(int idClase) {this.idClase = idClase;}
 
-    public boolean isPrincipal() {
+    public int getPrincipal() {
         return principal;
     }
 
-    public void setPrincipal(boolean principal) {
+    public void setPrincipal(int principal) {
         this.principal = principal;
     }
 }

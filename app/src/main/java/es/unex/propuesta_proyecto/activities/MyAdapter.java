@@ -2,8 +2,6 @@ package es.unex.propuesta_proyecto.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,19 +15,19 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
+import es.unex.propuesta_proyecto.api.ReposNetworkLoaderRunnable;
 import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
 import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
-import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 import es.unex.propuesta_proyecto.model.Repo;
-import es.unex.propuesta_proyecto.model.Usuarios;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private List<Repo> mDataset;
     private static String usuarioGlobal;
     private static String claseGlobal;
+    //private static int armaIdGlobal;
 
     public interface OnListInteractionListener{
         public void onListInteraction(String url);
@@ -45,6 +43,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void claseActiva(String clase){
         claseGlobal = clase;
     }
+
+    //public void pasarIdArma(int armaId) {this.armaIdGlobal = armaId;}
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -64,7 +64,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             super(v);
             context = itemView.getContext();
             tvNombre = itemView.findViewById(R.id.tvNombreArmaItem);
-            ivArma = itemView.findViewById(R.id.ivArma);
+            ivArma = itemView.findViewById(R.id.ivArmaItem);
             pbPrecisionArma = itemView.findViewById(R.id.pbPrecisionArma);
             pbDanoArma = itemView.findViewById(R.id.pbDañoArma);
             pbAlcanceArma = itemView.findViewById(R.id.pbAlcanceArma);
@@ -89,9 +89,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                      if(clasesUsuario.get(i).getNombre().equals(claseGlobal)){ // compara todas las clases hasta encontrar en la que está
                                          if(armasUsuario != null){ //  tiene ese arma el usuario se actualiza, si no se inserta.
                                              int armaActual = armasUsuario.getId();
-                                             AppDatabaseArmas.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),armaActual,claseActual);
+                                             AppDatabaseArmas.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),armaActual,claseActual, armasUsuario.getPrincipal());
                                          } else {
-                                             Armas insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, true);
+                                             Armas insertarArma = new Armas();
+                                             if( armaIdGlobal == 1){
+                                                insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, 1);
+                                             }else{
+                                                 if( armaIdGlobal == 0){
+                                                     insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, 0);
+                                                 }
+                                             }
                                              AppDatabaseArmas.getInstance(context).daoJuego().insertarArmas(insertarArma);
                                          }
                                      }
@@ -131,7 +138,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.pbCadenciaArma.setProgress(Integer.parseInt(mDataset.get(position).getFireRate())/3);
         holder.pbMovilidadArma.setProgress(Integer.parseInt(mDataset.get(position).getMobility())/3);
         holder.pbControlArma.setProgress(Integer.parseInt(mDataset.get(position).getControl())/3);
-
     }
 
     @Override
