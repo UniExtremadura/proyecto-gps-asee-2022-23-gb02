@@ -83,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }//Fin onCreate()
 
-
     private void guardarPreferencias(){
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
 
@@ -95,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
         editor.commit();
     }
+
     public void crearCuenta(View view){
         Intent actCrear = new Intent(getApplicationContext(), RegistroActivity.class);
         startActivity(actCrear);

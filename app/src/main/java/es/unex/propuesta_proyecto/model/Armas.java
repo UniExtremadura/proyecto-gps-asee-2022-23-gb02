@@ -30,7 +30,9 @@ public class Armas {
     private int control;
     @ColumnInfo(name="tipoArma")
     private String tipoArma;
+    @ColumnInfo(name="usuario")
     private String usuario;
+    @ColumnInfo(name="idClase")
     private int idClase;
     @ColumnInfo(name="principal")
     private int principal;

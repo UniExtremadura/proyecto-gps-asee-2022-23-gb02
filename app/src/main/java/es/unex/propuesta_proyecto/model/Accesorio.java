@@ -1,29 +1,32 @@
 package es.unex.propuesta_proyecto.model;
 
-enum TipoAccesorio {
-    BOCACHA,
-    CAÑON,
-    LASER,
-    MIRA,
-    CULATA,
-    ACOPLE,
-    MUNICION,
-    EMPUÑADURA_TRASERA,
-    VENTAJA
-}
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "Accesorios")
 public class Accesorio {
 
-    String nombre;
-    TipoAccesorio tipo;
-    Integer modPrecision;
-    Integer modDaño;
-    Integer modAlcance;
-    Integer modCadencia;
-    Integer modMovilidad;
-    Integer modControl;
+   public enum TipoAccesorio {
+        BOCACHA,
+        CAÑON,
+        LASER,
+        MIRA,
+        CULATA,
+    }
 
-    public Accesorio(String nombre, TipoAccesorio tipo, Integer modPrecision, Integer modDaño, Integer modAlcance, Integer modCadencia, Integer modMovilidad, Integer modControl) {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    private String nombre;
+    private TipoAccesorio tipo;
+    private int modPrecision;
+    private int modDaño;
+    private int modAlcance;
+    private int modCadencia;
+    private int modMovilidad;
+    private int modControl;
+    private int idArma;
+
+    public Accesorio(String nombre, TipoAccesorio tipo, int modPrecision, int modDaño, int modAlcance, int modCadencia, int modMovilidad, int modControl, int idArma) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.modPrecision = modPrecision;
@@ -32,6 +35,7 @@ public class Accesorio {
         this.modCadencia = modCadencia;
         this.modMovilidad = modMovilidad;
         this.modControl = modControl;
+        this.idArma = idArma;
     }
 
     public Accesorio() {
@@ -43,6 +47,15 @@ public class Accesorio {
         this.modCadencia = 0;
         this.modMovilidad = 0;
         this.modControl = 0;
+        this.idArma = 0;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -61,52 +74,59 @@ public class Accesorio {
         this.tipo = tipo;
     }
 
-    public Integer getModPrecision() {
+    public int getModPrecision() {
         return modPrecision;
     }
 
-    public void setModPrecision(Integer modPrecision) {
+    public void setModPrecision(int modPrecision) {
         this.modPrecision = modPrecision;
     }
 
-    public Integer getModDaño() {
+    public int getModDaño() {
         return modDaño;
     }
 
-    public void setModDaño(Integer modDaño) {
+    public void setModDaño(int modDaño) {
         this.modDaño = modDaño;
     }
 
-    public Integer getModAlcance() {
+    public int getModAlcance() {
         return modAlcance;
     }
 
-    public void setModAlcance(Integer modAlcance) {
+    public void setModAlcance(int modAlcance) {
         this.modAlcance = modAlcance;
     }
 
-    public Integer getModCadencia() {
+    public int getModCadencia() {
         return modCadencia;
     }
 
-    public void setModCadencia(Integer modCadencia) {
+    public void setModCadencia(int modCadencia) {
         this.modCadencia = modCadencia;
     }
 
-    public Integer getModMovilidad() {
+    public int getModMovilidad() {
         return modMovilidad;
     }
 
-    public void setModMovilidad(Integer modMovilidad) {
+    public void setModMovilidad(int modMovilidad) {
         this.modMovilidad = modMovilidad;
     }
 
-    public Integer getModControl() {
+    public int getModControl() {
         return modControl;
     }
 
-    public void setModControl(Integer modControl) {
+    public void setModControl(int modControl) {
         this.modControl = modControl;
     }
 
+    public int getIdArma() {
+        return idArma;
+    }
+
+    public void setIdArma(int idArma) {
+        this.idArma = idArma;
+    }
 }

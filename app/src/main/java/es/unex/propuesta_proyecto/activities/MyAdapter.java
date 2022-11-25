@@ -2,6 +2,7 @@ package es.unex.propuesta_proyecto.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<Repo> mDataset;
     private static String usuarioGlobal;
     private static String claseGlobal;
-    //private static int armaIdGlobal;
+    private static int armaIdGlobal;
 
     public interface OnListInteractionListener{
         public void onListInteraction(String url);
@@ -44,7 +45,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         claseGlobal = clase;
     }
 
-    //public void pasarIdArma(int armaId) {this.armaIdGlobal = armaId;}
+    public void pasarIdArma(int armaId) {this.armaIdGlobal = armaId;}
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -89,13 +90,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                      if(clasesUsuario.get(i).getNombre().equals(claseGlobal)){ // compara todas las clases hasta encontrar en la que está
                                          if(armasUsuario != null){ //  tiene ese arma el usuario se actualiza, si no se inserta.
                                              int armaActual = armasUsuario.getId();
+                                             Log.d("CADENCIA 3- (MY)", String.valueOf(pbCadenciaArma.getProgress()));
                                              AppDatabaseArmas.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),armaActual,claseActual, armasUsuario.getPrincipal());
                                          } else {
                                              Armas insertarArma = new Armas();
-                                             if(tvNombre.getText().toString().equals("1911") || tvNombre.getText().toString().equals("x16") || tvNombre.getText().toString().equals("50-gs") || tvNombre.getText().toString().equals("combat-knife") || tvNombre.getText().toString().equals("riot-shield")){
-                                                insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, 0);
-                                             }else{
+                                             if( armaIdGlobal == 1){
+                                                 Log.d("CADENCIA 4- (MY)", String.valueOf(pbCadenciaArma.getProgress()));
                                                  insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, 1);
+                                             }else{
+                                                 if( armaIdGlobal == 0){
+                                                     Log.d("CADENCIA 5- (MY)", String.valueOf(pbCadenciaArma.getProgress()));
+                                                     insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, 0);
+                                                 }
                                              }
                                              AppDatabaseArmas.getInstance(context).daoJuego().insertarArmas(insertarArma);
                                          }

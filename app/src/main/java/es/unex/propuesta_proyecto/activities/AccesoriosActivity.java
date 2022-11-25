@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -19,8 +21,11 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
+import es.unex.propuesta_proyecto.api.ReposNetworkLoaderRunnable;
+import es.unex.propuesta_proyecto.dao.AppDatabaseAccesorios;
 import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
 import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
+import es.unex.propuesta_proyecto.model.Accesorio;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 
@@ -31,10 +36,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
     Spinner sLaser;
     Spinner sMira;
     Spinner sCulata;
-    Spinner sAcople;
-    Spinner sMunicion;
-    Spinner sEmpuñaduraTrasera;
-    Spinner sVentaja;
+
 
     ProgressBar pbPrecisionArma;
     ProgressBar pbDanoArma;
@@ -42,9 +44,12 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
     ProgressBar pbCadenciaArma;
     ProgressBar pbMovilidadArma;
     ProgressBar pbControlArma;
+    Button bAplicar;
 
     private MyAdapter cogerUsuario;
     private String usuarioActual, claseActual;
+
+    private int idArma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
         pbCadenciaArma = findViewById(R.id.pbCadenciaArmaAccesorios);
         pbMovilidadArma = findViewById(R.id.pbMovilidadArmaAccesorios);
         pbControlArma = findViewById(R.id.pbControlArmaAccesorios);
+        bAplicar = findViewById(R.id.bActualizarAccesorios);
 
         cargarPreferencias();
 
@@ -69,6 +75,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
                     for(int i = 0; i < arma.size(); i++){
                         if(arma.get(i).getIdClase() == clase.getId()){ // Arma actual que esta empleando
                             Armas armaActual = arma.get(i);
+                            idArma = armaActual.getId();
                             pbPrecisionArma.setProgress(armaActual.getAccuracy());pbDanoArma.setProgress(armaActual.getDamage());
                             pbAlcanceArma.setProgress(armaActual.getRange());pbCadenciaArma.setProgress(armaActual.getFire_rate());
                             pbMovilidadArma.setProgress(armaActual.getMobility());pbControlArma.setProgress(armaActual.getControl());
@@ -105,29 +112,72 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
         sCulata.setAdapter(ArrayAdapter
                 .createFromResource(this, R.array.culata, android.R.layout.simple_spinner_item));
 
-        // Carga del Spinner de los acoples
-        sAcople = findViewById(R.id.sAcople);
-        sAcople.setAdapter(ArrayAdapter
-                .createFromResource(this, R.array.acople, android.R.layout.simple_spinner_item));
+        bAplicar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        // Carga del Spinner de las municiones
-        sMunicion = findViewById(R.id.sMunicion);
-        sMunicion.setAdapter(ArrayAdapter
-                .createFromResource(this, R.array.municion, android.R.layout.simple_spinner_item));
+                String obtenerBocacha = sBocacha.getSelectedItem().toString();
+                strategyAccesorios(obtenerBocacha);
+                String obtenerCañon = sBocacha.getSelectedItem().toString();
+                strategyAccesorios(obtenerCañon);
+                String obtenerLaser = sBocacha.getSelectedItem().toString();
+                strategyAccesorios(obtenerLaser);
+                String obtenerMira = sBocacha.getSelectedItem().toString();
+                strategyAccesorios(obtenerMira);
+                String obtenerCulata = sBocacha.getSelectedItem().toString();
+                strategyAccesorios(obtenerCulata);
 
-        // Carga del Spinner de las empuñaduras traseras
-        sEmpuñaduraTrasera = findViewById(R.id.sEmpuñaduraTrasera);
-        sEmpuñaduraTrasera.setAdapter(ArrayAdapter
-                .createFromResource(this, R.array.empuñaduraTrasera, android.R.layout.simple_spinner_item));
-
-        // Carga del Spinner de las ventajas
-        sVentaja = findViewById(R.id.sVentaja);
-        sVentaja.setAdapter(ArrayAdapter
-                .createFromResource(this, R.array.ventaja, android.R.layout.simple_spinner_item));
-
+            }
+        });
 
     }
 
+    private void strategyAccesorios(String nomAccesorio){
+         if(nomAccesorio.equals("Bocacha +")){
+             AppExecutors.getInstance().networkIO().execute(new Runnable() {
+                 @Override
+                 public void run() {
+                     Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesoriosUsuario(idArma);
+                     Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+                     Accesorio accesorio = new Accesorio(nomAccesorio, Accesorio.TipoAccesorio.BOCACHA,10,10,10,10,10,10,idArma);
+                     if(accesorioExistente == null ){
+                     AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
+                         actualizarCamposArmaAcesorrios(armaActual,accesorio);
+                    } else {
+                         actualizarCamposArmaAcesorrios(armaActual,accesorio);
+                     }
+                 }
+             });
+         } else if(nomAccesorio.equals("Bocacha ++")){
+
+        }
+        if(nomAccesorio.equals("Cañon +")){
+
+        } else if(nomAccesorio.equals("Cañon ++")){
+
+        }
+        if(nomAccesorio.equals("Laser +")){
+
+        } else if(nomAccesorio.equals("Laser ++")){
+
+        }
+        if(nomAccesorio.equals("Mira +")){
+
+        } else if(nomAccesorio.equals("Mira ++")){
+
+        }
+        if(nomAccesorio.equals("Culata +")){
+
+        } else if(nomAccesorio.equals("Culata ++")){
+
+        }
+    }
+
+    private void actualizarCamposArmaAcesorrios(Armas arma,Accesorio accesorio){
+        pbPrecisionArma.setProgress(arma.getAccuracy()+accesorio.getModPrecision());pbDanoArma.setProgress(arma.getDamage()+accesorio.getModDaño());
+        pbAlcanceArma.setProgress(arma.getRange()+accesorio.getModAlcance());pbCadenciaArma.setProgress(arma.getFire_rate()+accesorio.getModCadencia());
+        pbMovilidadArma.setProgress(arma.getMobility()+accesorio.getModMovilidad());pbControlArma.setProgress(arma.getControl()+accesorio.getModControl());
+    }
     private void cargarPreferencias() {
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
 

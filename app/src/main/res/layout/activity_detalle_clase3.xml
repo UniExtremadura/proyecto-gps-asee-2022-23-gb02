@@ -269,7 +269,7 @@
                         android:progress="50"
                         android:progressTint="#006400"
                         app:layout_constraintBottom_toBottomOf="@+id/tvControlArmaPrincipal"
-                        app:layout_constraintEnd_toEndOf="@+id/pbMovilidadArmaPrincipal"
+                        app:layout_constraintEnd_toEndOf="@+id/pbMovilidadArmaPrincipal3"
                         app:layout_constraintStart_toStartOf="@+id/pbMovilidadArmaPrincipal3"
                         app:layout_constraintTop_toTopOf="@+id/tvControlArmaPrincipal" />
 

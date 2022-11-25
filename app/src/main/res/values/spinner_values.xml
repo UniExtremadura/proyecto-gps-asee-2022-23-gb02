@@ -2,56 +2,27 @@
 <resources>
     <string-array name="bocachas">
         <item>-</item>
-        <item>Bocacha1</item>
-        <item>Bocacha2</item>
-        <item>Bocacha3</item>
+        <item>Bocacha +</item>
+        <item>Bocacha ++</item>
     </string-array>
     <string-array name="cañon">
         <item>-</item>
-        <item>Cañon1</item>
-        <item>Cañon2</item>
-        <item>Cañon3</item>
+        <item>Cañon +</item>
+        <item>Cañon ++</item>
     </string-array>
     <string-array name="laser">
         <item>-</item>
-        <item>Laser1</item>
-        <item>Laser2</item>
-        <item>Laser3</item>
+        <item>Laser +</item>
+        <item>Laser ++</item>
     </string-array>
     <string-array name="mira">
         <item>-</item>
-        <item>Mira1</item>
-        <item>Mira2</item>
-        <item>Mira3</item>
+        <item>Mira +</item>
+        <item>Mira ++</item>
     </string-array>
     <string-array name="culata">
         <item>-</item>
-        <item>Culata1</item>
-        <item>Culata2</item>
-        <item>Culata3</item>
-    </string-array>
-    <string-array name="acople">
-        <item>-</item>
-        <item>Acople1</item>
-        <item>Acople2</item>
-        <item>Acople3</item>
-    </string-array>
-    <string-array name="municion">
-        <item>-</item>
-        <item>Municion1</item>
-        <item>Municion2</item>
-        <item>Municion3</item>
-    </string-array>
-    <string-array name="empuñaduraTrasera">
-        <item>-</item>
-        <item>EmpuñaduraTrasera1</item>
-        <item>EmpuñaduraTrasera2</item>
-        <item>EmpuñaduraTrasera3</item>
-    </string-array>
-    <string-array name="ventaja">
-        <item>-</item>
-        <item>Ventaja1</item>
-        <item>Ventaja2</item>
-        <item>Ventaja3</item>
+        <item>Culata +</item>
+        <item>Culata ++</item>
     </string-array>
 </resources>

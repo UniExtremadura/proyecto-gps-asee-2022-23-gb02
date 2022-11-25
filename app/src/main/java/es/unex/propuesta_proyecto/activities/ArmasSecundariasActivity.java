@@ -47,10 +47,10 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         rvPistolas = findViewById(R.id.rvPistolas);
         rvPistolas.setLayoutManager(new LinearLayoutManager(this));
         //Inserción de las pistolas de la API en pistolas
-        for (int i = 75 ; i < 78; i++){
-            //int j=i;
+        //for (int i = 75 ; i < 78; i++){
+        for (int i = 75 ; i < 76; i++){
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  pistolas.swap((repos))));
-            //AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
+            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
         }
         rvPistolas.setAdapter(pistolas);//se carga el ArrayList de pistolas recuperado de la API en el RecyclerView
 
@@ -59,9 +59,12 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         rvCuerpoACuerpo.setLayoutManager(new LinearLayoutManager(this));
         //Inserción de las armas cuerpo a cuerpo de la API en cuerpo
         for (int i = 78 ; i < 80; i++){
-            // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cuerpo.swap((repos))));
-        }
-        rvCuerpoACuerpo.setAdapter(cuerpo);//se carga el ArrayList de armas cuerpo a cuerpo recuperado de la API en el RecyclerView
+            /*
+            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cuerpo.swap((repos))));
+            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
+            */
+            }
+        rvCuerpoACuerpo.setAdapter(cuerpo); //se carga el ArrayList de armas cuerpo a cuerpo recuperado de la API en el RecyclerView
 
     }
 
@@ -81,7 +84,9 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
     @Override
     public void onListInteraction(String url) {
         Uri webpage = Uri.parse(url);
+
         Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+
         startActivity(webIntent);
     }
 }
