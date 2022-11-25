@@ -43,17 +43,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivIcono" />
 
-    <ImageView
-        android:id="@+id/ivEditarClase"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginEnd="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/etNombreClase"
-        app:layout_constraintEnd_toStartOf="@+id/ivEliminarClase"
-        app:layout_constraintTop_toTopOf="@+id/etNombreClase"
-        app:srcCompat="@drawable/editar" />
-
-
 
     <ImageView
         android:id="@+id/ivEliminarClase"
