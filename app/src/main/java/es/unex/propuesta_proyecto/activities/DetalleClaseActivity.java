@@ -61,7 +61,7 @@ public class DetalleClaseActivity extends AppCompatActivity {
                             actualizarCamposArmasPrincipales(a);
                             Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,1,50,50,"Lanzamisiles",usuarioRecuperado,clase.getId(), 0);
                             Log.d("Accuracy", String.valueOf(a2.getAccuracy()));
-                            //actualizarCamposArmasSecundarias(a2);
+                            actualizarCamposArmasSecundarias(a2);
                             List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
                             if(armas != null){
                                 for(int i = 0; i < armas.size() ; i++){
@@ -76,7 +76,7 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                             String codigo = "cod: " + armaActual.getPrincipal();
                                             Log.d("Codigo arma", codigo);
                                             if(armaActual.getPrincipal() == 0){
-                                                //actualizarCamposArmasSecundarias(armaActual);
+                                                actualizarCamposArmasSecundarias(armaActual);
                                             }
                                         }
                                     }
@@ -542,9 +542,9 @@ public class DetalleClaseActivity extends AppCompatActivity {
 
     public void actualizarCamposArmasSecundarias(Armas actualizar){
         tvNameArmaSec.setText(actualizar.getName());
-        tvPrecisionSec.setProgress(actualizar.getAccuracy()); tvDanoSec.setProgress(actualizar.getDamage());
+        /*tvPrecisionSec.setProgress(actualizar.getAccuracy()); tvDanoSec.setProgress(actualizar.getDamage());
         tvAlcanceSec.setProgress(actualizar.getRange());tvCadenciaSec.setProgress(actualizar.getFire_rate());
-        tvMovilidadSec.setProgress(actualizar.getMobility()); tvControlSec.setProgress(actualizar.getControl());
+        tvMovilidadSec.setProgress(actualizar.getMobility()); tvControlSec.setProgress(actualizar.getControl());*/
     }
     private void cargarPreferencias() {
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
