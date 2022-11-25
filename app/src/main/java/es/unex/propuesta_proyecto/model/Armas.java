@@ -34,8 +34,11 @@ public class Armas {
     private String usuario;
     @ColumnInfo(name="idClase")
     private int idClase;
+    @ColumnInfo(name="principal")
+    private boolean principal;
 
-    public Armas(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String tipoArma, String usuario,int idClase) {
+
+    public Armas(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String tipoArma, String usuario,int idClase, boolean principal) {
         this.name = name;
         this.type = type;
         this.subtype = subtype;
@@ -48,6 +51,7 @@ public class Armas {
         this.tipoArma=tipoArma;
         this.usuario = usuario;
         this.idClase = idClase;
+        this.principal = principal;
     }
     public Armas() {//cuando hay varios constructores validos, Room escoge por defecto el que no tiene argumentos porque hemos declarado los getter y setter. Sin embargo, si no usamos nunca alguno, le podemos poner @Ignore
         this.name = "";
@@ -62,6 +66,7 @@ public class Armas {
         this.tipoArma="";
         this.usuario = "";
         this.idClase = 0;
+        this.principal = true;
     }
 
     public int getId() {
@@ -159,4 +164,12 @@ public class Armas {
     public int getIdClase() {return idClase;}
 
     public void setIdClase(int idClase) {this.idClase = idClase;}
+
+    public boolean isPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(boolean principal) {
+        this.principal = principal;
+    }
 }

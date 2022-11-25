@@ -91,7 +91,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                              int armaActual = armasUsuario.getId();
                                              AppDatabaseArmas.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),armaActual,claseActual);
                                          } else {
-                                             Armas insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual);
+                                             Armas insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, true);
                                              AppDatabaseArmas.getInstance(context).daoJuego().insertarArmas(insertarArma);
                                          }
                                      }
