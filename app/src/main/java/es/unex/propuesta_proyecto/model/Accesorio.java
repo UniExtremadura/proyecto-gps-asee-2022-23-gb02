@@ -1,6 +1,7 @@
 package es.unex.propuesta_proyecto.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Accesorios")
@@ -38,6 +39,7 @@ public class Accesorio {
         this.idArma = idArma;
     }
 
+    @Ignore
     public Accesorio() {
         this.nombre = "";
         this.tipo = tipo;

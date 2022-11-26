@@ -41,9 +41,9 @@ public class DetalleClaseActivity extends AppCompatActivity {
         Bundle parametros = this.getIntent().getExtras();//se recupera el Bundle de la Intent recibida
         if(parametros != null) {
             String valor = parametros.getString("className");
+            Log.d("valor",valor);
             switch (valor) {
                 case "Clase 2":
-
                     setContentView(R.layout.activity_detalle_clase2);
 
                     tvNameArma = findViewById(R.id.tvNameArma2);tvPrecision = findViewById(R.id.pbPrecisionArmaPrincipal2);tvDano = findViewById(R.id.pbDañoArmaPrincipal2);
@@ -52,27 +52,27 @@ public class DetalleClaseActivity extends AppCompatActivity {
 
                     tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria2);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria2);
                     tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria2);tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria2);
-                    tvCadencia = findViewById(R.id.pbCadenciaArmaSecundaria2);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria2);
+                    tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria2);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria2);
                     tvControlSec = findViewById(R.id.pbControlArmaSecundaria2);
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
+                            /* Cogemos la clase actual en la que se encuentra el usuario  */
                             Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 2",usuarioRecuperado);
-                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,11,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
+                            /* Creación de armas por defecto */
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,1,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
                             Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,1,50,50,"Lanzamisiles",usuarioRecuperado,clase.getId(), 0);
-                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
-                            if(armas != null){
+                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorClaseyNombre(clase.getId(),usuarioRecuperado); // Si es nulo, significa que no tiene ningún arma en esta clase
+                            if(armas.size() != 0){
                                 for(int i = 0; i < armas.size() ; i++){
                                     if(armas.get(i).getIdClase() == clase.getId()){ // Seria el arma del usuario en esta clase
                                         Armas armaActual = armas.get(i);
                                         AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy(),armaActual.getDamage(),armaActual.getRange(),0,armaActual.getMobility(),armaActual.getControl(), armaActual.getId(),clase.getId(), armaActual.getPrincipal());
                                         if(armaActual.getPrincipal() == 1){
-                                            Log.d("CADENCIA 1", String.valueOf(armaActual.getFire_rate()));
                                             actualizarCamposArmasPrincipales(armaActual);
                                         }else{
                                             if(armaActual.getPrincipal() == 0){
-                                                Log.d("CADENCIA 2", String.valueOf(armaActual.getFire_rate()));
                                                 actualizarCamposArmasSecundarias(armaActual);
                                             }
                                         }
@@ -80,9 +80,10 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                 }
                             } else { // No tiene ningún arma
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                                actualizarCamposArmasPrincipales(a);
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                                actualizarCamposArmasSecundarias(a2);
                             }
-
                         }
                     });
                     break;
@@ -95,17 +96,19 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     tvControl = findViewById(R.id.pbControlArmaPrincipal3);
 
                     tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria3);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria3);tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria3);
-                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria3);tvCadencia = findViewById(R.id.pbCadenciaArmaSecundaria3);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria3);
+                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria3);tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria3);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria3);
                     tvControlSec = findViewById(R.id.pbControlArmaSecundaria3);
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
+                            /* Cogemos la clase actual en la que se encuentra el usuario  */
                             Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 3",usuarioRecuperado);
-                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,11,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
+                            /* Creación de armas por defecto */
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,1,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
                             Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,1,50,50,"Lanzamisiles",usuarioRecuperado,clase.getId(), 0);
-                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
-                            if(armas != null){
+                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorClaseyNombre(clase.getId(),usuarioRecuperado); // Si es nulo, significa que no tiene ningún arma en esta clase
+                            if(armas.size() != 0){
                                 for(int i = 0; i < armas.size() ; i++){
                                     if(armas.get(i).getIdClase() == clase.getId()){ // Seria el arma del usuario en esta clase
                                         Armas armaActual = armas.get(i);
@@ -121,9 +124,10 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                 }
                             } else { // No tiene ningún arma
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                                actualizarCamposArmasPrincipales(a);
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                                actualizarCamposArmasSecundarias(a2);
                             }
-
                         }
                     });
                     break;
@@ -134,17 +138,20 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     tvControl = findViewById(R.id.pbControlArmaPrincipal4);
 
                     tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria4);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria4);tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria4);
-                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria4);tvCadencia = findViewById(R.id.pbCadenciaArmaSecundaria4);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria4);
+                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria4);tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria4);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria4);
                     tvControlSec = findViewById(R.id.pbControlArmaSecundaria4);
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
+                            /* Cogemos la clase actual en la que se encuentra el usuario  */
                             Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 4",usuarioRecuperado);
-                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,11,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
+                            /* Creación de armas por defecto */
+                            Log.d("Claseid",String.valueOf(clase.getId()));
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,1,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
                             Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,1,50,50,"Lanzamisiles",usuarioRecuperado,clase.getId(), 0);
-                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
-                            if(armas != null){
+                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorClaseyNombre(clase.getId(),usuarioRecuperado); // Si es nulo, significa que no tiene ningún arma en esta clase
+                            if(armas.size() != 0){
                                 for(int i = 0; i < armas.size() ; i++){
                                     if(armas.get(i).getIdClase() == clase.getId()){ // Seria el arma del usuario en esta clase
                                         Armas armaActual = armas.get(i);
@@ -160,7 +167,9 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                 }
                             } else { // No tiene ningún arma
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                                actualizarCamposArmasPrincipales(a);
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                                actualizarCamposArmasSecundarias(a2);
                             }
                         }
                     });
@@ -176,17 +185,19 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     tvControl = findViewById(R.id.pbControlArmaPrincipal5);
 
                     tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria5);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria5);tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria5);
-                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria5);tvCadencia = findViewById(R.id.pbCadenciaArmaSecundaria5);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria5);
+                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria5);tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria5);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria5);
                     tvControlSec = findViewById(R.id.pbControlArmaSecundaria5);
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
+                            /* Cogemos la clase actual en la que se encuentra el usuario  */
                             Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 5",usuarioRecuperado);
-                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,11,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
+                            /* Creación de armas por defecto */
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,1,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
                             Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,1,50,50,"Lanzamisiles",usuarioRecuperado,clase.getId(), 0);
-                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
-                            if(armas != null){
+                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorClaseyNombre(clase.getId(),usuarioRecuperado); // Si es nulo, significa que no tiene ningún arma en esta clase
+                            if(armas.size() != 0){
                                 for(int i = 0; i < armas.size() ; i++){
                                     if(armas.get(i).getIdClase() == clase.getId()){ // Seria el arma del usuario en esta clase
                                         Armas armaActual = armas.get(i);
@@ -202,9 +213,10 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                 }
                             } else { // No tiene ningún arma
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                                actualizarCamposArmasPrincipales(a);
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                                actualizarCamposArmasSecundarias(a2);
                             }
-
                         }
                     });
                     break;
@@ -218,17 +230,19 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     tvControl = findViewById(R.id.pbControlArmaPrincipal6);
 
                     tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria6);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria6);tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria6);
-                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria6);tvCadencia = findViewById(R.id.pbCadenciaArmaSecundaria6);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria6);
+                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria6);tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria6);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria6);
                     tvControlSec = findViewById(R.id.pbControlArmaSecundaria6);
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
+                            /* Cogemos la clase actual en la que se encuentra el usuario  */
                             Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 6",usuarioRecuperado);
-                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,11,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
+                            /* Creación de armas por defecto */
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,1,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
                             Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,1,50,50,"Lanzamisiles",usuarioRecuperado,clase.getId(), 0);
-                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
-                            if(armas != null){
+                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorClaseyNombre(clase.getId(),usuarioRecuperado); // Si es nulo, significa que no tiene ningún arma en esta clase
+                            if(armas.size() != 0){
                                 for(int i = 0; i < armas.size() ; i++){
                                     if(armas.get(i).getIdClase() == clase.getId()){ // Seria el arma del usuario en esta clase
                                         Armas armaActual = armas.get(i);
@@ -244,14 +258,16 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                 }
                             } else { // No tiene ningún arma
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                                actualizarCamposArmasPrincipales(a);
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                                actualizarCamposArmasSecundarias(a2);
                             }
-
                         }
                     });
                     break;
                 case "Clase 7":
                     setContentView(R.layout.activity_detalle_clase7);
+
                     tvNameArma = findViewById(R.id.tvNameArma7);tvPrecision = findViewById(R.id.pbPrecisionArmaPrincipal7);
                     tvDano = findViewById(R.id.pbDañoArmaPrincipal7);
                     tvAlcance = findViewById(R.id.pbAlcanceArmaPrincipal7);
@@ -260,23 +276,25 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     tvControl = findViewById(R.id.pbControlArmaPrincipal7);
 
                     tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria7);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria7);tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria7);
-                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria7);tvCadencia = findViewById(R.id.pbCadenciaArmaSecundaria7);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria7);
+                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria7);tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria7);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria7);
                     tvControlSec = findViewById(R.id.pbControlArmaSecundaria7);
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
+                            /* Cogemos la clase actual en la que se encuentra el usuario  */
                             Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 7",usuarioRecuperado);
-                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,11,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
+                            /* Creación de armas por defecto */
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,1,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
                             Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,1,50,50,"Lanzamisiles",usuarioRecuperado,clase.getId(), 0);
-                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
-                            if(armas != null){
+                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorClaseyNombre(clase.getId(),usuarioRecuperado); // Si es nulo, significa que no tiene ningún arma en esta clase
+                            if(armas.size() != 0){
                                 for(int i = 0; i < armas.size() ; i++){
                                     if(armas.get(i).getIdClase() == clase.getId()){ // Seria el arma del usuario en esta clase
                                         Armas armaActual = armas.get(i);
                                         AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy(),armaActual.getDamage(),armaActual.getRange(),0,armaActual.getMobility(),armaActual.getControl(), armaActual.getId(),clase.getId(), armaActual.getPrincipal());
                                         if(armaActual.getPrincipal() == 1){
-                                            actualizarCamposArmasPrincipales(armaActual);
+                                            //actualizarCamposArmasPrincipales(armaActual);
                                         }else{
                                             if(armaActual.getPrincipal() == 0){
                                                 actualizarCamposArmasSecundarias(armaActual);
@@ -286,13 +304,15 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                 }
                             } else { // No tiene ningún arma
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                                actualizarCamposArmasPrincipales(a);
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                                actualizarCamposArmasSecundarias(a2);
                             }
-
                         }
                     });
                 case "Clase 8":
                     setContentView(R.layout.activity_detalle_clase8);
+
                     tvNameArma = findViewById(R.id.tvNameArma8);tvPrecision = findViewById(R.id.pbPrecisionArmaPrincipal8);
                     tvDano = findViewById(R.id.pbDañoArmaPrincipal8);
                     tvAlcance = findViewById(R.id.pbAlcanceArmaPrincipal8);
@@ -301,17 +321,19 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     tvControl = findViewById(R.id.pbControlArmaPrincipal8);
 
                     tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria8);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria8);tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria8);
-                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria8);tvCadencia = findViewById(R.id.pbCadenciaArmaSecundaria8);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria8);
+                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria8);tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria8);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria8);
                     tvControlSec = findViewById(R.id.pbControlArmaSecundaria8);
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
+                            /* Cogemos la clase actual en la que se encuentra el usuario  */
                             Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 8",usuarioRecuperado);
-                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,11,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
+                            /* Creación de armas por defecto */
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,1,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
                             Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,1,50,50,"Lanzamisiles",usuarioRecuperado,clase.getId(), 0);
-                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
-                            if(armas != null){
+                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorClaseyNombre(clase.getId(),usuarioRecuperado); // Si es nulo, significa que no tiene ningún arma en esta clase
+                            if(armas.size() != 0){
                                 for(int i = 0; i < armas.size() ; i++){
                                     if(armas.get(i).getIdClase() == clase.getId()){ // Seria el arma del usuario en esta clase
                                         Armas armaActual = armas.get(i);
@@ -327,9 +349,10 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                 }
                             } else { // No tiene ningún arma
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                                actualizarCamposArmasPrincipales(a);
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                                actualizarCamposArmasSecundarias(a2);
                             }
-
                         }
                     });
                     break;
@@ -343,17 +366,19 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     tvControl = findViewById(R.id.pbControlArmaPrincipal9);
 
                     tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria9);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria9);tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria9);
-                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria9);tvCadencia = findViewById(R.id.pbCadenciaArmaSecundaria9);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria9);
+                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria9);tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria9);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria9);
                     tvControlSec = findViewById(R.id.pbControlArmaSecundaria9);
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
+                            /* Cogemos la clase actual en la que se encuentra el usuario  */
                             Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 9",usuarioRecuperado);
-                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,11,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
+                            /* Creación de armas por defecto */
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,1,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
                             Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,1,50,50,"Lanzamisiles",usuarioRecuperado,clase.getId(), 0);
-                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
-                            if(armas != null){
+                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorClaseyNombre(clase.getId(),usuarioRecuperado); // Si es nulo, significa que no tiene ningún arma en esta clase
+                            if(armas.size() != 0){
                                 for(int i = 0; i < armas.size() ; i++){
                                     if(armas.get(i).getIdClase() == clase.getId()){ // Seria el arma del usuario en esta clase
                                         Armas armaActual = armas.get(i);
@@ -369,9 +394,10 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                 }
                             } else { // No tiene ningún arma
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                                actualizarCamposArmasPrincipales(a);
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                                actualizarCamposArmasSecundarias(a2);
                             }
-
                         }
                     });
                     break;
@@ -385,17 +411,19 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     tvControl = findViewById(R.id.pbControlArmaPrincipal10);
 
                     tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria10);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria10);tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria10);
-                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria10);tvCadencia = findViewById(R.id.pbCadenciaArmaSecundaria10);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria10);
+                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria10);tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria10);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria10);
                     tvControlSec = findViewById(R.id.pbControlArmaSecundaria10);
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
+                            /* Cogemos la clase actual en la que se encuentra el usuario  */
                             Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 10",usuarioRecuperado);
-                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,11,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
+                            /* Creación de armas por defecto */
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,1,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
                             Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,1,50,50,"Lanzamisiles",usuarioRecuperado,clase.getId(), 0);
-                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
-                            if(armas != null){
+                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorClaseyNombre(clase.getId(),usuarioRecuperado); // Si es nulo, significa que no tiene ningún arma en esta clase
+                            if(armas.size() != 0){
                                 for(int i = 0; i < armas.size() ; i++){
                                     if(armas.get(i).getIdClase() == clase.getId()){ // Seria el arma del usuario en esta clase
                                         Armas armaActual = armas.get(i);
@@ -411,15 +439,17 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                 }
                             } else { // No tiene ningún arma
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                                actualizarCamposArmasPrincipales(a);
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                                actualizarCamposArmasSecundarias(a2);
                             }
-
                         }
                     });
                     break;
                 default:
                     setContentView(R.layout.activity_detalle_clase1);
-                    tvNameArma = findViewById(R.id.tvNameArmaPrincipal);tvPrecision = findViewById(R.id.pbPrecisionArmaPrincipal1);
+
+                    tvNameArma = findViewById(R.id.tvNombre1);tvPrecision = findViewById(R.id.pbPrecisionArmaPrincipal1);
                     tvDano = findViewById(R.id.pbDañoArmaPrincipal1);
                     tvAlcance = findViewById(R.id.pbAlcanceArmaPrincipal1);
                     tvCadencia = findViewById(R.id.pbCadenciaArmaPrincipal1);
@@ -427,17 +457,19 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     tvControl = findViewById(R.id.pbControlArmaPrincipal1);
 
                     tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria1);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria1);tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria1);
-                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria1);tvCadencia = findViewById(R.id.pbCadenciaArmaSecundaria1);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria1);
+                    tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria1);tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria1);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria1);
                     tvControlSec = findViewById(R.id.pbControlArmaSecundaria1);
 
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
+                            /* Cogemos la clase actual en la que se encuentra el usuario  */
                             Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 1",usuarioRecuperado);
-                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,11,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
+                            /* Creación de armas por defecto */
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,1,87,65,"Fusil de asalto",usuarioRecuperado,clase.getId(), 1);
                             Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,1,50,50,"Lanzamisiles",usuarioRecuperado,clase.getId(), 0);
-                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioRecuperado);
-                            if(armas != null){
+                            List<Armas> armas = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorClaseyNombre(clase.getId(),usuarioRecuperado); // Si es nulo, significa que no tiene ningún arma en esta clase
+                            if(armas.size() != 0){
                                 for(int i = 0; i < armas.size() ; i++){
                                     if(armas.get(i).getIdClase() == clase.getId()){ // Seria el arma del usuario en esta clase
                                         Armas armaActual = armas.get(i);
@@ -453,9 +485,10 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                 }
                             } else { // No tiene ningún arma
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                                actualizarCamposArmasPrincipales(a);
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                                actualizarCamposArmasSecundarias(a2);
                             }
-
                         }
                     });
                     break;
@@ -472,16 +505,22 @@ public class DetalleClaseActivity extends AppCompatActivity {
 
     public void actualizarCamposArmasPrincipales(Armas actualizar){
         tvNameArma.setText(actualizar.getName());
-        tvPrecision.setProgress(actualizar.getAccuracy()); tvDano.setProgress(actualizar.getDamage());
-        tvAlcance.setProgress(actualizar.getRange());tvCadencia.setProgress(actualizar.getFire_rate());
-        tvMovilidad.setProgress(actualizar.getMobility()); tvControl.setProgress(actualizar.getControl());
+        tvPrecision.setProgress(actualizar.getAccuracy());
+        tvDano.setProgress(actualizar.getDamage());
+        tvAlcance.setProgress(actualizar.getRange());
+        tvCadencia.setProgress(actualizar.getFire_rate());
+        tvMovilidad.setProgress(actualizar.getMobility());
+        tvControl.setProgress(actualizar.getControl());
     }
 
     public void actualizarCamposArmasSecundarias(Armas actualizar){
         tvNameArmaSec.setText(actualizar.getName());
-        tvPrecisionSec.setProgress(actualizar.getAccuracy()); tvDanoSec.setProgress(actualizar.getDamage());
-        tvAlcanceSec.setProgress(actualizar.getRange());//tvCadenciaSec.setProgress(actualizar.getFire_rate());
-        tvMovilidadSec.setProgress(actualizar.getMobility()); tvControlSec.setProgress(actualizar.getControl());
+        tvPrecisionSec.setProgress(actualizar.getAccuracy());
+        tvDanoSec.setProgress(actualizar.getDamage());
+        tvAlcanceSec.setProgress(actualizar.getRange());
+        tvCadenciaSec.setProgress(actualizar.getFire_rate());
+        tvMovilidadSec.setProgress(actualizar.getMobility());
+        tvControlSec.setProgress(actualizar.getControl());
     }
     private void cargarPreferencias() {
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
