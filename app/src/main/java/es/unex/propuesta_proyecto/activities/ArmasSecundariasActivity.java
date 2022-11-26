@@ -51,6 +51,7 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         for (int i = 75 ; i < 76; i++){
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  pistolas.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
+            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
         }
         rvPistolas.setAdapter(pistolas);//se carga el ArrayList de pistolas recuperado de la API en el RecyclerView
 
@@ -62,6 +63,7 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
             /*
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cuerpo.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
+            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
             */
             }
         rvCuerpoACuerpo.setAdapter(cuerpo); //se carga el ArrayList de armas cuerpo a cuerpo recuperado de la API en el RecyclerView

@@ -29,8 +29,7 @@
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNombreArmaItem"
-            app:srcCompat="@drawable/ak_47" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNombreArmaItem"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clAtributosArma"

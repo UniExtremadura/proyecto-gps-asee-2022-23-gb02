@@ -15,10 +15,7 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
 import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
-import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
-import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 
 public class ClasesActivity extends AppCompatActivity {
@@ -87,26 +84,24 @@ public class ClasesActivity extends AppCompatActivity {
 
 
         bAgregar.setOnClickListener(new View.OnClickListener() {
-            int i=4;
             @Override
             public void onClick(View v) {
-                alClases.add("Clase "+i);
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
                         List<Clases> clasesTotales = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuario);
                         int numClase = clasesTotales.size();
-                            Clases aux;
-                             if(numClase > 8){
-                                 bAgregar.setVisibility(View.INVISIBLE);
-                             }
-                            if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + (numClase+1),usuario) == null){
-                                alClases.add("Clase "+(numClase+1));
-                                Log.d("clase4",String.valueOf(numClase));
-                                aux = new Clases("Clase " + (numClase+1),usuario,0,0);
-                                AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
-                            }
+                        Clases aux;
+                        if(numClase > 8){
+                            bAgregar.setVisibility(View.INVISIBLE);
                         }
+                        if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + (numClase+1),usuario) == null){
+                            alClases.add("Clase "+(numClase+1));
+                            Log.d("clase4",String.valueOf(numClase));
+                            aux = new Clases("Clase " + (numClase+1),usuario,0,0);
+                            AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+                        }
+                    }
                 });
                 rvClases.setAdapter(new ClasesAdapter(alClases));
             }

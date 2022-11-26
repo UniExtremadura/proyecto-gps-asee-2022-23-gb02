@@ -16,7 +16,8 @@
         android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icono" />
+        app:srcCompat="@drawable/icono"
+        android:onClick="volverClases" />
 
     <ImageView
         android:id="@+id/ivUsuario"
@@ -114,7 +115,7 @@
                     />
 
                 <ImageView
-                    android:id="@+id/ivArmaArmaPrincipal"
+                    android:id="@+id/ivArmaArmaPrincipal10"
                     android:layout_width="0dp"
                     android:layout_height="210dp"
                     android:layout_marginTop="10dp"
@@ -131,7 +132,7 @@
                     android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaPrincipal">
+                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaPrincipal10">
 
                     <TextView
                         android:id="@+id/tvPrecisionArmaPrincipal"
@@ -330,7 +331,7 @@
                     android:onClick="cambiarArmaSecundaria"/>
 
                 <ImageView
-                    android:id="@+id/ivArmaArmaSecundaria"
+                    android:id="@+id/ivArmaArmaSecundaria10"
                     android:layout_width="0dp"
                     android:layout_height="210dp"
                     android:layout_marginTop="10dp"
@@ -347,7 +348,7 @@
                     android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaSecundaria">
+                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaSecundaria10">
 
                     <TextView
                         android:id="@+id/tvPrecisionArmaSecundaria"

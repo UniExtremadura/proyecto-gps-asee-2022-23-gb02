@@ -30,7 +30,6 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
     RecyclerView rvEscopetas;
     RecyclerView rvAmetralladorasLigeras;
     RecyclerView rvFusilesDeFrancotirador;
-    RecyclerView rvUsuario;
 
     private MyAdapter fusiles,subfusiles,escopetas,ametrelladoraLigera,fusilesDeFrancotirador;
     private MyAdapter cogerUsuario;
@@ -59,6 +58,7 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         for (int i = 1; i < 2; i++){
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusiles.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
+            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
         }
         rvFusilesDeAsalto.setAdapter(fusiles); //se carga el ArrayList de fusiles recuperado de la API en el RecyclerView
 
@@ -70,6 +70,8 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         for (int i = 17 ; i < 32; i++){
         /*  AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  subfusiles.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal())))); */
+            //AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
+
         }
         rvSubfusiles.setAdapter(subfusiles);//se carga el ArrayList de subfusiles recuperado de la API en el RecyclerView
 
@@ -80,6 +82,7 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         for (int i = 32 ; i < 48; i++){
         /*  AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  escopetas.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal())))); */
+           // AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
         }
         rvEscopetas.setAdapter(escopetas);//se carga el ArrayList de escopetas recuperado de la API en el RecyclerView
 
@@ -90,6 +93,7 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         for (int i = 48 ; i < 60; i++){
             /*  AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  ametrelladoraLigera.swap((repos))));
                 AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
+                AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
             */
         }
         rvAmetralladorasLigeras.setAdapter(ametrelladoraLigera);//se carga el ArrayList de ametralladoras recuperado de la API en el RecyclerView
@@ -101,6 +105,7 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         for (int i = 60 ; i < 75; i++){
          /*  AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusilesDeFrancotirador.swap((repos))));
              AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
+             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
          */
         }
         rvFusilesDeFrancotirador.setAdapter(fusilesDeFrancotirador);//se carga el ArrayList de fusiles de francotirador recuperado de la API en el RecyclerView

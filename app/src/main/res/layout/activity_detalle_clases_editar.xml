@@ -122,7 +122,7 @@
                     app:srcCompat="@android:drawable/checkbox_on_background" />
 
                 <ImageView
-                    android:id="@+id/ivArmaArmaPrincipal"
+                    android:id="@+id/ivArmaArmaPrincipal10"
                     android:layout_width="0dp"
                     android:layout_height="210dp"
                     android:layout_marginTop="10dp"
@@ -140,7 +140,7 @@
                     android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaPrincipal">
+                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaPrincipal10">
 
                     <TextView
                         android:id="@+id/tvPrecisionArmaPrincipal"
@@ -338,7 +338,7 @@
                     app:srcCompat="@drawable/editar" />
 
                 <ImageView
-                    android:id="@+id/ivArmaArmaSecundaria"
+                    android:id="@+id/ivArmaArmaSecundaria10"
                     android:layout_width="0dp"
                     android:layout_height="210dp"
                     android:layout_marginTop="10dp"
@@ -355,7 +355,7 @@
                     android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaSecundaria">
+                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaSecundaria10">
 
                     <TextView
                         android:id="@+id/tvPrecisionArmaSecundaria"

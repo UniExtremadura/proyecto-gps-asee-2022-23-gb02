@@ -81,7 +81,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
                                 Log.d("Cadencia",String.valueOf(armaActual.getFire_rate()));
                                 actualizarCamposArmaAcesorrios(armaActual,accesorio);
                                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(arma.get(i).getName(),arma.get(i).getType(),arma.get(i).getSubtype(),arma.get(i).getAccuracy()+accesorio.getModPrecision(),arma.get(i).getDamage()+accesorio.getModDaño(),arma.get(i).getRange()+accesorio
-                                        .getModAlcance(), arma.get(i).getFire_rate()+accesorio.getModCadencia(),arma.get(i).getMobility()+accesorio.getModMovilidad(),arma.get(i).getControl()+accesorio.getModControl(),arma.get(i).getPrincipal(), armaActual.getId(),arma.get(i).getIdClase());
+                                        .getModAlcance(), arma.get(i).getFire_rate()+accesorio.getModCadencia(),arma.get(i).getMobility()+accesorio.getModMovilidad(),arma.get(i).getControl()+accesorio.getModControl(),arma.get(i).getPrincipal(), armaActual.getId(),arma.get(i).getIdClase(), armaActual.getWeapon());
                             } else {
                                 pbPrecisionArma.setProgress(armaActual.getAccuracy());pbDanoArma.setProgress(armaActual.getDamage());
                                 pbAlcanceArma.setProgress(armaActual.getRange());pbCadenciaArma.setProgress(armaActual.getFire_rate());
@@ -198,7 +198,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
             public void run() {
                 AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(arma.getName(),arma.getType(),arma.getSubtype(),arma.getAccuracy()+accesorio.getModPrecision(),
                         arma.getDamage()+accesorio.getModDaño(),arma.getRange()+accesorio.getModAlcance(),arma.getFire_rate()+accesorio.getModCadencia(),arma.getMobility()+accesorio.getModMovilidad(),
-                        arma.getControl()+accesorio.getModControl(),idArma,arma.getIdClase(),arma.getPrincipal());
+                        arma.getControl()+accesorio.getModControl(),idArma,arma.getIdClase(),arma.getPrincipal(), arma.getWeapon());
             }
         });
     }

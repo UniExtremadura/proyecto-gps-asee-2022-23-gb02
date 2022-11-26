@@ -1,6 +1,8 @@
 
 package es.unex.propuesta_proyecto.model;
 
+import android.net.Uri;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -136,4 +138,5 @@ public class Repo {
     public void setPrincipal(int principal) {
         this.principal = principal;
     }
+
 }
