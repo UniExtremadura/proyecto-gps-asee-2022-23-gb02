@@ -21,7 +21,7 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
 
     View.OnClickListener listener;
     Context context;
-        
+
     public ClasesAdapter(ArrayList<String> alClases) {
         this.alClases = alClases;
     }
@@ -48,8 +48,6 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         Button bClase;
-
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
