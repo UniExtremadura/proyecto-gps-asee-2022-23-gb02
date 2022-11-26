@@ -2,6 +2,7 @@ package es.unex.propuesta_proyecto.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 //Esta clase define los atributos y metodos de la tabla "Usuarios" de Room
 @Entity(tableName = "Usuarios")
@@ -17,6 +18,7 @@ public class Usuarios {
         this.password = password;
     }
 
+    @Ignore
     public Usuarios() {
         this.name = name;
         this.password = password;

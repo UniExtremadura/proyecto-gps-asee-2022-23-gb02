@@ -23,6 +23,9 @@ public interface DaoJuego {
     @Query("SELECT * FROM Armas WHERE usuario = :nombreUsuario")
     abstract List<Armas> obtenerArmasPorNombreUsuario(String nombreUsuario);
 
+    @Query("SELECT * FROM Armas WHERE idClase = :idClase and usuario = :nombreUsuario")
+    abstract List<Armas> obtenerArmasPorClaseyNombre(int idClase, String nombreUsuario);
+
     @Insert
     void insertarArmas(Armas...armas);
 

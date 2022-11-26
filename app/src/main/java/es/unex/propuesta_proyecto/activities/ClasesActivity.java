@@ -11,11 +11,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
 import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
+import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 
@@ -70,29 +72,44 @@ public class ClasesActivity extends AppCompatActivity {
         alClases.add("Clase 1");
         alClases.add("Clase 2");
         alClases.add("Clase 3");
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                List<Clases> clasesUser = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuario);
+                for(int i = 3; i < clasesUser.size(); i++){
+                    if(clasesUser.get(i).getNombre().equals("Clase "+(i+1))){
+                        alClases.add("Clase "+(i+1));
+                    }
+                }
+            }
+        });
         rvClases.setAdapter(new ClasesAdapter(alClases));
+
+
         bAgregar.setOnClickListener(new View.OnClickListener() {
-            int i=4;
             @Override
             public void onClick(View v) {
-                alClases.add("Clase "+i);
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
-                        Clases aux;
-                        if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + i,usuario) == null){
-                            aux = new Clases("Clase "+i,usuario,0,0);
-                            AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+                        List<Clases> clasesTotales = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuario);
+                        int numClase = clasesTotales.size();
+                            Clases aux;
+                             if(numClase > 8){
+                                 bAgregar.setVisibility(View.INVISIBLE);
+                             }
+                            if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + (numClase+1),usuario) == null){
+                                alClases.add("Clase "+(numClase+1));
+                                Log.d("clase4",String.valueOf(numClase));
+                                aux = new Clases("Clase " + (numClase+1),usuario,0,0);
+                                AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+                            }
                         }
-                    }
                 });
-                if (i == 10) {
-                    bAgregar.setVisibility(View.INVISIBLE);
-                }
-                i++;
                 rvClases.setAdapter(new ClasesAdapter(alClases));
             }
         });
+
         // Acceso a clases
     }//Fin onCreate()
 

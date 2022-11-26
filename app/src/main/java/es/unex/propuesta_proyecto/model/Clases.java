@@ -2,6 +2,7 @@ package es.unex.propuesta_proyecto.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Clases")
@@ -22,6 +23,7 @@ public class Clases {
         this.idArmaSecundaria = idArmaSecundaria;
     }
 
+    @Ignore
     public Clases(){
         this.nombre = "";
         this.usuario = "";
