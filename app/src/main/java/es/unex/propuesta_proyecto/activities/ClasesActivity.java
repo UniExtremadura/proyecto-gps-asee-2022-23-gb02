@@ -21,6 +21,8 @@ import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 
+/* Esta clase representa el listado de clases que se muestran nada más iniciar sesión Clase 1, clase 2, clase 3...*/
+
 public class ClasesActivity extends AppCompatActivity {
 
     ArrayList<String> alClases = new ArrayList<String>();
@@ -30,6 +32,7 @@ public class ClasesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clases);
 
@@ -63,14 +66,11 @@ public class ClasesActivity extends AppCompatActivity {
         alClases.add("Clase 1");
         alClases.add("Clase 2");
         alClases.add("Clase 3");
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                List<Clases> clasesUser = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuario);
-                for(int i = 3; i < clasesUser.size(); i++){
-                    if(clasesUser.get(i).getNombre().equals("Clase "+(i+1))){
-                        alClases.add("Clase "+(i+1));
-                    }
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            List<Clases> clasesUser = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuario);
+            for(int i = 3; i < clasesUser.size(); i++){
+                if(clasesUser.get(i).getNombre().equals("Clase "+(i+1))){
+                    alClases.add("Clase "+(i+1));
                 }
             }
         });
@@ -83,18 +83,60 @@ public class ClasesActivity extends AppCompatActivity {
             AppExecutors.getInstance().diskIO().execute(() -> {
                 List<Clases> clasesTotales = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuario);
                 int numClase = clasesTotales.size();
-                    Clases aux;
-                     if(numClase > 8){
-                         bAgregar.setVisibility(View.INVISIBLE);
-                     }
-                    if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + (numClase+1),usuario) == null){
-                        alClases.add("Clase "+(numClase+1));
-                        aux = new Clases("Clase "+(numClase+1),usuario,0,0);
-                        AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
-                    }
-                });
+                Clases aux;
+                if(numClase > 8){
+                    bAgregar.setVisibility(View.INVISIBLE);
+                }
+                if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + (numClase+1),usuario) == null){
+                    alClases.add("Clase "+(numClase+1));
+                    aux = new Clases("Clase "+(numClase+1),usuario,0,0);
+                    AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+                }
+            });
             rvClases.setAdapter(new ClasesAdapter(alClases)); // Los añade al recyclerView.
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        //necesito registrar el ArrayList de botones hasta alClases.size()(tengan clase o no, y los que no tengan clase en Room, se hace un alClases.remove(i), y luego se invoca a rvClases.setAdapter())
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                //comprobar si la clase que está a null es Clase1, Clase2 o Clase3. Si lo es, regenerar por defecto en Room. Si no lo es, eliminar de alClases para que no se muestre en el RecyclerView.
+                for (int i = 0; i < alClases.size(); i++) {
+                    //si la clase es null en Room, se comprueba si es de las de por defecto
+                    if (AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + (i + 1), usuario) == null) {
+                        Clases aux;
+                        if (i == 0) {//si i == 0 es que la clase que esta a null en Room es Clase 1, por lo que se vuelve a rellenar con valores por defecto
+                            aux = new Clases("Clase 1", usuario, 0, 0);
+                            AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+                        } else {
+                            if (i == 1) {//si i == 1 es que la clase que esta a null en Room es Clase 2, por lo que se vuelve a rellenar con valores por defecto
+                                aux = new Clases("Clase 2", usuario, 0, 0);
+                                AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+                            } else {
+                                if (i == 2) {//si i == 2 es que la clase que esta a null en Room es Clase 3, por lo que se vuelve a rellenar con valores por defecto
+                                    aux = new Clases("Clase 3", usuario, 0, 0);
+                                    AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+                                } else {
+                                    alClases.remove(i);//Elimina el elemento de alClases para que no se muestre en el RecyclerView al invocar a setAdapter()
+                                    runOnUiThread(() -> {
+                                        if (alClases.size() < 10) {
+                                            bAgregar.setVisibility(View.VISIBLE);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });//Fin del runnable
+
+        rvClases.setAdapter(new ClasesAdapter(alClases));
     }
 
     /* Boton de perfil de usuario para poder acceder a editar la contraseña */

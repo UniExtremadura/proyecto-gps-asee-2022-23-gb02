@@ -9,6 +9,7 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.model.Clases;
 
+/* Este dao nos permite hacer con la clase Clases las operaciones CRUD */
 
 @Dao
 public interface DaoClases {

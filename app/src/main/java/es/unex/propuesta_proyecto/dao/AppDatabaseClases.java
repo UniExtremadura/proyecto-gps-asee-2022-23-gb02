@@ -9,6 +9,8 @@ import androidx.room.RoomDatabase;
 import es.unex.propuesta_proyecto.model.Clases;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
+/* Base de datos encargada de gestionar las Clases */
+
 @Database(entities = {Clases.class}, version = 3)
 public abstract class AppDatabaseClases extends RoomDatabase {
 

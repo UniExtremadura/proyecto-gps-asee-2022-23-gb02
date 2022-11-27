@@ -26,6 +26,8 @@ import es.unex.propuesta_proyecto.model.Accesorio;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 
+/* Clase de accesorios, los cuales se podrán intercambiar dependiendo de la selección del usuario*/
+
 public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.OnListInteractionListener {
 
     Spinner sBocacha;
@@ -33,7 +35,6 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
     Spinner sLaser;
     Spinner sMira;
     Spinner sCulata;
-
 
     ProgressBar pbPrecisionArma;
     ProgressBar pbDanoArma;
@@ -61,48 +62,47 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
         pbControlArma = findViewById(R.id.pbControlArmaAccesorios);
         bAplicar = findViewById(R.id.bActualizarAccesorios);
 
-        cargarPreferencias();
+        cargarPreferencias(); // Carga el usuario , contraseña
 
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase(claseActual,usuarioActual);
-                List<Armas> arma = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioActual);
-                if(arma != null && clase != null){
-                    for(int i = 0; i < arma.size(); i++){
-                        if(arma.get(i).getIdClase() == clase.getId()){ // Arma actual que esta empleando
-                            if(arma.get(i).getPrincipal() == 1){
-                                Armas armaActual = arma.get(i);
-                                idArma = armaActual.getId();
-                                List<Accesorio> accesorio = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesoriosTodosUsuario(idArma);
-                                if(accesorio.size() != 0){
-                                    for(int j = 0; accesorio.size() > j; j++){
-                                        switch (accesorio.get(j).getNombre()){
-                                            case "Bocacha +":  sBocacha.setSelection(1); break;
-                                            case "Bocacha ++": sBocacha.setSelection(2); break;
-                                            case "Cañon +": sCañon.setSelection(1); break;
-                                            case "Cañon ++": sCañon.setSelection(2);  break;
-                                            case "Mira +": sMira.setSelection(1); break;
-                                            case "Mira ++": sMira.setSelection(2); break;
-                                            case "Laser +": sLaser.setSelection(1); break;
-                                            case "Laser ++": sLaser.setSelection(2); break;
-                                            case "Culata +": sCulata.setSelection(1); break;
-                                            case "Culata ++": sCulata.setSelection(2); break;
-                                            default: sBocacha.setSelection(0);sCañon.setSelection(0);
-                                                sMira.setSelection(0); sLaser.setSelection(0); sCulata.setSelection(0);
-                                                break;
-                                        }
-                                        actualizarCamposArma(armaActual);
+        /* Esta parte se encarga de que cuando inicia en los accesorios le salgan precargados */
+
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase(claseActual,usuarioActual);
+            List<Armas> arma = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioActual);
+            if(arma != null && clase != null){
+                for(int i = 0; i < arma.size(); i++){
+                    if(arma.get(i).getIdClase() == clase.getId()){ // Arma actual que esta empleando
+                        if(arma.get(i).getPrincipal() == 1){
+                            Armas armaActual = arma.get(i);
+                            idArma = armaActual.getId();
+                            List<Accesorio> accesorio = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesoriosTodosUsuario(idArma);
+                            if(accesorio.size() != 0){
+                                for(int j = 0; accesorio.size() > j; j++){
+                                    switch (accesorio.get(j).getNombre()){
+                                        case "Bocacha +":  sBocacha.setSelection(1); break;
+                                        case "Bocacha ++": sBocacha.setSelection(2); break;
+                                        case "Cañon +": sCañon.setSelection(1); break;
+                                        case "Cañon ++": sCañon.setSelection(2);  break;
+                                        case "Mira +": sMira.setSelection(1); break;
+                                        case "Mira ++": sMira.setSelection(2); break;
+                                        case "Laser +": sLaser.setSelection(1); break;
+                                        case "Laser ++": sLaser.setSelection(2); break;
+                                        case "Culata +": sCulata.setSelection(1); break;
+                                        case "Culata ++": sCulata.setSelection(2); break;
+                                        default: sBocacha.setSelection(0);sCañon.setSelection(0);
+                                            sMira.setSelection(0); sLaser.setSelection(0); sCulata.setSelection(0);
+                                            break;
                                     }
-                                } else { // Se ponen los valores normales del arma
                                     actualizarCamposArma(armaActual);
                                 }
+                            } else { // Se ponen los valores normales del arma
+                                actualizarCamposArma(armaActual);
                             }
                         }
                     }
-                } else{
-                    Log.d("ARMA NULA",arma.toString());
                 }
+            } else{
+                Log.d("ARMA NULA",arma.toString());
             }
         });
 
@@ -131,6 +131,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
         sCulata.setAdapter(ArrayAdapter
                 .createFromResource(this, R.array.culata, android.R.layout.simple_spinner_item));
 
+
         /* Al pulsar el botón se devuelve en cada String correspondiente lo que el usuario ha seleccionado del spinner, posteriormente, se pasa al modulo de strategyAccesorios,
         el cual determinará las operaciones convenientes según la selección del usuario */
 
@@ -150,13 +151,6 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
                 almacenSpinners.add(obtenerLaser);
                 almacenSpinners.add(obtenerMira);
                 almacenSpinners.add(obtenerCulata);
-
-                /*
-                strategyAccesorios(obtenerBocacha);
-                strategyAccesorios(obtenerCanon);
-                strategyAccesorios(obtenerLaser);
-                strategyAccesorios(obtenerMira);
-                strategyAccesorios(obtenerCulata);*/
 
                 strategyAccesorios(almacenSpinners);
                 finish();

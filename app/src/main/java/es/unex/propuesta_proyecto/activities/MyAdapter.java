@@ -24,6 +24,8 @@ import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 import es.unex.propuesta_proyecto.model.Repo;
 
+/* Esta clase permite meter las armas en el recyclerView de la clase ArmasPrincipalesActivity y ArmasSecundariasActivity */
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     private List<Repo> mDataset;

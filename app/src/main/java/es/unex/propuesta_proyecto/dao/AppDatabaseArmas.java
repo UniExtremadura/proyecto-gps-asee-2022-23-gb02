@@ -8,6 +8,8 @@ import androidx.room.RoomDatabase;
 
 import es.unex.propuesta_proyecto.model.Armas;
 
+/* Base de datos encargada de gestionar las Armas */
+
 @Database(entities = {Armas.class}, version = 1)
 public abstract class AppDatabaseArmas extends RoomDatabase {
     private static AppDatabaseArmas instance;

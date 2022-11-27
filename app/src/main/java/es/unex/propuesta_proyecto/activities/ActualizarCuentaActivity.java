@@ -17,12 +17,13 @@ import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
+/* Esta clase actualiza la cuenta del usuario */
+
 public class ActualizarCuentaActivity extends AppCompatActivity {
 
     TextView username;
     EditText password;
     Button actualizar,eliminar;//HACER onCLICK()
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,44 +42,36 @@ public class ActualizarCuentaActivity extends AppCompatActivity {
         username.setText(usuario);//hace que se muestre en el EditText "username" el String pasado por parametros. En este caso es el nombre del usuario.
         password.setText(contrasena);//hace que se muestre en el EditText "password" el String pasado por parametros. En este caso es la contraseña del usuario.
 
-        actualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        Usuarios checkUser;
-                        checkUser = AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(usuario);
-                        Log.d("USUARIO",password.getText().toString());
-                        if(checkUser != null){
-                            checkUser.setName(username.getText().toString());
-                            checkUser.setPassword(password.getText().toString());
-                            AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().actualizarContrasena(checkUser.getName(),checkUser.getPassword());
-                            Intent reloggin = new Intent(getApplicationContext(),LoginActivity.class);
-                            startActivity(reloggin);
-                        }
-                    }
-                });
-            }
-        });
+        /* Cuando se hace click en el boton actualiza */
 
-        eliminar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        Usuarios deleteUser;
-                        deleteUser = AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(usuario);
-                            AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().borrarUsuario(deleteUser);
-                            Intent reloggin = new Intent(getApplicationContext(),LoginActivity.class);
-                            startActivity(reloggin);
-                    }
-                });
+        actualizar.setOnClickListener(v -> AppExecutors.getInstance().diskIO().execute(() -> {
+            Usuarios checkUser;
+            checkUser = AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(usuario);
+            if(checkUser != null){
+                checkUser.setName(username.getText().toString());
+                checkUser.setPassword(password.getText().toString());
+                AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().actualizarContrasena(checkUser.getName(),checkUser.getPassword());
+                Intent reloggin = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(reloggin);
             }
-        });
+        }));
+
+        /* Cuando se hace click en el botón elimina */
+
+        eliminar.setOnClickListener(v -> AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Usuarios deleteUser;
+                deleteUser = AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(usuario);
+                    AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().borrarUsuario(deleteUser);
+                    Intent reloggin = new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(reloggin);
+            }
+        }));
 
     }//Fin onCreate
+
+    /* Cuando se hace click en el botón se desplaza con el intent*/
 
     public void cuentaActualizada(View view){
         Intent cuentaAct = new Intent(this, ClasesActivity.class);

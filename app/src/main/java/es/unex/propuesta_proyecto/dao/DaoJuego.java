@@ -8,6 +8,8 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.model.Armas;
 
+/* Este dao nos permite hacer con la clase Armas las operaciones CRUD */
+
 @Dao
 public interface DaoJuego {
 
@@ -37,5 +39,11 @@ public interface DaoJuego {
 
     @Query("DELETE FROM Armas WHERE id = :id")
     void borrarArma(int id);
+
+    @Query("DELETE FROM Armas WHERE id = :id AND usuario = :nombreusuario")
+    void borrarArmaPorNombreyId(int id, String nombreusuario);
+
+    @Query("DELETE FROM Armas WHERE idClase = :idClase AND usuario = :nombreUsuario")
+    void borrarArmaPorClaseyNombre(int idClase, String nombreUsuario);
 
 }

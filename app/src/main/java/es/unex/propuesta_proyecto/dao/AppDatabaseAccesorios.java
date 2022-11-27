@@ -7,6 +7,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import es.unex.propuesta_proyecto.model.Accesorio;
 
+/* Base de datos encargada de gestionar los Accesorios */
+
 @Database(entities = {Accesorio.class}, version = 4)
 public abstract class AppDatabaseAccesorios extends RoomDatabase {
 

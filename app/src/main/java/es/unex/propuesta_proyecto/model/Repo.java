@@ -1,10 +1,10 @@
 
 package es.unex.propuesta_proyecto.model;
 
-import android.net.Uri;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+/* Repositorio (convertido de JSON a Java), utilizado para obtener los datos de la api*/
 
 public class Repo {
 

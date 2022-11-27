@@ -7,6 +7,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
+/* Base de datos encargada de gestionar los Usuarios */
+
 @Database(entities = {Usuarios.class}, version = 2)
 public abstract class AppDatabaseUsuarios extends RoomDatabase {
 
@@ -17,6 +19,5 @@ public abstract class AppDatabaseUsuarios extends RoomDatabase {
             instance = Room.databaseBuilder(context, AppDatabaseUsuarios.class,"Usuarios.db").build();
         return instance;
     }
-
     public abstract DaoUsuarios daoUsuarios();
 }

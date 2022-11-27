@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivIcono7" />
 
     <ImageView
-        android:id="@+id/ivEliminarClase7"
+        android:id="@+id/ivEliminarClase"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginEnd="25dp"
@@ -64,7 +64,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivEliminarClase7">
+        app:layout_constraintTop_toBottomOf="@+id/ivEliminarClase">
 
         <LinearLayout
             android:id="@+id/LinearLayout"
@@ -328,7 +328,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvArmaSecundaria7"
                     app:srcCompat="@drawable/editar"
-                    android:onClick="cambiarArmaSecundaria7"/>
+                    android:onClick="cambiarArmaSecundaria"/>
 
                 <ImageView
                     android:id="@+id/ivArmaArmaSecundaria7"

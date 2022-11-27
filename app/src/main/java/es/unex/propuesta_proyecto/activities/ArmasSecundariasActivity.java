@@ -37,11 +37,16 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_armas_secundarias);
-        /** INICIALIZACION DE LOS ADAPTERS **/
+
+        /* INICIALIZACION DE LOS ADAPTERS */
+
         pistolas = new MyAdapter(new ArrayList<>(), this);
         cuerpo = new MyAdapter(new ArrayList<>(), this);
 
-        cargarPreferencias();
+        cargarPreferencias(); // Carga preferencias
+
+        /** IMPORTANTE ! LOS ACCESOS A LA API SE ENCUENTRAN COMENTADOS, PUES SOLO SE TIENEN 100 USOS.. (LO CUAL SIGNIFICA QUE SOLO SE VISUALIZARAN UN PORCENTAJE DE ARMAS..
+         * Y DARÁ ERROR CUANDO SE UTILICEN TODOS LOS ACCESOS. ADEMÁS LAS IMAGENES TARDAN EN CARGAR LO SUYO..) **/
 
         // Carga del RecyclerView de las pistolas
         rvPistolas = findViewById(R.id.rvPistolas);
@@ -49,9 +54,10 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         //Inserción de las pistolas de la API en pistolas
         //for (int i = 75 ; i < 78; i++){
         for (int i = 75 ; i < 76; i++){
+
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  pistolas.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
-            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
+
         }
         rvPistolas.setAdapter(pistolas);//se carga el ArrayList de pistolas recuperado de la API en el RecyclerView
 
@@ -60,11 +66,12 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         rvCuerpoACuerpo.setLayoutManager(new LinearLayoutManager(this));
         //Inserción de las armas cuerpo a cuerpo de la API en cuerpo
         for (int i = 78 ; i < 80; i++){
+
             /*
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cuerpo.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
-            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
             */
+
             }
         rvCuerpoACuerpo.setAdapter(cuerpo); //se carga el ArrayList de armas cuerpo a cuerpo recuperado de la API en el RecyclerView
 
@@ -75,6 +82,8 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         super.onPause();
         finish();
     }
+
+    /* Este método recupera el usuario y la clase actual (guardados en sharedPreferences) */
 
     private void cargarPreferencias() {
 
@@ -88,6 +97,8 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         cogerUsuario.usuarioActivo(usuario);
         cogerUsuario.claseActiva(clase);
     }
+
+    /* Método autogenerado por Listener */
 
     @Override
     public void onListInteraction(String url) {

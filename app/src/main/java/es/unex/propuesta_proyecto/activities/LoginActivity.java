@@ -16,6 +16,8 @@ import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
 import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
+/* Esta clase permite al usuario registrarse, introduciendo una contraseña y nombre de usuario (con previo registro) */
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText username,password;
@@ -31,57 +33,38 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.bIniciarSesion);
 
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //Fin onClick()
+        btnLogin.setOnClickListener(v -> {
 
-                String user = username.getText().toString();
-                String pass = password.getText().toString();
+            String user = username.getText().toString();
+            String pass = password.getText().toString();
 
-                if(user.equals("")||pass.equals(""))
-                    Toast.makeText(LoginActivity.this,"Por favor, rellene todos los campos", Toast.LENGTH_SHORT).show();
-                else{
-                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            Usuarios usuario;
-                            usuario = AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(user);
-                            if(usuario != null){
-                                if(usuario.getName().equals(user) && usuario.getPassword().equals(pass)){
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(LoginActivity.this, "Ha iniciado sesión!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                    Intent intent = new Intent(getApplicationContext(),ClasesActivity.class);
-                                    intent.putExtra("estado",true);
-                                    intent.putExtra("usuario",user);
-                                    intent.putExtra("password",pass);
-                                    guardarPreferencias();
-                                    startActivity(intent);
-                                } else{
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(LoginActivity.this,"Credenciales incorrectas!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            } else {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(LoginActivity.this,"No existe usuario!", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        }//Fin run() del onClick()
-                    });
-                }
-            }//Fin onClick()
+            if(user.equals("")||pass.equals(""))
+                Toast.makeText(LoginActivity.this,"Por favor, rellene todos los campos", Toast.LENGTH_SHORT).show();
+            else{
+                //Fin run() del onClick()
+                AppExecutors.getInstance().diskIO().execute(() -> {
+                    Usuarios usuario;
+                    usuario = AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(user);
+                    if(usuario != null){
+                        if(usuario.getName().equals(user) && usuario.getPassword().equals(pass)){
+                            runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Ha iniciado sesión!", Toast.LENGTH_SHORT).show());
+                            Intent intent = new Intent(getApplicationContext(),ClasesActivity.class);
+                            intent.putExtra("usuario",user);
+                            intent.putExtra("password",pass);
+                            guardarPreferencias();
+                            startActivity(intent);
+                        } else{
+                            runOnUiThread(() -> Toast.makeText(LoginActivity.this,"Credenciales incorrectas!", Toast.LENGTH_SHORT).show());
+                        }
+                    } else {
+                        runOnUiThread(() -> Toast.makeText(LoginActivity.this,"No existe usuario!", Toast.LENGTH_SHORT).show());
+                    }
+                });
+            }
         });
     }//Fin onCreate()
+
 
     private void guardarPreferencias(){
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
