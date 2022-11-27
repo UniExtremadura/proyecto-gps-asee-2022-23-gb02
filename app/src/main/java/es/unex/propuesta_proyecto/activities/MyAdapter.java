@@ -86,7 +86,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
-                            Uri urlArm;
                             Intent navegarADetalles = new Intent(context,DetalleClaseActivity.class);
                             navegarADetalles.putExtra("className",claseGlobal);
                             // usuarioGlobal es el usuario que está loggeado en este instante.
@@ -105,7 +104,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                                  public void run() {
                                                      pasarURLimg(weaponGlobal, ivArma);
                                                  }
-                                             });                                             AppDatabaseArmas.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),armaActual,claseActual, armasUsuario.getPrincipal(), weaponGlobal);
+                                             });
+                                             AppDatabaseArmas.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),armaActual,claseActual, armasUsuario.getPrincipal(), weaponGlobal);
                                          } else {
                                              Armas insertarArma = new Armas();
                                              if( armaIdGlobal == 1){

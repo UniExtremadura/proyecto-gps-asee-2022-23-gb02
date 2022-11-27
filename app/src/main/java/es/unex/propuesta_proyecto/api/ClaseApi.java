@@ -9,6 +9,6 @@ import retrofit2.http.Path;
 //Esta clase es la que se encarga de invocar las llamadas a la API
 public interface ClaseApi {
 
-    @GET("faa07ae4-bbdf-4004-a33d-425b0b439b78/{id}")
+    @GET("cad19ebb-f914-43b1-b1ec-3c4689631e27/{id}")
     Call<List<Repo>> listRepos(@Path("id") int id);
 }
