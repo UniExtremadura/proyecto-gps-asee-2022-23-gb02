@@ -52,9 +52,7 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         rvPistolas = findViewById(R.id.rvPistolas);
         rvPistolas.setLayoutManager(new LinearLayoutManager(this));
         //Inserción de las pistolas de la API en pistolas
-        //for (int i = 75 ; i < 78; i++){
-        for (int i = 75 ; i < 76; i++){
-
+        for (int i = 75 ; i < 77; i++){
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  pistolas.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
 
@@ -66,12 +64,8 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         rvCuerpoACuerpo.setLayoutManager(new LinearLayoutManager(this));
         //Inserción de las armas cuerpo a cuerpo de la API en cuerpo
         for (int i = 78 ; i < 80; i++){
-
-            /*
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cuerpo.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
-            */
-
             }
         rvCuerpoACuerpo.setAdapter(cuerpo); //se carga el ArrayList de armas cuerpo a cuerpo recuperado de la API en el RecyclerView
 

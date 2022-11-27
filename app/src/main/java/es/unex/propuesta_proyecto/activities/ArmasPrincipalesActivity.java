@@ -59,8 +59,8 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         rvFusilesDeAsalto = findViewById(R.id.rvFusilesDeAsalto);
         rvFusilesDeAsalto.setLayoutManager(new LinearLayoutManager(this));
         // Inserción de los fusiles de asalto de la API en alFusilesDeAsalto
-        //for (int i = 0; i < 17; i++){
-        for (int i = 1; i < 2; i++){
+        // i < 17 API COMPLETA
+        for (int i = 1; i < 3; i++){
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusiles.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
@@ -72,12 +72,12 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         rvSubfusiles = findViewById(R.id.rvSubfusiles);
         rvSubfusiles.setLayoutManager(new LinearLayoutManager(this));
         // Inserción de los subfusiles de la API en alSubfusiles
+        // i < 32 API COMPLETA
+        for (int i = 17 ; i < 19; i++){
 
-        for (int i = 17 ; i < 32; i++){
-
-        /*  AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  subfusiles.swap((repos))));
-            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal())))); */
-            //AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
+            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  subfusiles.swap((repos))));
+            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
+            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
 
         }
         rvSubfusiles.setAdapter(subfusiles);//se carga el ArrayList de subfusiles recuperado de la API en el RecyclerView
@@ -86,13 +86,13 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         rvEscopetas = findViewById(R.id.rvEscopetas);
         rvEscopetas.setLayoutManager(new LinearLayoutManager(this));
         // Inserción de las escopetas de la API en alEscopetas
-        for (int i = 32 ; i < 48; i++){
-
-        /*  AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  escopetas.swap((repos))));
+        // i < 48 API COMPLETA
+        for (int i = 32 ; i < 34; i++){
+             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  escopetas.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
              AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
 
-         */
+
 
         }
         rvEscopetas.setAdapter(escopetas);//se carga el ArrayList de escopetas recuperado de la API en el RecyclerView
@@ -101,12 +101,13 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         rvAmetralladorasLigeras = findViewById(R.id.rvAmetralladorasLigeras);
         rvAmetralladorasLigeras.setLayoutManager(new LinearLayoutManager(this));
         // Inserción de las ametralladoras ligeras de la API en alAmetralladorasLigeras
-        for (int i = 48 ; i < 60; i++){
+        // i < 60 API COMPLETA
+        for (int i = 48 ; i < 50; i++){
 
-            /*  AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  ametrelladoraLigera.swap((repos))));
+              AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  ametrelladoraLigera.swap((repos))));
                 AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
                 AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
-            */
+
         }
         rvAmetralladorasLigeras.setAdapter(ametrelladoraLigera);//se carga el ArrayList de ametralladoras recuperado de la API en el RecyclerView
 
@@ -114,12 +115,13 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         rvFusilesDeFrancotirador = findViewById(R.id.rvFusilesDeFrancotirador);
         rvFusilesDeFrancotirador.setLayoutManager(new LinearLayoutManager(this));
         //Inserción de los fusiles de francotirador de la API en alFusilesDeFrancotirador
-        for (int i = 60 ; i < 75; i++){
+        // i < 75 API COMPLETA
+        for (int i = 60 ; i < 62; i++){
 
-         /*  AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusilesDeFrancotirador.swap((repos))));
+           AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusilesDeFrancotirador.swap((repos))));
              AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
              AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarWeapon((repos.get(0).getWeapon()))));
-         */
+
 
         }
         rvFusilesDeFrancotirador.setAdapter(fusilesDeFrancotirador);//se carga el ArrayList de fusiles de francotirador recuperado de la API en el RecyclerView
