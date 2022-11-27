@@ -13,7 +13,6 @@
         android:backgroundTint="#006400"
         android:text="Clase"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:onClick="onClick"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </LinearLayout>
