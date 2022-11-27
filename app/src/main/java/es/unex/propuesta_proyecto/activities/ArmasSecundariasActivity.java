@@ -70,6 +70,12 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        finish();
+    }
+
     private void cargarPreferencias() {
 
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);

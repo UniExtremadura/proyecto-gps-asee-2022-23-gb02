@@ -115,7 +115,7 @@
                     />
 
                 <ImageView
-                    android:id="@+id/ivArmaArmaPrincipal10"
+                    android:id="@+id/ivArmaArmaPrincipal6"
                     android:layout_width="0dp"
                     android:layout_height="210dp"
                     android:layout_marginTop="10dp"
@@ -132,7 +132,7 @@
                     android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaPrincipal10">
+                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaPrincipal6">
 
                     <TextView
                         android:id="@+id/tvPrecisionArmaPrincipal"
@@ -331,7 +331,7 @@
                     android:onClick="cambiarArmaSecundaria"/>
 
                 <ImageView
-                    android:id="@+id/ivArmaArmaSecundaria10"
+                    android:id="@+id/ivArmaArmaSecundaria6"
                     android:layout_width="0dp"
                     android:layout_height="210dp"
                     android:layout_marginTop="10dp"
@@ -348,7 +348,7 @@
                     android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaSecundaria10">
+                    app:layout_constraintTop_toBottomOf="@+id/ivArmaArmaSecundaria6">
 
                     <TextView
                         android:id="@+id/tvPrecisionArmaSecundaria"

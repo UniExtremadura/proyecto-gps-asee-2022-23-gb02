@@ -19,7 +19,6 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
 
     private ArrayList<String> alClases;
 
-    View.OnClickListener listener;
     Context context;
 
     public ClasesAdapter(ArrayList<String> alClases) {
@@ -53,22 +52,15 @@ public class ClasesAdapter extends RecyclerView.Adapter<ClasesAdapter.ViewHolder
             super(itemView);
             context = itemView.getContext();
             bClase = itemView.findViewById(R.id.bClase);
-            bClase.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent actClase = new Intent(context, DetalleClaseActivity.class);;
-                    actClase.putExtra("className", bClase.getText());
-                    context.startActivity(actClase);
-                }
+            bClase.setOnClickListener(v -> {
+                Intent actClase = new Intent(context, DetalleClaseActivity.class);;
+                actClase.putExtra("className", bClase.getText());
+                context.startActivity(actClase);
             });
         }
 
         public Button getbClase() {
             return bClase;
-        }
-
-        public void setbClase(Button bClase) {
-            this.bClase = bClase;
         }
 
     }

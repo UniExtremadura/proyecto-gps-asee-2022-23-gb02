@@ -2,7 +2,6 @@ package es.unex.propuesta_proyecto.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -26,7 +24,7 @@ import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 import es.unex.propuesta_proyecto.model.Repo;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     private List<Repo> mDataset;
     private static String usuarioGlobal;
@@ -80,72 +78,51 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             pbMovilidadArma = itemView.findViewById(R.id.pbMovilidadArma);
             pbControlArma = itemView.findViewById(R.id.pbControlArma);
 
-            tvNombre.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent navegarADetalles = new Intent(context,DetalleClaseActivity.class);
-                            navegarADetalles.putExtra("className",claseGlobal);
-                            // usuarioGlobal es el usuario que está loggeado en este instante.
-                            Armas armasUsuario = AppDatabaseArmas.getInstance(context).daoJuego().obtenerArmaUsuario(tvNombre.getText().toString(),usuarioGlobal);
-                             List<Clases> clasesUsuario = AppDatabaseClases.getInstance(context).daoClases().obtenerClasesUsuario(usuarioGlobal);
-                             if(clasesUsuario != null){
-                                 for(int i = 0; i < clasesUsuario.size(); i++){
-                                     int claseActual = clasesUsuario.get(i).getId(); // Recupera la id de la clase actual.
-                                     if(clasesUsuario.get(i).getNombre().equals(claseGlobal)){ // compara todas las clases hasta encontrar en la que está
-                                         if(armasUsuario != null) { //  tiene ese arma el usuario se actualiza, si no se inserta.
-                                             int armaActual = armasUsuario.getId();
-                                             Log.d("CADENCIA 3- (MY)", String.valueOf(pbCadenciaArma.getProgress()));
-                                             //Se ejecuta en el hilo principal porque realiza cambios en la pantalla en tiempo de ejecución
-                                             AppExecutors.getInstance().mainThread().execute(new Runnable() {
-                                                 @Override
-                                                 public void run() {
-                                                     pasarURLimg(weaponGlobal, ivArma);
-                                                 }
-                                             });
-                                             AppDatabaseArmas.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),armaActual,claseActual, armasUsuario.getPrincipal(), weaponGlobal);
-                                         } else {
-                                             Armas insertarArma = new Armas();
-                                             if( armaIdGlobal == 1){
-                                                 Log.d("CADENCIA 4- (MY)", String.valueOf(pbCadenciaArma.getProgress()));
-                                                 insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, 1, weaponGlobal);
-                                                 AppExecutors.getInstance().mainThread().execute(new Runnable() {
-                                                     @Override
-                                                     public void run() {
-                                                         pasarURLimg(weaponGlobal, ivArma);
-                                                     }
-                                                 });
-                                                 insertarArma.setWeapon(weaponGlobal);
-                                             }else{
-                                                 if( armaIdGlobal == 0){
-                                                     Log.d("CADENCIA 5- (MY)", String.valueOf(pbCadenciaArma.getProgress()));
-                                                     insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, 0, weaponGlobal);
-                                                     AppExecutors.getInstance().mainThread().execute(new Runnable() {
-                                                         @Override
-                                                         public void run() {
-                                                             pasarURLimg(weaponGlobal, ivArma);
-                                                         }
-                                                     });
-                                                     insertarArma.setWeapon(weaponGlobal);
-                                                 }
-                                             }
-                                             AppDatabaseArmas.getInstance(context).daoJuego().insertarArmas(insertarArma);
-                                         }
+            /* Este método se encarga de cambiar las armas principales y secundarias. Una vez que el usuario pulse en el nombre del arma (Dentro de la lista mostrada por la API en Armas
+            Principales (Activity) o Armas Secundarias (Activity), le conducirá a la pantalla de DetalleClaseActivity, donde le intercambiará el arma anterior por el arma seleccionado */
+
+            tvNombre.setOnClickListener(v1 -> AppExecutors.getInstance().diskIO().execute(() -> {
+                Intent navegarADetalles = new Intent(context,DetalleClaseActivity.class);
+                navegarADetalles.putExtra("className",claseGlobal); // Pasamos la clase al detallesActivity a través del intent
+                // usuarioGlobal es el usuario que está loggeado en este instante.
+                Armas armasUsuario = AppDatabaseArmas.getInstance(context).daoJuego().obtenerArmaUsuario(tvNombre.getText().toString(),usuarioGlobal); // Se coge el arma actual del usuario
+                 List<Clases> clasesUsuario = AppDatabaseClases.getInstance(context).daoClases().obtenerClasesUsuario(usuarioGlobal); // Lista de clases del usuario
+                 if(clasesUsuario != null){
+                     for(int i = 0; i < clasesUsuario.size(); i++){
+                         int claseActual = clasesUsuario.get(i).getId(); // Recupera la id de la clase actual.
+                         if(clasesUsuario.get(i).getNombre().equals(claseGlobal)){ // compara todas las clases hasta encontrar en la que está
+                             if(armasUsuario != null) { //  tiene ese arma el usuario se actualiza, si no se inserta.
+                                 int armaActual = armasUsuario.getId();
+                                 //Se ejecuta en el hilo principal porque realiza cambios en la pantalla en tiempo de ejecución
+                                 AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(weaponGlobal, ivArma));
+                                 AppDatabaseArmas.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),armaActual,claseActual, armasUsuario.getPrincipal(), weaponGlobal);
+                             } else {
+                                 Armas insertarArma = new Armas();
+                                 if( armaIdGlobal == 1){
+                                     insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, 1, weaponGlobal);
+                                     AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(weaponGlobal, ivArma));
+                                     insertarArma.setWeapon(weaponGlobal);
+                                 }else{
+                                     if( armaIdGlobal == 0){
+                                         insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, 0, weaponGlobal);
+                                         AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(weaponGlobal, ivArma));
+                                         insertarArma.setWeapon(weaponGlobal);
                                      }
                                  }
+                                 AppDatabaseArmas.getInstance(context).daoJuego().insertarArmas(insertarArma);
                              }
-                             context.startActivity(navegarADetalles);
-                        }
-                    });
-                }
-            });
+                         }
+                     }
+                 }
+                 context.startActivity(navegarADetalles);
+            }));
 
         }
     }
+
     //Dependiendo del nombre del arma recibido como parámetro muestra una imagen u otra en función del enlace con las funciones de Picasso
     //sobre el objeto ImageView recibido por parámetro
+
     public static void pasarURLimg(String nombreArma, ImageView ivArma){
         switch (nombreArma){
             case "ak-47":
@@ -225,7 +202,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    // Provide a suitable constructor (depends on the kind of dataset) (Constructor de MyAdapter)
+
     public MyAdapter(List<Repo> myDataset, OnListInteractionListener listener) {
         mDataset = myDataset;
         mListener = listener;
@@ -240,20 +218,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return new MyAdapter.MyViewHolder(view);
     }
 
+    // Modificación de atributos del Dataset de la api.
+
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
         holder.tvNombre.setText(mDataset.get(position).getName());
-        //holder.ivArma.setImageURI(mDataset.get(position).getUrlImg());
-        holder.pbPrecisionArma.setProgress(Integer.parseInt(mDataset.get(position).getAccuracy())/3);
-        holder.pbDanoArma.setProgress(Integer.parseInt(mDataset.get(position).getDamage())/3);
-        holder.pbAlcanceArma.setProgress(Integer.parseInt(mDataset.get(position).getRange())/3);
-        holder.pbCadenciaArma.setProgress(Integer.parseInt(mDataset.get(position).getFireRate())/3);
-        holder.pbMovilidadArma.setProgress(Integer.parseInt(mDataset.get(position).getMobility())/3);
-        holder.pbControlArma.setProgress(Integer.parseInt(mDataset.get(position).getControl())/3);
+        holder.pbPrecisionArma.setProgress(Integer.parseInt(mDataset.get(position).getAccuracy()));
+        holder.pbDanoArma.setProgress(Integer.parseInt(mDataset.get(position).getDamage()));
+        holder.pbAlcanceArma.setProgress(Integer.parseInt(mDataset.get(position).getRange()));
+        holder.pbCadenciaArma.setProgress(Integer.parseInt(mDataset.get(position).getFireRate()));
+        holder.pbMovilidadArma.setProgress(Integer.parseInt(mDataset.get(position).getMobility()));
+        holder.pbControlArma.setProgress(Integer.parseInt(mDataset.get(position).getControl()));
     }
+
+    // Devuelve el tamaño de mDataset
 
     @Override
     public int getItemCount() { return mDataset.size();}
+
+    // Se le pasa el repositorio por parametros y lo añade a mDataset, almacenando los datos de la api.
 
     public void swap(List<Repo> dataset){
         mDataset.add(dataset.get(0));

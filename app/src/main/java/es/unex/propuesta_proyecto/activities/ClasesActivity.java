@@ -15,7 +15,10 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
+import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
 import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
+import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
+import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 
 public class ClasesActivity extends AppCompatActivity {
@@ -31,41 +34,32 @@ public class ClasesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_clases);
 
         Bundle parametros = this.getIntent().getExtras();//se recupera el Bundle que viene de la Intent recibida
-        if (parametros != null) {
-            ImageView perfil = findViewById(R.id.ivUsuario);
-            boolean estado = parametros.getBoolean("estado");//se recupera del Bundle el boolean que indica el estado del ImageView
-            if (estado) { // True -- visible
-                perfil.setVisibility(View.VISIBLE);
-            } else { // False -- invisible
-                perfil.setVisibility(View.INVISIBLE);
-            }
-        }
+
         usuario = parametros.getString("usuario");//se recupera el nombre del usuario del Bundle de la Intent recibida
         pass = parametros.getString("password");
-
 
         rvClases = findViewById(R.id.rvClases);
         rvClases.setLayoutManager(new LinearLayoutManager(this));
         bAgregar = findViewById(R.id.ivAgregar);
 
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                Clases aux;
-               if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 1",usuario) == null){
-                    aux = new Clases("Clase 1",usuario,0,0);
-                    AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
-               }
-                if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 2",usuario) == null){
-                    aux = new Clases("Clase 2",usuario,0,0);
-                    AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
-                }
-                if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 3",usuario) == null){
-                    aux = new Clases("Clase 3",usuario,0,0);
-                    AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
-                }
+        /* Añade tres clases por defecto, que siempre le saldrán a todos los usuarios */
+
+        AppExecutors.getInstance().diskIO().execute(() -> {
+            Clases aux;
+           if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 1",usuario) == null){
+                aux = new Clases("Clase 1",usuario,0,0);
+                AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+           }
+            if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 2",usuario) == null){
+                aux = new Clases("Clase 2",usuario,0,0);
+                AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+            }
+            if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 3",usuario) == null){
+                aux = new Clases("Clase 3",usuario,0,0);
+                AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
             }
         });
+
         alClases.add("Clase 1");
         alClases.add("Clase 2");
         alClases.add("Clase 3");
@@ -82,33 +76,28 @@ public class ClasesActivity extends AppCompatActivity {
         });
         rvClases.setAdapter(new ClasesAdapter(alClases));
 
+        /* Este método se encarga de mostrar hasta 10 clases, es decir cuando el usuario presiona el botón "+", se encarga de ir añadiendo clases, hasta un máximo de 10.
+        * Para ello comprueba en la base de datos de clases que ese mismo Usuario pueda seguir creando clases */
 
-        bAgregar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<Clases> clasesTotales = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuario);
-                        int numClase = clasesTotales.size();
-                        Clases aux;
-                        if(numClase > 8){
-                            bAgregar.setVisibility(View.INVISIBLE);
-                        }
-                        if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + (numClase+1),usuario) == null){
-                            alClases.add("Clase "+(numClase+1));
-                            Log.d("clase4",String.valueOf(numClase));
-                            aux = new Clases("Clase " + (numClase+1),usuario,0,0);
-                            AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
-                        }
+        bAgregar.setOnClickListener(v -> {
+            AppExecutors.getInstance().diskIO().execute(() -> {
+                List<Clases> clasesTotales = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuario);
+                int numClase = clasesTotales.size();
+                    Clases aux;
+                     if(numClase > 8){
+                         bAgregar.setVisibility(View.INVISIBLE);
+                     }
+                    if(AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + (numClase+1),usuario) == null){
+                        alClases.add("Clase "+(numClase+1));
+                        aux = new Clases("Clase "+(numClase+1),usuario,0,0);
+                        AppDatabaseClases.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
                     }
                 });
-                rvClases.setAdapter(new ClasesAdapter(alClases));
-            }
+            rvClases.setAdapter(new ClasesAdapter(alClases)); // Los añade al recyclerView.
         });
+    }
 
-        // Acceso a clases
-    }//Fin onCreate()
+    /* Boton de perfil de usuario para poder acceder a editar la contraseña */
 
     public void perfilUsuario(View view){
         Intent perfil = new Intent(this, ActualizarCuentaActivity.class);

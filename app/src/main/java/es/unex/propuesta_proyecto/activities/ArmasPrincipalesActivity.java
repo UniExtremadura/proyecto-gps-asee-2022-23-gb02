@@ -109,8 +109,13 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
          */
         }
         rvFusilesDeFrancotirador.setAdapter(fusilesDeFrancotirador);//se carga el ArrayList de fusiles de francotirador recuperado de la API en el RecyclerView
+    }
 
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        finish();
     }
 
     private void cargarPreferencias() {

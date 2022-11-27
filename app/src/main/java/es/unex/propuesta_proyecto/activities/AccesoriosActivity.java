@@ -9,10 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +19,6 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.api.ReposNetworkLoaderRunnable;
 import es.unex.propuesta_proyecto.dao.AppDatabaseAccesorios;
 import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
 import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
@@ -48,7 +45,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
 
     private MyAdapter cogerUsuario;
     private String usuarioActual, claseActual;
-
+    private ArrayList<String> almacenSpinners = new ArrayList<>();
     private int idArma;
 
     @Override
@@ -71,21 +68,35 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
             public void run() {
                 Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase(claseActual,usuarioActual);
                 List<Armas> arma = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioActual);
-                Accesorio accesorio = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesoriosUsuario(idArma);
                 if(arma != null && clase != null){
                     for(int i = 0; i < arma.size(); i++){
                         if(arma.get(i).getIdClase() == clase.getId()){ // Arma actual que esta empleando
-                            Armas armaActual = arma.get(i);
-                            idArma = armaActual.getId();
-                            if(accesorio != null){
-                                Log.d("Cadencia",String.valueOf(armaActual.getFire_rate()));
-                                actualizarCamposArmaAcesorrios(armaActual,accesorio);
-                                AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(arma.get(i).getName(),arma.get(i).getType(),arma.get(i).getSubtype(),arma.get(i).getAccuracy()+accesorio.getModPrecision(),arma.get(i).getDamage()+accesorio.getModDaño(),arma.get(i).getRange()+accesorio
-                                        .getModAlcance(), arma.get(i).getFire_rate()+accesorio.getModCadencia(),arma.get(i).getMobility()+accesorio.getModMovilidad(),arma.get(i).getControl()+accesorio.getModControl(),arma.get(i).getPrincipal(), armaActual.getId(),arma.get(i).getIdClase(), armaActual.getWeapon());
-                            } else {
-                                pbPrecisionArma.setProgress(armaActual.getAccuracy());pbDanoArma.setProgress(armaActual.getDamage());
-                                pbAlcanceArma.setProgress(armaActual.getRange());pbCadenciaArma.setProgress(armaActual.getFire_rate());
-                                pbMovilidadArma.setProgress(armaActual.getMobility());pbControlArma.setProgress(armaActual.getControl());
+                            if(arma.get(i).getPrincipal() == 1){
+                                Armas armaActual = arma.get(i);
+                                idArma = armaActual.getId();
+                                List<Accesorio> accesorio = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesoriosTodosUsuario(idArma);
+                                if(accesorio.size() != 0){
+                                    for(int j = 0; accesorio.size() > j; j++){
+                                        switch (accesorio.get(j).getNombre()){
+                                            case "Bocacha +":  sBocacha.setSelection(1); break;
+                                            case "Bocacha ++": sBocacha.setSelection(2); break;
+                                            case "Cañon +": sCañon.setSelection(1); break;
+                                            case "Cañon ++": sCañon.setSelection(2);  break;
+                                            case "Mira +": sMira.setSelection(1); break;
+                                            case "Mira ++": sMira.setSelection(2); break;
+                                            case "Laser +": sLaser.setSelection(1); break;
+                                            case "Laser ++": sLaser.setSelection(2); break;
+                                            case "Culata +": sCulata.setSelection(1); break;
+                                            case "Culata ++": sCulata.setSelection(2); break;
+                                            default: sBocacha.setSelection(0);sCañon.setSelection(0);
+                                                sMira.setSelection(0); sLaser.setSelection(0); sCulata.setSelection(0);
+                                                break;
+                                        }
+                                        actualizarCamposArma(armaActual);
+                                    }
+                                } else { // Se ponen los valores normales del arma
+                                    actualizarCamposArma(armaActual);
+                                }
                             }
                         }
                     }
@@ -120,90 +131,201 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
         sCulata.setAdapter(ArrayAdapter
                 .createFromResource(this, R.array.culata, android.R.layout.simple_spinner_item));
 
-        //sCulata.setSelection(2);
+        /* Al pulsar el botón se devuelve en cada String correspondiente lo que el usuario ha seleccionado del spinner, posteriormente, se pasa al modulo de strategyAccesorios,
+        el cual determinará las operaciones convenientes según la selección del usuario */
+
 
         bAplicar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String obtenerBocacha = sBocacha.getSelectedItem().toString();
-                strategyAccesorios(obtenerBocacha);
                 String obtenerCanon = sCañon.getSelectedItem().toString();
-                strategyAccesorios(obtenerCanon);
                 String obtenerLaser = sLaser.getSelectedItem().toString();
-                strategyAccesorios(obtenerLaser);
                 String obtenerMira = sMira.getSelectedItem().toString();
-                strategyAccesorios(obtenerMira);
                 String obtenerCulata = sCulata.getSelectedItem().toString();
-                strategyAccesorios(obtenerCulata);
 
+                almacenSpinners.add(obtenerBocacha);
+                almacenSpinners.add(obtenerCanon);
+                almacenSpinners.add(obtenerLaser);
+                almacenSpinners.add(obtenerMira);
+                almacenSpinners.add(obtenerCulata);
+
+                /*
+                strategyAccesorios(obtenerBocacha);
+                strategyAccesorios(obtenerCanon);
+                strategyAccesorios(obtenerLaser);
+                strategyAccesorios(obtenerMira);
+                strategyAccesorios(obtenerCulata);*/
+
+                strategyAccesorios(almacenSpinners);
+                finish();
             }
         });
+    }
+    /* Modulo que permite comprobar si un accesorio es nulo y actualizar el arma*/
 
+    private void comprobarAccesorio(String nombreAccesorio){
+        Accesorio comprobarAccesorio = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, nombreAccesorio);
+        Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+        if (comprobarAccesorio != null) {
+            /* Se resta en cada campo su accesorio correspondiente */
+            AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArmaPorId(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),
+                    armaActual.getAccuracy()-comprobarAccesorio.getModPrecision(),
+                    armaActual.getDamage()-comprobarAccesorio.getModDaño(),armaActual.getRange()-comprobarAccesorio.getModAlcance(),
+                    armaActual.getFire_rate()-comprobarAccesorio.getModCadencia(),armaActual.getMobility()-comprobarAccesorio.getModMovilidad()
+                    ,armaActual.getControl()-comprobarAccesorio.getModControl(),armaActual.getId(),armaActual.getPrincipal());
+
+            AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().borrarAccesorio(idArma, comprobarAccesorio.getNombre());
+        }
+        actualizarCamposArma(armaActual);
     }
 
-    private void strategyAccesorios(String nomAccesorio){
-         if(nomAccesorio.equals("Bocacha +")){
-             AppExecutors.getInstance().networkIO().execute(new Runnable() {
+
+    /* Este modulo aplica a las armas diferentes incrementos de daño, precision... */
+
+    private void strategyAccesorios(ArrayList<String> almacenSpinners){
+        String nomAccesorio;
+        for(int i = 0; i < almacenSpinners.size(); i++){
+            nomAccesorio = almacenSpinners.get(i);
+        // Si el accesorio es "- X -" significa que o bien el usuario quiere quitarlo o bien no existe(no se añadido aún), por lo tanto de existir debe borrarse.
+
+            if(nomAccesorio.equals("- B -") || nomAccesorio.equals("- C -") || nomAccesorio.equals("- L -")|| nomAccesorio.equals("- M -")|| nomAccesorio.equals("- T -")){
+                String finalNomAccesorio = nomAccesorio;
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (finalNomAccesorio) {
+                            case "- B -": {
+                                comprobarAccesorio("Bocacha +");
+                                break;
+                            }
+                            case "- C -": {
+                                comprobarAccesorio("Cañon +");
+                                break;
+                            }
+                            case "- L -": {
+                                comprobarAccesorio("Laser +");
+                                break;
+                            }
+                            case "- M -" : {
+                                comprobarAccesorio("Mira +");
+                                break;
+                            }
+                            case "- T -": {
+                                comprobarAccesorio("Culata +");
+                                break;
+                            }
+                        }
+                    }
+                });
+            }
+
+        /* En la siguiente secuencia de opciones se compruebe lo que el usuario selecciona, en los diferentes casos se hacen diferentes variaciones a las armas, pues
+                                    dependiendo de la combinación de Accesorios, el arma tendrá unos ventajas u otras.
+           Ins
+         */
+
+        if(nomAccesorio.equals("Bocacha +")){
+            String finalNomAccesorio1 = nomAccesorio;
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
                  @Override
                  public void run() {
-                     Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesoriosUsuario(idArma);
+                     Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio1);
                      Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
-                     Accesorio accesorio = new Accesorio(nomAccesorio, Accesorio.TipoAccesorio.BOCACHA,10,10,10,10,10,10,idArma);
+                     Accesorio accesorio = new Accesorio(finalNomAccesorio1, Accesorio.TipoAccesorio.BOCACHA,12,14,-4,12,-4,-4,idArma);
                      if(accesorioExistente == null ){
                      AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
-                         actualizarArmaConAccesoriosBD(armaActual,accesorio);
-                         actualizarCamposArmaAcesorrios(armaActual,accesorio);
-                    } else {
-                         actualizarCamposArmaAcesorrios(armaActual,accesorio);
-                     }
+                     AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
+                                 armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
+                                 armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
+                    }
                  }
              });
-         } else if(nomAccesorio.equals("Bocacha ++")){
-
+         }
+        else if(nomAccesorio.equals("Cañon +")){
+            String finalNomAccesorio2 = nomAccesorio;
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio2);
+                    Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+                    Accesorio accesorio = new Accesorio(finalNomAccesorio2, Accesorio.TipoAccesorio.CAÑON,-7,-7,8,12,-12,1,idArma);
+                    if(accesorioExistente == null ){
+                        AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
+                        AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
+                                armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
+                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
+                    }
+                }
+            });
         }
-        if(nomAccesorio.equals("Cañon +")){
-
-        } else if(nomAccesorio.equals("Cañon ++")){
-
+        else if(nomAccesorio.equals("Laser +")){
+            String finalNomAccesorio3 = nomAccesorio;
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio3);
+                    Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+                    Accesorio accesorio = new Accesorio(finalNomAccesorio3, Accesorio.TipoAccesorio.CAÑON,1,4,-9,5,2,11,idArma);
+                    if(accesorioExistente == null ){
+                        AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
+                        AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
+                                armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
+                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
+                    }
+                }
+            });
         }
-        if(nomAccesorio.equals("Laser +")){
-
-        } else if(nomAccesorio.equals("Laser ++")){
-
+        else if(nomAccesorio.equals("Mira +")){
+            String finalNomAccesorio4 = nomAccesorio;
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio4);
+                    Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+                    Accesorio accesorio = new Accesorio(finalNomAccesorio4, Accesorio.TipoAccesorio.MIRA,-9,7,4,11,-11,4,idArma);
+                    if(accesorioExistente == null ){
+                        AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
+                        AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
+                                armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
+                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
+                    }
+                }
+            });
         }
-        if(nomAccesorio.equals("Mira +")){
-
-        } else if(nomAccesorio.equals("Mira ++")){
-
-        }
-        if(nomAccesorio.equals("Culata +")){
-
-        } else if(nomAccesorio.equals("Culata ++")){
-
-        }
-    }
-
-    /* Este método actualiza los campos de las armas primarias con accesorios, modificandolas en el room y en el layout */
-
-    private void actualizarCamposArmaAcesorrios(Armas arma,Accesorio accesorio){
-        pbPrecisionArma.setProgress(arma.getAccuracy()+accesorio.getModPrecision());pbDanoArma.setProgress(arma.getDamage()+accesorio.getModDaño());
-        pbAlcanceArma.setProgress(arma.getRange()+accesorio.getModAlcance());pbCadenciaArma.setProgress(arma.getFire_rate()+accesorio.getModCadencia());
-        pbMovilidadArma.setProgress(arma.getMobility()+accesorio.getModMovilidad());pbControlArma.setProgress(arma.getControl()+accesorio.getModControl());
-    }
-
-    private void actualizarArmaConAccesoriosBD(Armas arma,Accesorio accesorio){
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(arma.getName(),arma.getType(),arma.getSubtype(),arma.getAccuracy()+accesorio.getModPrecision(),
-                        arma.getDamage()+accesorio.getModDaño(),arma.getRange()+accesorio.getModAlcance(),arma.getFire_rate()+accesorio.getModCadencia(),arma.getMobility()+accesorio.getModMovilidad(),
-                        arma.getControl()+accesorio.getModControl(),idArma,arma.getIdClase(),arma.getPrincipal(), arma.getWeapon());
+        else if(nomAccesorio.equals("Culata +")){
+            String finalNomAccesorio5 = nomAccesorio;
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio5);
+                    Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+                    Accesorio accesorio = new Accesorio(finalNomAccesorio5, Accesorio.TipoAccesorio.CULATA,-2,4,4,11,1,1,idArma);
+                    if(accesorioExistente == null ){
+                        AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
+                         AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
+                                armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
+                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
+                    }
+                }
+            });
             }
-        });
+        }
     }
 
-    /* Este recupera con la función SharedPreferences el usuario que está loggeado en este instante y la clase a la que ha accedido en el mismo instante */
+
+    /* Este método es igual que el anterior, pero simplemente actualiza los campos del arma sin accesorio */
+
+    private void actualizarCamposArma(Armas arma) {
+        pbPrecisionArma.setProgress(arma.getAccuracy());pbDanoArma.setProgress(arma.getDamage());
+        pbAlcanceArma.setProgress(arma.getRange());pbCadenciaArma.setProgress(arma.getFire_rate());
+        pbMovilidadArma.setProgress(arma.getMobility());pbControlArma.setProgress(arma.getControl());
+    }
+
+
+
+    /* Este método recupera con la función SharedPreferences el usuario que está loggeado en este instante y la clase a la que ha accedido en el mismo instante */
 
     private void cargarPreferencias() {
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
@@ -219,6 +341,8 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
         cogerUsuario.usuarioActivo(usuario);
         cogerUsuario.claseActiva(clase);
     }
+
+    /* Método autogenerado por la clase (al ser un Listener) */
 
     @Override
     public void onListInteraction(String url) {

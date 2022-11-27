@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="bocachas">
-        <item>-</item>
+        <item>- B -</item>
         <item>Bocacha +</item>
-        <item>Bocacha ++</item>
     </string-array>
     <string-array name="cañon">
-        <item>-</item>
+        <item>- C -</item>
         <item>Cañon +</item>
-        <item>Cañon ++</item>
     </string-array>
     <string-array name="laser">
-        <item>-</item>
+        <item>- L -</item>
         <item>Laser +</item>
-        <item>Laser ++</item>
     </string-array>
     <string-array name="mira">
-        <item>-</item>
+        <item>- M -</item>
         <item>Mira +</item>
-        <item>Mira ++</item>
     </string-array>
     <string-array name="culata">
-        <item>-</item>
+        <item>- T -</item>
         <item>Culata +</item>
-        <item>Culata ++</item>
     </string-array>
 </resources>
