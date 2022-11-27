@@ -6,6 +6,9 @@ android {
     namespace 'es.unex.propuesta_proyecto'
     compileSdk 33
 
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
 
     defaultConfig {
         applicationId "es.unex.propuesta_proyecto"
