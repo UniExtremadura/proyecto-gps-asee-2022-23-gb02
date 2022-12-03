@@ -1,6 +1,7 @@
 package es.unex.propuesta_proyecto.dao;
 
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -12,6 +13,10 @@ import es.unex.propuesta_proyecto.model.Usuarios;
 
 @Dao
 public interface DaoUsuarios {
+
+    /* Para las pruebas */
+    @Query("SELECT * FROM Usuarios")
+    abstract LiveData<List<Usuarios>> obtenerUsuariosLV();
 
     @Query("SELECT * FROM Usuarios")
     abstract List<Usuarios> obtenerUsuarios();

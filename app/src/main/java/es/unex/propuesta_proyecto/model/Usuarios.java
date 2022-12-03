@@ -21,8 +21,8 @@ public class Usuarios {
 
     @Ignore
     public Usuarios() {
-        this.name = name;
-        this.password = password;
+        this.name = "";
+        this.password = "";
     }
 
     public String getName() {
