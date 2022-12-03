@@ -15,10 +15,7 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
 import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
-import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
-import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 
 /* Esta clase representa el listado de clases que se muestran nada más iniciar sesión Clase 1, clase 2, clase 3...*/

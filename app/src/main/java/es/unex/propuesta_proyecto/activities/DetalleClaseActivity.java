@@ -53,19 +53,9 @@ public class DetalleClaseActivity extends AppCompatActivity {
             switch (valor) {
                 case "Clase 2":
                     setContentView(R.layout.activity_detalle_clase2);
-
                     tvNameArma = findViewById(R.id.tvNameArma2);tvPrecision = findViewById(R.id.pbPrecisionArmaPrincipal2);tvDano = findViewById(R.id.pbDañoArmaPrincipal2);
-                    tvAlcance = findViewById(R.id.pbAlcanceArmaPrincipal2);tvCadencia = findViewById(R.id.pbCadenciaArmaPrincipal2);tvMovilidad = findViewById(R.id.pbMovilidadArmaPrincipal2);
-                    tvControl = findViewById(R.id.pbControlArmaPrincipal2);
-
-                    imgPrimaria = findViewById(R.id.ivArmaArmaPrincipal2);
-                    imgSecundaria = findViewById(R.id.ivArmaArmaSecundaria2);
-
-                    tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria2);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria2);
-                    tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria2);tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria2);
-                    tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria2);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria2);
-                    tvControlSec = findViewById(R.id.pbControlArmaSecundaria2);
-
+                    tvAlcance = findViewById(R.id.pbAlcanceArmaPrincipal2);tvCadencia = findViewById(R.id.pbCadenciaArmaPrincipal2);tvMovilidad = findViewById(R.id.pbMovilidadArmaPrincipal2);tvControl = findViewById(R.id.pbControlArmaPrincipal2);
+                    imgPrimaria = findViewById(R.id.ivArmaArmaPrincipal2);imgSecundaria = findViewById(R.id.ivArmaArmaSecundaria2);tvNameArmaSec = findViewById(R.id.tvNombreArmaSecundaria2);tvPrecisionSec = findViewById(R.id.pbPrecisionArmaSecundaria2);tvDanoSec = findViewById(R.id.pbDañoArmaSecundaria2);tvAlcanceSec = findViewById(R.id.pbAlcanceArmaSecundaria2);tvCadenciaSec = findViewById(R.id.pbCadenciaArmaSecundaria2);tvMovilidadSec = findViewById(R.id.pbMovilidadArmaSecundaria2);tvControlSec = findViewById(R.id.pbControlArmaSecundaria2);
                     AppExecutors.getInstance().diskIO().execute(() -> {
                         /* Cogemos la clase actual en la que se encuentra el usuario  */
                         Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 2",usuarioRecuperado);
@@ -80,22 +70,16 @@ public class DetalleClaseActivity extends AppCompatActivity {
                                     if(armaActual.getPrincipal() == 1){
                                         actualizarCamposArmasPrincipales(armaActual);
                                         //Ejecutamos en el hilo principal porque ejecuta cambios en la vista
-                                        runOnUiThread(() -> actualizarImgPrimaria(armaActual));
-                                    }else{
+                                        runOnUiThread(() -> actualizarImgPrimaria(armaActual));}else{
                                         if(armaActual.getPrincipal() == 0){
                                             actualizarCamposArmasSecundarias(armaActual);
-                                            runOnUiThread(() -> actualizarImgSecundaria(armaActual));
-                                        }
-                                    }
-                                }
-                            }
-                        } else { // No tiene ningún arma
+                                            runOnUiThread(() -> actualizarImgSecundaria(armaActual));}}}
+                            }} else { // No tiene ningún arma
                             AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
                             actualizarCamposArmasPrincipales(a);
                             AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
-                            actualizarCamposArmasSecundarias(a2);
-                        }
-                    });
+                            actualizarCamposArmasSecundarias(a2);}}
+                    );
                     break;
                 case "Clase 3":
                     setContentView(R.layout.activity_detalle_clase3);

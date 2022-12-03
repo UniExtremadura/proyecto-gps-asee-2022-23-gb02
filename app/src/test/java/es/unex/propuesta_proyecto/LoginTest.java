@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
 import es.unex.propuesta_proyecto.dao.DaoJuego;
 import es.unex.propuesta_proyecto.dao.DaoUsuarios;
+import es.unex.propuesta_proyecto.model.Usuarios;
 
 @RunWith(AndroidJUnit4.class)
 public class LoginTest {
@@ -38,6 +39,32 @@ public class LoginTest {
     public void getTestDao(){
         dao_to_test = loginDB.daoUsuarios();
         Assert.assertNotNull(dao_to_test);
+    }
+
+    @Test
+    public void insertarUsuTest(){
+        Usuarios user = new Usuarios("Carlos", "1234");
+        dao_to_test.insertarUsuario(user);
+        Usuarios recup = dao_to_test.obtenerUsuarios().get(0);
+        Assert.assertEquals(recup.getName(), "Carlos");
+        Assert.assertEquals(recup.getPassword(), "1234");
+    }
+
+    @Test
+    public void actualizarUsuTest(){
+        Usuarios user = new Usuarios("Carlos", "1234");
+        dao_to_test.insertarUsuario(user);
+        dao_to_test.actualizarContrasena("Carlos", "Prueba1");
+        Usuarios recup = dao_to_test.obtenerUsuarios().get(0);
+        Assert.assertEquals(recup.getPassword(), "Prueba1");
+    }
+
+    @Test
+    public void borrarUsuTest(){
+        Usuarios user = new Usuarios("Carlos", "1234");
+        dao_to_test.insertarUsuario(user);
+        dao_to_test.borrarUsuario(user);
+        Assert.assertEquals(dao_to_test.obtenerUsuarios().size(), 0);
     }
 
     @After

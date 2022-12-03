@@ -1,5 +1,6 @@
 package es.unex.propuesta_proyecto.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -15,6 +16,10 @@ public interface DaoJuego {
 
     @Query("SELECT * FROM Armas")
     abstract List<Armas> obtenerArmas();
+
+    //Pruebas
+    @Query("SELECT * FROM Armas")
+    abstract LiveData<List<Armas>> getAllLD();
 
     @Query("SELECT * FROM Armas WHERE id = :idArma")
     Armas obtenerArmaPorId(int idArma);
