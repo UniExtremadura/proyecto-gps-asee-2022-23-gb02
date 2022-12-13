@@ -14,7 +14,7 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
+import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
 /* Esta clase actualiza la cuenta del usuario */
@@ -46,11 +46,11 @@ public class ActualizarCuentaActivity extends AppCompatActivity {
 
         actualizar.setOnClickListener(v -> AppExecutors.getInstance().diskIO().execute(() -> {
             Usuarios checkUser;
-            checkUser = AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(usuario);
+            checkUser = AppDataBase.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(usuario);
             if(checkUser != null){
                 checkUser.setName(username.getText().toString());
                 checkUser.setPassword(password.getText().toString());
-                AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().actualizarContrasena(checkUser.getName(),checkUser.getPassword());
+                AppDataBase.getInstance(getApplicationContext()).daoUsuarios().actualizarContrasena(checkUser.getName(),checkUser.getPassword());
                 Intent reloggin = new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(reloggin);
             }
@@ -62,8 +62,8 @@ public class ActualizarCuentaActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Usuarios deleteUser;
-                deleteUser = AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(usuario);
-                    AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().borrarUsuario(deleteUser);
+                deleteUser = AppDataBase.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(usuario);
+                AppDataBase.getInstance(getApplicationContext()).daoUsuarios().borrarUsuario(deleteUser);
                     Intent reloggin = new Intent(getApplicationContext(),LoginActivity.class);
                     startActivity(reloggin);
             }

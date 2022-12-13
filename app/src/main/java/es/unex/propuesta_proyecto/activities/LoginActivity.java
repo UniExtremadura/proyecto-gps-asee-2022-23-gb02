@@ -12,8 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;//Los Toast deben ser lanzados desde el hilo de la Activity, no en un hilo secundario
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
-import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
+import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
 /* Esta clase permite al usuario registrarse, introduciendo una contraseña y nombre de usuario (con previo registro) */
@@ -45,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 //Fin run() del onClick()
                 AppExecutors.getInstance().diskIO().execute(() -> {
                     Usuarios usuario;
-                    usuario = AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(user);
+                    usuario = AppDataBase.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(user);
                     if(usuario != null){
                         if(usuario.getName().equals(user) && usuario.getPassword().equals(pass)){
                             runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Ha iniciado sesión!", Toast.LENGTH_SHORT).show());

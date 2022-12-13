@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
+import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
 /* Esta clase permita al usuario registrarse */
@@ -43,10 +43,10 @@ public class RegistroActivity extends AppCompatActivity {
                 if(pass.equals(repass)){
                     AppExecutors.getInstance().diskIO().execute(() -> {
                         Usuarios usuario;
-                        usuario = AppDatabaseUsuarios.getInstance(RegistroActivity.this).daoUsuarios().comprobarUsuario(user);
+                        usuario = AppDataBase.getInstance(RegistroActivity.this).daoUsuarios().comprobarUsuario(user);
                         if(usuario == null){
                             usuario = new Usuarios(user,pass);
-                            AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().insertarUsuario(usuario);
+                            AppDataBase.getInstance(getApplicationContext()).daoUsuarios().insertarUsuario(usuario);
                             Intent actClasses = new Intent(getApplicationContext(), LoginActivity.class);
                             runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Se ha registrado!", Toast.LENGTH_SHORT).show());
                             startActivity(actClasses);

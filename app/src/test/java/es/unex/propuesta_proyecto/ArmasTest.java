@@ -14,13 +14,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
+import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.dao.DaoJuego;
 import es.unex.propuesta_proyecto.model.Armas;
 
 @RunWith(AndroidJUnit4.class)
 public class ArmasTest {
-    private AppDatabaseArmas armasDB;
+    private AppDataBase armasDB;
     private DaoJuego dao_armas;
 
     @Rule
@@ -29,7 +29,7 @@ public class ArmasTest {
     @Before
     public void crearArmasDB(){
         Context context = ApplicationProvider.getApplicationContext();
-        armasDB = Room.inMemoryDatabaseBuilder(context, AppDatabaseArmas.class).allowMainThreadQueries().build();
+        armasDB = Room.inMemoryDatabaseBuilder(context, AppDataBase.class).allowMainThreadQueries().build();
         dao_armas = armasDB.daoJuego();
     }
 

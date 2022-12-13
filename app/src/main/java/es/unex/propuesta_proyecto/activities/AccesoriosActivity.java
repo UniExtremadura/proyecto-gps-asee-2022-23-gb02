@@ -18,9 +18,7 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.dao.AppDatabaseAccesorios;
-import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
-import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
+import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Accesorio;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
@@ -66,15 +64,15 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
         /* Esta parte se encarga de que cuando inicia en los accesorios le salgan precargados */
 
         AppExecutors.getInstance().diskIO().execute(() -> {
-            Clases clase = AppDatabaseClases.getInstance(getApplicationContext()).daoClases().obtenerClase(claseActual,usuarioActual);
-            List<Armas> arma = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioActual);
+            Clases clase = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(claseActual,usuarioActual);
+            List<Armas> arma = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmasPorNombreUsuario(usuarioActual);
             if(arma != null && clase != null){
                 for(int i = 0; i < arma.size(); i++){
                     if(arma.get(i).getIdClase() == clase.getId()){ // Arma actual que esta empleando
                         if(arma.get(i).getPrincipal() == 1){
                             Armas armaActual = arma.get(i);
                             idArma = armaActual.getId();
-                            List<Accesorio> accesorio = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesoriosTodosUsuario(idArma);
+                            List<Accesorio> accesorio = AppDataBase.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesoriosTodosUsuario(idArma);
                             if(accesorio.size() != 0){
                                 for(int j = 0; accesorio.size() > j; j++){
                                     switch (accesorio.get(j).getNombre()){
@@ -159,17 +157,17 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
     /* Modulo que permite comprobar si un accesorio es nulo y actualizar el arma*/
 
     private void comprobarAccesorio(String nombreAccesorio){
-        Accesorio comprobarAccesorio = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, nombreAccesorio);
-        Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+        Accesorio comprobarAccesorio = AppDataBase.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, nombreAccesorio);
+        Armas armaActual = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
         if (comprobarAccesorio != null) {
             /* Se resta en cada campo su accesorio correspondiente */
-            AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArmaPorId(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),
+            AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarArmaPorId(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),
                     armaActual.getAccuracy()-comprobarAccesorio.getModPrecision(),
                     armaActual.getDamage()-comprobarAccesorio.getModDaño(),armaActual.getRange()-comprobarAccesorio.getModAlcance(),
                     armaActual.getFire_rate()-comprobarAccesorio.getModCadencia(),armaActual.getMobility()-comprobarAccesorio.getModMovilidad()
                     ,armaActual.getControl()-comprobarAccesorio.getModControl(),armaActual.getId(),armaActual.getPrincipal());
 
-            AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().borrarAccesorio(idArma, comprobarAccesorio.getNombre());
+            AppDataBase.getInstance(getApplicationContext()).daoAccesorios().borrarAccesorio(idArma, comprobarAccesorio.getNombre());
         }
         actualizarCamposArma(armaActual);
     }
@@ -224,12 +222,12 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                  @Override
                  public void run() {
-                     Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio1);
-                     Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+                     Accesorio accesorioExistente = AppDataBase.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio1);
+                     Armas armaActual = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
                      Accesorio accesorio = new Accesorio(finalNomAccesorio1, Accesorio.TipoAccesorio.BOCACHA,12,14,-4,12,-4,-4,idArma);
                      if(accesorioExistente == null ){
-                     AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
-                     AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
+                     AppDataBase.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
+                         AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
                                  armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
                                  armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
                     }
@@ -241,12 +239,12 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
-                    Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio2);
-                    Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+                    Accesorio accesorioExistente = AppDataBase.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio2);
+                    Armas armaActual = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
                     Accesorio accesorio = new Accesorio(finalNomAccesorio2, Accesorio.TipoAccesorio.CAÑON,-7,-7,8,12,-12,1,idArma);
                     if(accesorioExistente == null ){
-                        AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
-                        AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
+                        AppDataBase.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
+                        AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
                                 armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
                                 armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
                     }
@@ -258,12 +256,12 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
-                    Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio3);
-                    Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+                    Accesorio accesorioExistente = AppDataBase.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio3);
+                    Armas armaActual = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
                     Accesorio accesorio = new Accesorio(finalNomAccesorio3, Accesorio.TipoAccesorio.CAÑON,1,4,-9,5,2,11,idArma);
                     if(accesorioExistente == null ){
-                        AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
-                        AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
+                        AppDataBase.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
+                        AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
                                 armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
                                 armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
                     }
@@ -275,12 +273,12 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
-                    Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio4);
-                    Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+                    Accesorio accesorioExistente = AppDataBase.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio4);
+                    Armas armaActual = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
                     Accesorio accesorio = new Accesorio(finalNomAccesorio4, Accesorio.TipoAccesorio.MIRA,-9,7,4,11,-11,4,idArma);
                     if(accesorioExistente == null ){
-                        AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
-                        AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
+                        AppDataBase.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
+                        AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
                                 armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
                                 armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
                     }
@@ -292,12 +290,12 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
-                    Accesorio accesorioExistente = AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio5);
-                    Armas armaActual = AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
+                    Accesorio accesorioExistente = AppDataBase.getInstance(getApplicationContext()).daoAccesorios().obtenerAccesorioUsuario(idArma, finalNomAccesorio5);
+                    Armas armaActual = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArma);
                     Accesorio accesorio = new Accesorio(finalNomAccesorio5, Accesorio.TipoAccesorio.CULATA,-2,4,4,11,1,1,idArma);
                     if(accesorioExistente == null ){
-                        AppDatabaseAccesorios.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
-                         AppDatabaseArmas.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
+                        AppDataBase.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
+                        AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
                                 armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
                                 armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
                     }

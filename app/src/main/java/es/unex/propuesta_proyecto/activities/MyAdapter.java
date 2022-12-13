@@ -21,8 +21,7 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
-import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
+import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 import es.unex.propuesta_proyecto.model.Repo;
@@ -94,8 +93,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 Intent navegarADetalles = new Intent(context, DetalleClaseActivity.class);
                 navegarADetalles.putExtra("className", claseGlobal); // Pasamos la clase al detallesActivity a través del intent
                 // usuarioGlobal es el usuario que está loggeado en este instante.
-                Armas armasUsuario = AppDatabaseArmas.getInstance(context).daoJuego().obtenerArmaUsuario(tvNombre.getText().toString(), usuarioGlobal); // Se coge el arma actual del usuario
-                List<Clases> clasesUsuario = AppDatabaseClases.getInstance(context).daoClases().obtenerClasesUsuario(usuarioGlobal); // Lista de clases del usuario
+                Armas armasUsuario = AppDataBase.getInstance(context).daoJuego().obtenerArmaUsuario(tvNombre.getText().toString(), usuarioGlobal); // Se coge el arma actual del usuario
+                List<Clases> clasesUsuario = AppDataBase.getInstance(context).daoClases().obtenerClasesUsuario(usuarioGlobal); // Lista de clases del usuario
                 if (clasesUsuario != null) {
                     for (int i = 0; i < clasesUsuario.size(); i++) {
                         int claseActual = clasesUsuario.get(i).getId(); // Recupera la id de la clase actual.
@@ -104,7 +103,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                 int armaActual = armasUsuario.getId();
                                 //Se ejecuta en el hilo principal porque realiza cambios en la pantalla en tiempo de ejecución
                                 AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(weaponGlobal, ivArma));
-                                AppDatabaseArmas.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(), "", "", pbPrecisionArma.getProgress(), pbDanoArma.getProgress(), pbAlcanceArma.getProgress(), pbCadenciaArma.getProgress(), pbMovilidadArma.getProgress(), pbControlArma.getProgress(), armaActual, claseActual, armasUsuario.getPrincipal(), weaponGlobal);
+                                AppDataBase.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(), "", "", pbPrecisionArma.getProgress(), pbDanoArma.getProgress(), pbAlcanceArma.getProgress(), pbCadenciaArma.getProgress(), pbMovilidadArma.getProgress(), pbControlArma.getProgress(), armaActual, claseActual, armasUsuario.getPrincipal(), weaponGlobal);
                             } else {
                                 Armas insertarArma = new Armas();
                                 if (armaIdGlobal == 1) {
@@ -118,7 +117,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                                         insertarArma.setWeapon(weaponGlobal);
                                     }
                                 }
-                                AppDatabaseArmas.getInstance(context).daoJuego().insertarArmas(insertarArma);
+                                AppDataBase.getInstance(context).daoJuego().insertarArmas(insertarArma);
                             }
                         }
                     }
