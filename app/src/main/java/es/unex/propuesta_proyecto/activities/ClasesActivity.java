@@ -47,33 +47,49 @@ public class ClasesActivity extends AppCompatActivity {
 
         AppExecutors.getInstance().diskIO().execute(() -> {
             Clases aux;
-            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto",usuario, 0, 1, "AK-47");
-            Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,5,50,50,"Lanzamisiles",usuario, 0, 0, "RPG-7");
-            AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
-            AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
-            int idClass, idArmaPrinc, idArmaSec;
-            idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaUsuario(a.getName(), a.getUsuario()).getId();
-            idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaUsuario(a2.getName(), a2.getUsuario()).getId();
+            Armas principal, secundaria;
+            int idClass, idArmaPrinc, idArmaSec;;
             if(AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 1",usuario) == null){
-                aux = new Clases("Clase 1", usuario, idArmaPrinc, idArmaSec);
+                aux = new Clases("Clase 1", usuario, 0, 0);
                 AppDataBase.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
                 idClass = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(aux.getNombre(), usuario).getId();
-                AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarIdClase(idClass, idArmaPrinc);
-                AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarIdClase(idClass, idArmaSec);
+
+                Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto",usuario, idClass, 1, "AK-47");
+                Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,5,50,50,"Lanzamisiles",usuario, idClass, 0, "RPG-7");
+                AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 1);
+                idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 0);
+
+                AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrinc, idArmaSec, idClass);
            }
             if(AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 2",usuario) == null){
-                aux = new Clases("Clase 2",usuario,0 ,0);
+                aux = new Clases("Clase 2",usuario, 0,0);
                 AppDataBase.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
                 idClass = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(aux.getNombre(), usuario).getId();
-                AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarIdClase(idClass, idArmaPrinc);
-                AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarIdClase(idClass, idArmaSec);
+
+                Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto",usuario, idClass, 1, "AK-47");
+                Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,5,50,50,"Lanzamisiles",usuario, idClass, 0, "RPG-7");
+                AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+
+                idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 1);
+                idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 0);
+                AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrinc, idArmaSec, idClass);
             }
             if(AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase 3",usuario) == null){
                 aux = new Clases("Clase 3",usuario,0 ,0);
                 AppDataBase.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
                 idClass = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(aux.getNombre(), usuario).getId();
-                AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarIdClase(idClass, idArmaPrinc);
-                AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarIdClase(idClass, idArmaSec);
+
+                Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto",usuario, idClass, 1, "AK-47");
+                Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,5,50,50,"Lanzamisiles",usuario, idClass, 0, "RPG-7");
+                AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+
+                idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 1);
+                idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 0);
+                AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrinc, idArmaSec, idClass);
             }
         });
 
@@ -98,20 +114,20 @@ public class ClasesActivity extends AppCompatActivity {
                 List<Clases> clasesTotales = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuario);
                 int numClase = clasesTotales.size();
                 Clases aux;
-                Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto",usuario, 0, 1, "AK-47");
-                Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,5,50,50,"Lanzamisiles",usuario, 0, 0, "RPG-7");
-                AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
-                AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
                 int idClass, idArmaPrinc, idArmaSec;
-                idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaUsuario(a.getName(), a.getUsuario()).getId();
-                idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaUsuario(a2.getName(), a2.getUsuario()).getId();
                 if(AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + (numClase+1),usuario) == null){
                     alClases.add("Clase "+(numClase+1));
                     aux = new Clases("Clase "+(numClase+1),usuario,0,0);
                     AppDataBase.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
                     idClass = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(aux.getNombre(), usuario).getId();
-                    AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarIdClase(idClass, idArmaPrinc);
-                    AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarIdClase(idClass, idArmaSec);
+                    Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto",usuario, idClass, 1, "AK-47");
+                    Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,5,50,50,"Lanzamisiles",usuario, idClass, 0, "RPG-7");
+                    AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                    AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+
+                    idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 1);
+                    idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 0);
+                    AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrinc, idArmaSec, idClass);
                 }
             });
             rvClases.setAdapter(new ClasesAdapter(alClases)); // Los añade al recyclerView.

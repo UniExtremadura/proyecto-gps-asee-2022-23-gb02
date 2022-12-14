@@ -42,11 +42,11 @@ public interface DaoJuego {
     @Query("UPDATE Armas set name = :name, type = :type, subtype = :subtype, accuracy = :accuracy, damage = :damage, range = :range, fire_rate = :fire_rate, mobility = :mobility, control = :control, principal =:principal  WHERE id = :id")
     void actualizarArmaPorId(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, int id, int principal);
 
-    @Query("UPDATE Armas set idClase = :idClase  WHERE id = :id")
-    void actualizarIdClase(int idClase, int id);
-
     @Query("DELETE FROM Armas WHERE id = :id")
     void borrarArma(int id);
+
+    @Query("SELECT id FROM Armas WHERE idClase = :idClase AND principal = :principal")
+    int getIdArmaTipo(int idClase, int principal);
 
     @Query("DELETE FROM Armas WHERE id = :id AND usuario = :nombreusuario")
     void borrarArmaPorNombreyId(int id, String nombreusuario);
