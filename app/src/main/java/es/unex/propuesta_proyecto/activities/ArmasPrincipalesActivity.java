@@ -1,21 +1,21 @@
 package es.unex.propuesta_proyecto.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import es.unex.propuesta_proyecto.model.Armas;
+
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.api.ReposNetworkLoaderRunnable;
+import es.unex.propuesta_proyecto.model.Armas;
 
 /* Muestra el listado de armas principales, obtenidas de la API y haciendolas intercambiables con las "por defecto" */
 
