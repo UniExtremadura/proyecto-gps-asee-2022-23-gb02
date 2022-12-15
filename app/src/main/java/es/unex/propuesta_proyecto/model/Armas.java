@@ -38,11 +38,9 @@ public class Armas {
     private int idClase;
     @ColumnInfo(name="principal")
     private int principal;
-    @ColumnInfo(name="weapon")
-    private String weapon;
 
 
-    public Armas(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String tipoArma, String usuario,int idClase, int principal, String weapon) {
+    public Armas(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String tipoArma, String usuario,int idClase, int principal) {
         this.name = name;
         this.type = type;
         this.subtype = subtype;
@@ -56,7 +54,6 @@ public class Armas {
         this.usuario = usuario;
         this.idClase = idClase;
         this.principal = principal;
-        this.weapon = weapon;
     }
 
     @Ignore
@@ -73,7 +70,6 @@ public class Armas {
         this.tipoArma="";
         this.usuario = "";
         this.idClase = 0;
-        this.weapon = "";
     }
 
     public int getId() {
@@ -180,11 +176,4 @@ public class Armas {
         this.principal = principal;
     }
 
-    public String getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(String weapon) {
-        this.weapon = weapon;
-    }
 }

@@ -229,7 +229,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
                      AppDataBase.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
                          AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
                                  armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
-                                 armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
+                                 armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal());
                     }
                  }
              });
@@ -246,7 +246,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
                         AppDataBase.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
                         AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
                                 armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
-                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
+                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal());
                     }
                 }
             });
@@ -263,7 +263,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
                         AppDataBase.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
                         AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
                                 armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
-                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
+                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal());
                     }
                 }
             });
@@ -280,7 +280,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
                         AppDataBase.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
                         AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
                                 armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
-                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
+                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal());
                     }
                 }
             });
@@ -297,7 +297,7 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
                         AppDataBase.getInstance(getApplicationContext()).daoAccesorios().insertarAccesorio(accesorio);
                         AppDataBase.getInstance(getApplicationContext()).daoJuego().actualizarArma(armaActual.getName(),armaActual.getType(),armaActual.getSubtype(),armaActual.getAccuracy()+accesorio.getModPrecision(),
                                 armaActual.getDamage()+accesorio.getModDaño(),armaActual.getRange()+accesorio.getModAlcance(),armaActual.getFire_rate()+accesorio.getModCadencia(),armaActual.getMobility()+accesorio.getModMovilidad(),
-                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal(),armaActual.getWeapon());
+                                armaActual.getControl()+accesorio.getModControl(),idArma,armaActual.getIdClase(),armaActual.getPrincipal());
                     }
                 }
             });

@@ -111,7 +111,7 @@ public class DetalleClaseActivity extends AppCompatActivity {
 
     //Dependiendo el atributo weapon del arma recibida muestra una imagen u otra en función del enlace con las funciones de Picasso
     public void actualizarImgPrimaria(Armas arma){
-        switch (arma.getWeapon()) {
+        switch (arma.getName()) {
             case "ak-47":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_ak-47.webp").into(imgPrimaria);
                 break;
