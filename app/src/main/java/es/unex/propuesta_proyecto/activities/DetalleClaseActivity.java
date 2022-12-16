@@ -58,11 +58,20 @@ public class DetalleClaseActivity extends AppCompatActivity {
                 @SuppressLint("WrongViewCast")
                 @Override
                 public void run() {
+                    int claseActual = 0;
+                    List<Clases> clasesUsuario = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuarioRecuperado); // Lista de clases del usuario
+                    if (clasesUsuario != null) {
+                        for (int i = 0; i < clasesUsuario.size(); i++) {
+                            if(clasesUsuario.get(i).getNombre().equals(valor)){
+                                claseActual = clasesUsuario.get(i).getId(); // Recupera la id de la clase actual.
+                            }
+                        }
+                    }
                     int idArmaPrin, idArmaSec;
-                    Armas aPrin;
-                    Armas aSec;
-                    idArmaPrin = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(valor, usuarioRecuperado).getIdArmaPrincipal();
-                    idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(valor, usuarioRecuperado).getIdArmaSecundaria();
+                    Armas aPrin, aSec;
+                    idArmaPrin = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(claseActual, 1);
+                    idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(claseActual, 0);
+                    AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrin, idArmaSec, claseActual);
                     aPrin = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArmaPrin);
                     aSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().obtenerArmaPorId(idArmaSec);
                     tvNameArma = findViewById(R.id.tvNombre1);

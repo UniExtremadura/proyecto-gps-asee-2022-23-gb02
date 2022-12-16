@@ -30,7 +30,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<Repo> mDataset;
     private static String usuarioGlobal;
     private static String claseGlobal;
-    private static int armaIdGlobal;
+    private static int armaPrincipal;
 
     public interface OnListInteractionListener {
         public void onListInteraction(String url);
@@ -47,8 +47,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         claseGlobal = clase;
     }
 
-    public void pasarIdArma(int armaId) {
-        this.armaIdGlobal = armaId;
+    public void pasarIdArma(int principal) {
+        this.armaPrincipal = principal;
     }
 
 
@@ -92,18 +92,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     for (int i = 0; i < clasesUsuario.size(); i++) {
                         int claseActual = clasesUsuario.get(i).getId(); // Recupera la id de la clase actual.
                         if (clasesUsuario.get(i).getNombre().equals(claseGlobal)) { // compara todas las clases hasta encontrar en la que está
-                            if (armasUsuario != null) { //  tiene ese arma el usuario se actualiza, si no se inserta.
-                                int armaActual = armasUsuario.getId();
-                                //Se ejecuta en el hilo principal porque realiza cambios en la pantalla en tiempo de ejecución
-                                AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(tvNombre.getText().toString(), ivArma));
-                                AppDataBase.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(), "", "", pbPrecisionArma.getProgress(), pbDanoArma.getProgress(), pbAlcanceArma.getProgress(), pbCadenciaArma.getProgress(), pbMovilidadArma.getProgress(), pbControlArma.getProgress(), armaActual, claseActual, armasUsuario.getPrincipal());
-                            } else {
                                 Armas insertarArma = new Armas();
-                                if (armaIdGlobal == 1) {
+                                AppDataBase.getInstance(context).daoJuego().borrarArmasUsuario(claseActual, usuarioGlobal, armaPrincipal);
+                                if (armaPrincipal == 1) {
                                     insertarArma = new Armas(tvNombre.getText().toString(), "", "", pbPrecisionArma.getProgress(), pbDanoArma.getProgress(), pbAlcanceArma.getProgress(), pbCadenciaArma.getProgress(), pbMovilidadArma.getProgress(), pbControlArma.getProgress(), "", usuarioGlobal, claseActual, 1);
                                     AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(tvNombre.getText().toString(), ivArma));
                                 } else {
-                                    if (armaIdGlobal == 0) {
+                                    if (armaPrincipal == 0) {
                                         insertarArma = new Armas(tvNombre.getText().toString(), "", "Base", pbPrecisionArma.getProgress(), pbDanoArma.getProgress(), pbAlcanceArma.getProgress(), pbCadenciaArma.getProgress(), pbMovilidadArma.getProgress(), pbControlArma.getProgress(), "", usuarioGlobal, claseActual, 0);
                                         AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(tvNombre.getText().toString(), ivArma));
                                     }
@@ -112,7 +107,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                             }
                         }
                     }
-                }
                 context.startActivity(navegarADetalles);
             }));
 
@@ -236,7 +230,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     // Se le pasa el repositorio por parametros y lo añade a mDataset, almacenando los datos de la api.
 
     public void swap(List<Repo> dataset){
-        mDataset.add(dataset.get(1));
+        mDataset.add(dataset.get(0));
         notifyDataSetChanged();
     }
 }

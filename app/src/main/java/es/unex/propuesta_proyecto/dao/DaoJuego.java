@@ -51,6 +51,9 @@ public interface DaoJuego {
     @Query("DELETE FROM Armas WHERE id = :id AND usuario = :nombreusuario")
     void borrarArmaPorNombreyId(int id, String nombreusuario);
 
+    @Query("DELETE FROM Armas WHERE usuario = :nombreusuario AND idClase = :clase AND principal = :principal")
+    void borrarArmasUsuario(int clase, String nombreusuario, int principal);
+
     @Query("DELETE FROM Armas WHERE idClase = :idClase AND usuario = :nombreUsuario")
     void borrarArmaPorClaseyNombre(int idClase, String nombreUsuario);
 
