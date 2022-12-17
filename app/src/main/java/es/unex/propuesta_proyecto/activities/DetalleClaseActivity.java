@@ -104,11 +104,23 @@ public class DetalleClaseActivity extends AppCompatActivity {
         bBorrar.setOnClickListener(v -> {
             AppExecutors.getInstance().diskIO().execute(() -> {
                 //borra del Room la clase indicada
+                String nombreBorrar = parametros.getString("className");
                 //hay que borrar la clase, y también las armas asociadas a esa clase
-                Clases clase = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(parametros.getString("className"),usuarioRecuperado);
+                Clases clase = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(nombreBorrar,usuarioRecuperado);
                 AppDataBase.getInstance(getApplicationContext()).daoJuego().borrarArmaPorClaseyNombre(clase.getId(),usuarioRecuperado);
-                //Este borrar clases funciona perfectamente (comprobado con AppInspector)
-                AppDataBase.getInstance(getApplicationContext()).daoClases().borrarClase(clase.getNombre(), usuarioRecuperado);
+                if(clase.getNombre().equals("Clase 1") || clase.getNombre().equals("Clase 2") || clase.getNombre().equals("Clase 3")){
+                    int idArmaPrinc, idArmaSec;
+                    Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto",usuarioRecuperado, clase.getId(), 1);
+                    Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,5,50,50,"Lanzamisiles",usuarioRecuperado, clase.getId(), 0);
+                    AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                    AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+                    idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(clase.getId(), 1);
+                    idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(clase.getId(), 0);
+                    AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrinc, idArmaSec, clase.getId());
+                } else{
+                    //Este borrar clases funciona perfectamente (comprobado con AppInspector)
+                    AppDataBase.getInstance(getApplicationContext()).daoClases().borrarClase(clase.getNombre(), usuarioRecuperado);
+                }
             });
             finish();//se supone que vuelve a la Activity anterior
         });

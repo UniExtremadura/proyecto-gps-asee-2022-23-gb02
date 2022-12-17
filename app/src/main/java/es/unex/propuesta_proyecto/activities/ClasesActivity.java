@@ -102,14 +102,6 @@ public class ClasesActivity extends AppCompatActivity {
         alClases.add("Clase 1");
         alClases.add("Clase 2");
         alClases.add("Clase 3");
-        AppExecutors.getInstance().diskIO().execute(() -> {
-            List<Clases> clasesUser = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuario);
-            for(int i = 3; i < clasesUser.size(); i++){
-                if(clasesUser.get(i).getNombre().equals("Clase "+(i+1))){
-                    alClases.add("Clase "+(i+1));
-                }
-            }
-        });
         rvClases.setAdapter(new ClasesAdapter(alClases));
 
         /* Este método se encarga de mostrar hasta 10 clases, es decir cuando el usuario presiona el botón "+", se encarga de ir añadiendo clases, hasta un máximo de 10.
@@ -134,6 +126,23 @@ public class ClasesActivity extends AppCompatActivity {
                     idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 1);
                     idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 0);
                     AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrinc, idArmaSec, idClass);
+                }else{
+                    for(int i=1; i < numClase; i++){
+                        if(clasesTotales.get(i) == null){
+                            alClases.add("Clase "+(numClase+1));
+                            aux = new Clases("Clase "+(numClase+1),usuario,0,0);
+                            AppDataBase.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
+                            idClass = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(aux.getNombre(), usuario).getId();
+                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto",usuario, idClass, 1);
+                            Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,5,50,50,"Lanzamisiles",usuario, idClass, 0);
+                            AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
+                            AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
+
+                            idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 1);
+                            idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 0);
+                            AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrinc, idArmaSec, idClass);
+                        }
+                    }
                 }
             });
             rvClases.setAdapter(new ClasesAdapter(alClases)); // Los añade al recyclerView.
@@ -148,56 +157,12 @@ public class ClasesActivity extends AppCompatActivity {
         AppExecutors.getInstance().diskIO().execute(() -> {
             //comprobar si la clase que está a null es Clase1, Clase2 o Clase3. Si lo es, regenerar por defecto en Room. Si no lo es,
             // eliminar de alClases para que no se muestre en el RecyclerView.
-            for (int i = 0; i < alClases.size(); i++) {
-                //si la clase es null en Room, se comprueba si es de las de por defecto
-                if (AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase("Clase " + (i + 1), usuario) == null) {
-                    Clases aux;
-                    int idClass, idArmaPrinc, idArmaSec;
-                    if (i == 0) {//si i == 0 es que la clase que esta a null en Room es Clase 1, por lo que se vuelve a rellenar con valores por defecto
-                        aux = new Clases("Clase 1", usuario, 0, 0);
-                        AppDataBase.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
-                        idClass = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(aux.getNombre(), usuario).getId();
-
-                        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto",usuario, idClass, 1);
-                        Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,5,50,50,"Lanzamisiles",usuario, idClass, 0);
-                        AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
-                        AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
-                        idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 1);
-                        idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 0);
-                        AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrinc, idArmaSec, idClass);
-                    } else {
-                        if (i == 1) {//si i == 1 es que la clase que esta a null en Room es Clase 2, por lo que se vuelve a rellenar con valores por defecto
-                            aux = new Clases("Clase 2", usuario, 0, 0);
-                            AppDataBase.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
-                            idClass = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(aux.getNombre(), usuario).getId();
-
-                            Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto",usuario, idClass, 1);
-                            Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,5,50,50,"Lanzamisiles",usuario, idClass, 0);
-                            AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
-                            AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
-                            idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 1);
-                            idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 0);
-                            AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrinc, idArmaSec, idClass);
-                        } else {
-                            if (i == 2) {//si i == 2 es que la clase que esta a null en Room es Clase 3, por lo que se vuelve a rellenar con valores por defecto
-                                aux = new Clases("Clase 3", usuario, 0, 0);
-                                AppDataBase.getInstance(getApplicationContext()).daoClases().insertarClase(aux);
-                                idClass = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(aux.getNombre(), usuario).getId();
-
-                                Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto",usuario, idClass, 1);
-                                Armas a2 = new Armas("RPG-7","Weapon","Base",30,50,20,5,50,50,"Lanzamisiles",usuario, idClass, 0);
-                                AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a);
-                                AppDataBase.getInstance(getApplicationContext()).daoJuego().insertarArmas(a2);
-                                idArmaPrinc = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 1);
-                                idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(idClass, 0);
-                                AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrinc, idArmaSec, idClass);
-                            } else {
-                                alClases.remove(i);//Elimina el elemento de alClases para que no se muestre en el RecyclerView al invocar a setAdapter()
-                            }
-                        }
-                    }
-                }
+            alClases.clear();
+            List <Clases> clasesUsuario = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuario);
+            for (int i=0; i < clasesUsuario.size(); i++){
+                alClases.add(clasesUsuario.get(i).getNombre());
             }
+
         });//Fin del runnable
         rvClases.setAdapter(new ClasesAdapter(alClases));
     }
