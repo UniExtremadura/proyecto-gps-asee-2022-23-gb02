@@ -26,8 +26,8 @@ public interface DaoClases {
     @Insert
     void insertarClase(Clases clase);
 
-    @Query("DELETE FROM Clases WHERE nombre = :nombre")
-    void borrarClase(String nombre);
+    @Query("DELETE FROM Clases WHERE nombre = :nombre AND usuario = :usuario")
+    void borrarClase(String nombre, String usuario);
 
     @Query("UPDATE Clases SET idArmaPrincipal = :idPrincipal, idArmaSecundaria = :idSecundaria WHERE id = :id")
     void actualizarIdArmas (int idPrincipal, int idSecundaria, int id);

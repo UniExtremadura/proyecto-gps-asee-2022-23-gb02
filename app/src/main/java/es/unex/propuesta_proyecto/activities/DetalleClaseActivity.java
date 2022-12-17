@@ -87,25 +87,24 @@ public class DetalleClaseActivity extends AppCompatActivity {
 
                     imgPrimaria = findViewById(R.id.ivArma1);
                     imgSecundaria = findViewById(R.id.ivArmaSecundaria1);
-                    actualizarImgPrimaria(aPrin);
-                    actualizarImgSecundaria(aSec);
+                    //Se ejecutan desde el hilo principal
+                    AppExecutors.getInstance().mainThread().execute(() -> actualizarImgPrimaria(aPrin));
+                    AppExecutors.getInstance().mainThread().execute(() -> actualizarImgSecundaria(aSec));
                 }
             });
 
         }
 
         /* Boton para eliminar la clase en cuestión */
-        bBorrar=findViewById(R.id.ivEliminarClase);
+        bBorrar = findViewById(R.id.ivEliminarClase);
         bBorrar.setOnClickListener(v -> {
-            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {//borra del Room la clase indicada
-                    //hay que borrar la clase, y también las armas asociadas a esa clase
-                    Clases clase = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(parametros.getString("className"),usuarioRecuperado);
-                    AppDataBase.getInstance(getApplicationContext()).daoJuego().borrarArmaPorClaseyNombre(clase.getId(),usuarioRecuperado);
-                    //Este borrar clases funciona perfectamente (comprobado con AppInspector)
-                    AppDataBase.getInstance(getApplicationContext()).daoClases().borrarClase(parametros.getString("className"));
-                }
+            AppExecutors.getInstance().diskIO().execute(() -> {
+                //borra del Room la clase indicada
+                //hay que borrar la clase, y también las armas asociadas a esa clase
+                Clases clase = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(parametros.getString("className"),usuarioRecuperado);
+                AppDataBase.getInstance(getApplicationContext()).daoJuego().borrarArmaPorClaseyNombre(clase.getId(),usuarioRecuperado);
+                //Este borrar clases funciona perfectamente (comprobado con AppInspector)
+                AppDataBase.getInstance(getApplicationContext()).daoClases().borrarClase(clase.getNombre(), usuarioRecuperado);
             });
             finish();//se supone que vuelve a la Activity anterior
         });
@@ -121,61 +120,61 @@ public class DetalleClaseActivity extends AppCompatActivity {
     //Dependiendo el atributo weapon del arma recibida muestra una imagen u otra en función del enlace con las funciones de Picasso
     public void actualizarImgPrimaria(Armas arma){
         switch (arma.getName()) {
-            case "ak-47":
+            case "Ak-47":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_ak-47.webp").into(imgPrimaria);
                 break;
-            case "aug":
+            case "Aug":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_aug.webp").into(imgPrimaria);
                 break;
-            case "fn-scar-17":
+            case "Fn Scar L7":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_fn-scar-17.webp").into(imgPrimaria);
                 break;
-            case "m4a1":
+            case "M4a1":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_m4a1.webp").into(imgPrimaria);
                 break;
             case "725":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_725.webp").into(imgPrimaria);
                 break;
-            case "model-680":
+            case "Model 680":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_model-680.webp").into(imgPrimaria);
                 break;
-            case "r9-0-shotgun":
+            case "R9-O":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_r9-0-shotgun.webp").into(imgPrimaria);
                 break;
-            case "origin-12-shotgun":
+            case "Origin 12 Shotgun":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_origin-12-shotgun.webp").into(imgPrimaria);
                 break;
-            case "dragunov":
+            case "Dragunov":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_dragunov.webp").into(imgPrimaria);
                 break;
-            case "ebr-14":
+            case "Ebr-14":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_ebr-14.webp").into(imgPrimaria);
                 break;
-            case "hdr":
+            case "Hdr":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_hdr.webp").into(imgPrimaria);
                 break;
-            case "kar98k":
+            case "Kar98k":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_kar98k.webp").into(imgPrimaria);
                 break;
-            case "mg34":
+            case "M634":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_mg34.webp").into(imgPrimaria);
                 break;
-            case "m91":
+            case "M91":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_m91.webp").into(imgPrimaria);
                 break;
-            case "pkm":
+            case "Pkm":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_pkm.webp").into(imgPrimaria);
                 break;
-            case "mp5":
+            case "Mp5":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_mp5.webp").into(imgPrimaria);
                 break;
-            case "mp7":
+            case "Mp7":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_mp7.webp").into(imgPrimaria);
                 break;
-            case "p90":
+            case "P90":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_p90.webp").into(imgPrimaria);
                 break;
-            case "uzi":
+            case "Uzi":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_uzi.webp").into(imgPrimaria);
                 break;
             default:
@@ -189,16 +188,16 @@ public class DetalleClaseActivity extends AppCompatActivity {
             case "1911":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_1911.webp").into(imgSecundaria);
                 break;
-            case "x16":
+            case "X16":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_x16.webp").into(imgSecundaria);
                 break;
-            case "50-gs":
+            case ".50 GS":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_50-gs.webp").into(imgSecundaria);
                 break;
-            case "combat-knife":
+            case "Combat Knife":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_combat-knife.webp").into(imgSecundaria);
                 break;
-            case "riot-shield":
+            case "Riot Shield":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_riot-shield.webp").into(imgSecundaria);
                 break;
             default:

@@ -59,8 +59,8 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         rvFusilesDeAsalto = findViewById(R.id.rvFusilesDeAsalto);
         rvFusilesDeAsalto.setLayoutManager(new LinearLayoutManager(this));
         // Inserción de los fusiles de asalto de la API en alFusilesDeAsalto
-        // i < 5 API COMPLETA
-        for (int i = 1; i < 3; i++){
+        // i < 4 API COMPLETA
+        for (int i = 0; i < 2; i++){
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusiles.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
         }
@@ -70,8 +70,8 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         rvEscopetas = findViewById(R.id.rvEscopetas);
         rvEscopetas.setLayoutManager(new LinearLayoutManager(this));
         // Inserción de las escopetas de la API en alEscopetas
-        // i < 9 API COMPLETA
-        for (int i = 5 ; i < 7; i++){
+        // i < 8 API COMPLETA
+        for (int i = 4; i < 6; i++){
 /*             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  escopetas.swap((repos))));
              AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
         */}
@@ -82,8 +82,8 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         rvFusilesDeFrancotirador = findViewById(R.id.rvFusilesDeFrancotirador);
         rvFusilesDeFrancotirador.setLayoutManager(new LinearLayoutManager(this));
         //Inserción de los fusiles de francotirador de la API en alFusilesDeFrancotirador
-        // i < 13 API COMPLETA
-        for (int i = 9 ; i < 11; i++){
+        // i < 12 API COMPLETA
+        for (int i = 8 ; i < 10; i++){
            /*AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  fusilesDeFrancotirador.swap((repos))));
            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
         */}
@@ -93,8 +93,8 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         rvAmetralladorasLigeras = findViewById(R.id.rvAmetralladorasLigeras);
         rvAmetralladorasLigeras.setLayoutManager(new LinearLayoutManager(this));
         // Inserción de las ametralladoras ligeras de la API en alAmetralladorasLigeras
-        // i < 16 API COMPLETA
-        for (int i = 13 ; i < 15; i++){
+        // i < 15 API COMPLETA
+        for (int i = 12 ; i < 14; i++){
 /*              AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  ametrelladoraLigera.swap((repos))));
               AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
         */}
@@ -106,8 +106,8 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         rvSubfusiles = findViewById(R.id.rvSubfusiles);
         rvSubfusiles.setLayoutManager(new LinearLayoutManager(this));
         // Inserción de los subfusiles de la API en alSubfusiles
-        // i < 20 API COMPLETA
-        for (int i = 16; i < 17; i++){
+        // i < 19 API COMPLETA
+        for (int i = 15; i < 17; i++){
 /*            AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  subfusiles.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
         */}

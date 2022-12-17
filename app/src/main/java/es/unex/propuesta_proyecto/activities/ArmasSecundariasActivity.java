@@ -52,8 +52,8 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         rvPistolas = findViewById(R.id.rvPistolas);
         rvPistolas.setLayoutManager(new LinearLayoutManager(this));
         //Inserción de las pistolas de la API en pistolas
-        //i < 23
-        for (int i = 20 ; i < 22; i++){
+        //i < 22
+        for (int i = 19 ; i < 21; i++){
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  pistolas.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
         }
@@ -63,8 +63,8 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         rvCuerpoACuerpo = findViewById(R.id.rvCuerpoACuerpo);
         rvCuerpoACuerpo.setLayoutManager(new LinearLayoutManager(this));
         //Inserción de las armas cuerpo a cuerpo de la API en cuerpo
-        //i < 25
-        for (int i = 23 ; i < 25; i++){
+        //i < 24
+        for (int i = 22 ; i < 24; i++){
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cuerpo.swap((repos))));
             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
         }
