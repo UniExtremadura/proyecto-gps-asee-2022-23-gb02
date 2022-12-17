@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +52,11 @@ public class AccesoriosActivity extends AppCompatActivity implements MyAdapter.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accesorios);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Accesorios");
+        }
 
         pbPrecisionArma = findViewById(R.id.pbPrecisionArmaAccesorios);
         pbDanoArma = findViewById(R.id.pbDañoArmaAccesorios);

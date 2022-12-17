@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +40,11 @@ public class ArmasSecundariasActivity extends AppCompatActivity  implements MyAd
         setContentView(R.layout.activity_armas_secundarias);
 
         /* INICIALIZACION DE LOS ADAPTERS */
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Armas Secundarias");
+        }
 
         pistolas = new MyAdapter(new ArrayList<>(), this);
         cuerpo = new MyAdapter(new ArrayList<>(), this);

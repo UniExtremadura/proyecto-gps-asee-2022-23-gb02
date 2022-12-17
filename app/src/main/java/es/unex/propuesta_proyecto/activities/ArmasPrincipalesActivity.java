@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +42,12 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_armas_principales);
 
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Armas Principales");
+        }
+
         cargarPreferencias(); // Carga preferencias.
 
         /* INICIALIZACION DE LOS ADAPTERS */
@@ -75,8 +82,7 @@ public class ArmasPrincipalesActivity extends AppCompatActivity implements MyAda
 /*             AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  escopetas.swap((repos))));
              AppExecutors.getInstance().networkIO().execute(new ReposNetworkLoaderRunnable(i,(repos) ->  cogerUsuario.pasarIdArma((repos.get(0).getPrincipal()))));
         */}
-        rvEscopetas.setAdapter(escopetas);//se carga el ArrayList de escopetas recuperado de la API en el RecyclerView
-
+        rvEscopetas.setAdapter(escopetas); //se carga el ArrayList de escopetas recuperado de la API en el RecyclerView
 
         // Carga del RecyclerView de los fusiles de francotirador
         rvFusilesDeFrancotirador = findViewById(R.id.rvFusilesDeFrancotirador);

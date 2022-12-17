@@ -1,5 +1,6 @@
 package es.unex.propuesta_proyecto.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,11 @@ public class RegistroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_cuenta);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Registro");
+        }
 
         username = findViewById(R.id.etUsuario);//EditText
         password = findViewById(R.id.etContraseña);//EditText

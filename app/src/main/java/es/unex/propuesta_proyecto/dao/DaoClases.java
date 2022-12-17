@@ -33,5 +33,5 @@ public interface DaoClases {
     void actualizarIdArmas (int idPrincipal, int idSecundaria, int id);
 
     @Query("UPDATE Clases SET idArmaPrincipal = :idArmaPrincipal, idArmaSecundaria = :idArmaSecundaria WHERE nombre = :nombreClase AND usuario = :usuario")
-    void actualizarArma(String nombreClase,String usuario,int idArmaPrincipal, int idArmaSecundaria);
+    void actualizarClase(String nombreClase,String usuario,int idArmaPrincipal, int idArmaSecundaria);
 }

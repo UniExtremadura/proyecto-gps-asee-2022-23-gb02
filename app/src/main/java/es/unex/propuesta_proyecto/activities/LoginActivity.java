@@ -1,5 +1,6 @@
 package es.unex.propuesta_proyecto.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -31,6 +32,10 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.etContraseñaLogin);
         btnLogin = findViewById(R.id.bIniciarSesion);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Login");
+        }
 
         //Fin onClick()
         btnLogin.setOnClickListener(v -> {

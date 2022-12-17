@@ -1,5 +1,6 @@
 package es.unex.propuesta_proyecto.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,11 @@ public class ClasesActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clases);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Clases");
+        }
 
         Bundle parametros = this.getIntent().getExtras();//se recupera el Bundle que viene de la Intent recibida
 

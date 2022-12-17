@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.squareup.picasso.Picasso;
 import java.util.List;
@@ -46,7 +47,10 @@ public class DetalleClaseActivity extends AppCompatActivity {
         cargarPreferencias();
 
         // Dependiendo de la clase recuperada en el bundle se accederá a una clase u otra.
-
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Información Armas");
+        }
 
         Bundle parametros = this.getIntent().getExtras();//se recupera el Bundle de la Intent recibida
         if(parametros != null) {
