@@ -41,7 +41,7 @@ public class ArmasTest {
 
     @Test
     public void insertarArmaTest(){
-        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1, "AK-47");
+        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1);
         dao_armas.insertarArmas(a);
         Armas aRecup = dao_armas.obtenerArmas().get(0);
         Assert.assertEquals(aRecup.getName(), a.getName());
@@ -49,16 +49,16 @@ public class ArmasTest {
 
     @Test
     public void actualizarArmaTest(){
-        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1, "AK-47");
+        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1);
         dao_armas.insertarArmas(a);
-        dao_armas.actualizarArma("TestActualizar", "Weapon", "Base",64,23,12,5,87,65, 1, 1, 1, "AK-47");
+        dao_armas.actualizarArma("TestActualizar", "Weapon", "Base",64,23,12,5,87,65, 1, 1, 1);
         Armas aRecup = dao_armas.obtenerArmas().get(0);
         Assert.assertEquals(aRecup.getName(), "TestActualizar");
     }
 
     @Test
     public void borrarArmaTest(){
-        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1, "AK-47");
+        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1);
         dao_armas.insertarArmas(a);
         dao_armas.borrarArma(1);
         Assert.assertEquals(dao_armas.obtenerArmas().size(), 0);
