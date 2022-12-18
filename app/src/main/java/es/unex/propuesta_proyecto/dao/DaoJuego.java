@@ -10,7 +10,6 @@ import java.util.List;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.RepoArmas;
 
-/* Este dao nos permite hacer con la clase Armas las operaciones CRUD */
 
 @Dao
 public interface DaoJuego {
@@ -36,10 +35,6 @@ public interface DaoJuego {
 
     @Query("SELECT COUNT(*) FROM Armas WHERE usuario = :usuario")
     int getNumberArmasUsuario ( String usuario);
-
-    @Query("SELECT * FROM Armas WHERE idClase = :idClase and usuario = :nombreUsuario")
-    abstract List<Armas> obtenerArmasPorClaseyNombre(int idClase, String nombreUsuario);
-
     @Insert
     void insertarArmas(Armas...armas);
 

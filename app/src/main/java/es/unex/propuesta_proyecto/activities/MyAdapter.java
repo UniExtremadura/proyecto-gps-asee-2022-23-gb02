@@ -23,8 +23,6 @@ import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 import es.unex.propuesta_proyecto.model.RepoArmas;
 
-/* Esta clase permite meter las armas en el recyclerView de la clase ArmasPrincipalesActivity y ArmasSecundariasActivity */
-
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private List<RepoArmas> mDataset;
@@ -54,7 +52,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+
         TextView tvNombre;
         ImageView ivArma;
         ProgressBar pbPrecisionArma;
@@ -79,19 +77,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             pbMovilidadArma = itemView.findViewById(R.id.pbMovilidadArma);
             pbControlArma = itemView.findViewById(R.id.pbControlArma);
 
-            /* Este método se encarga de cambiar las armas principales y secundarias. Una vez que el usuario pulse en el nombre del arma (Dentro de la lista mostrada por la API en Armas
-            Principales (Activity) o Armas Secundarias (Activity), le conducirá a la pantalla de DetalleClaseActivity, donde le intercambiará el arma anterior por el arma seleccionado */
-
             tvNombre.setOnClickListener(v1 -> AppExecutors.getInstance().diskIO().execute(() -> {
                 Intent navegarADetalles = new Intent(context, DetalleClaseActivity.class);
-                navegarADetalles.putExtra("className", claseGlobal); // Pasamos la clase al detallesActivity a través del intent
-                // usuarioGlobal es el usuario que está loggeado en este instante.
-                Armas armasUsuario = AppDataBase.getInstance(context).daoJuego().obtenerArmaUsuario(tvNombre.getText().toString(), usuarioGlobal); // Se coge el arma actual del usuario
-                List<Clases> clasesUsuario = AppDataBase.getInstance(context).daoClases().obtenerClasesUsuario(usuarioGlobal); // Lista de clases del usuario
+                navegarADetalles.putExtra("className", claseGlobal);
+                Armas armasUsuario = AppDataBase.getInstance(context).daoJuego().obtenerArmaUsuario(tvNombre.getText().toString(), usuarioGlobal);
+                List<Clases> clasesUsuario = AppDataBase.getInstance(context).daoClases().obtenerClasesUsuario(usuarioGlobal);
                 if (clasesUsuario != null) {
                     for (int i = 0; i < clasesUsuario.size(); i++) {
-                        int claseActual = clasesUsuario.get(i).getId(); // Recupera la id de la clase actual.
-                        if (clasesUsuario.get(i).getNombre().equals(claseGlobal)) { // compara todas las clases hasta encontrar en la que está
+                        int claseActual = clasesUsuario.get(i).getId();
+                        if (clasesUsuario.get(i).getNombre().equals(claseGlobal)) {
                                 Armas insertarArma = new Armas();
                                 AppDataBase.getInstance(context).daoJuego().borrarArmasUsuario(claseActual, usuarioGlobal, armaPrincipal);
                                 if (armaPrincipal == 1) {
@@ -112,8 +106,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         }
     }
-    //Dependiendo del nombre del arma recibido como parámetro muestra una imagen u otra en función del enlace con las funciones de Picasso
-    //sobre el objeto ImageView recibido por parámetro
 
     public static void pasarURLimg(String nombreArma, ImageView ivArma){
         switch (nombreArma){
@@ -194,7 +186,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public MyAdapter(List<RepoArmas> myDataset, OnListInteractionListener listener) {
         mDataset = myDataset;
         mListener = listener;
@@ -209,8 +200,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return new MyAdapter.MyViewHolder(view);
     }
 
-    // Modificación de atributos del Dataset de la api.
-
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
         holder.tvNombre.setText(mDataset.get(position).getName());
@@ -222,12 +211,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.pbControlArma.setProgress(Integer.parseInt(mDataset.get(position).getControl()));
     }
 
-    // Devuelve el tamaño de mDataset
 
     @Override
     public int getItemCount() { return mDataset.size();}
 
-    // Se le pasa el repositorio por parametros y lo añade a mDataset, almacenando los datos de la api.
 
     public void swap(List<RepoArmas> dataset){
         mDataset.add(dataset.get(0));

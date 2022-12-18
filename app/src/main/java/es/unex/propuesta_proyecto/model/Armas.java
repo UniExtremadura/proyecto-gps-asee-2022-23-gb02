@@ -1,12 +1,9 @@
 package es.unex.propuesta_proyecto.model;
-
-
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-/* Esta clase define los atributos y metodos de la tabla de Armas en Room */
+
 @Entity(tableName = "Armas")
 public class Armas {
 
@@ -57,7 +54,7 @@ public class Armas {
     }
 
     @Ignore
-    public Armas() { //cuando hay varios constructores validos, Room escoge por defecto el que no tiene argumentos porque hemos declarado los getter y setter. Sin embargo, si no usamos nunca alguno, le podemos poner @Ignore
+    public Armas() {
         this.name = "";
         this.type = "";
         this.subtype = "";

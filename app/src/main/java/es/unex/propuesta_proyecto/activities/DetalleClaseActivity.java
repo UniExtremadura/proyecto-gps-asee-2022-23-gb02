@@ -16,25 +16,28 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.squareup.picasso.Picasso;
 import java.util.List;
 import es.unex.propuesta_proyecto.R;
+import es.unex.propuesta_proyecto.api.AppContainer;
 import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.api.ArmaNetworkDataSource;
 import es.unex.propuesta_proyecto.api.ArmasRepository;
+import es.unex.propuesta_proyecto.api.ArmasViewModel;
 import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
+import es.unex.propuesta_proyecto.model.MyApplication;
 import es.unex.propuesta_proyecto.model.RepoArmas;
 
-/* Esta clase se encarga de mostrar todos los detalles de las armas, además desde ella se acceden a los accesorios, se pueden editar las armas, intercambiandolas con la API, pulsando
-    el botón de editar.
- */
 public class DetalleClaseActivity extends AppCompatActivity {
 
     private ArmasRepository mRepository;
     private MyAdapter mAdapter;
+
     Button bPrimaria;
     ImageView imgPrimaria, imgSecundaria,bBorrar;
     String usuarioRecuperado, contrasenaRecuperada;
@@ -45,7 +48,6 @@ public class DetalleClaseActivity extends AppCompatActivity {
     TextView tvNameArmaSec;
     ProgressBar tvPrecisionSec,tvDanoSec,tvAlcanceSec,tvCadenciaSec,tvMovilidadSec,tvControlSec;
 
-    /* En el OnCreate se crean las clases y en el OnResume se actualizan */
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -53,13 +55,12 @@ public class DetalleClaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         cargarPreferencias();
 
-        // Dependiendo de la clase recuperada en el bundle se accederá a una clase u otra.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("Información Armas");
         }
 
-        Bundle parametros = this.getIntent().getExtras();//se recupera el Bundle de la Intent recibida
+        Bundle parametros = this.getIntent().getExtras();
         if(parametros != null) {
             String valor = parametros.getString("className");
             setContentView(R.layout.activity_detalle_clase1);
@@ -70,11 +71,11 @@ public class DetalleClaseActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     int claseActual = 0;
-                    List<Clases> clasesUsuario = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuarioRecuperado); // Lista de clases del usuario
+                    List<Clases> clasesUsuario = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClasesUsuario(usuarioRecuperado);
                     if (clasesUsuario != null) {
                         for (int i = 0; i < clasesUsuario.size(); i++) {
                             if(clasesUsuario.get(i).getNombre().equals(valor)){
-                                claseActual = clasesUsuario.get(i).getId(); // Recupera la id de la clase actual.
+                                claseActual = clasesUsuario.get(i).getId();
                             }
                         }
                     }
@@ -98,7 +99,7 @@ public class DetalleClaseActivity extends AppCompatActivity {
 
                     imgPrimaria = findViewById(R.id.ivArma1);
                     imgSecundaria = findViewById(R.id.ivArmaSecundaria1);
-                    //Se ejecutan desde el hilo principal
+
                     AppExecutors.getInstance().mainThread().execute(() -> actualizarImgPrimaria(aPrin));
                     AppExecutors.getInstance().mainThread().execute(() -> actualizarImgSecundaria(aSec));
                 }
@@ -106,13 +107,10 @@ public class DetalleClaseActivity extends AppCompatActivity {
 
         }
 
-        /* Boton para eliminar la clase en cuestión */
         bBorrar = findViewById(R.id.ivEliminarClase);
         bBorrar.setOnClickListener(v -> {
             AppExecutors.getInstance().diskIO().execute(() -> {
-                //borra del Room la clase indicada
                 String nombreBorrar = parametros.getString("className");
-                //hay que borrar la clase, y también las armas asociadas a esa clase
                 Clases clase = AppDataBase.getInstance(getApplicationContext()).daoClases().obtenerClase(nombreBorrar,usuarioRecuperado);
                 AppDataBase.getInstance(getApplicationContext()).daoJuego().borrarArmaPorClaseyNombre(clase.getId(),usuarioRecuperado);
                 if(clase.getNombre().equals("Clase 1") || clase.getNombre().equals("Clase 2") || clase.getNombre().equals("Clase 3")){
@@ -125,33 +123,33 @@ public class DetalleClaseActivity extends AppCompatActivity {
                     idArmaSec = AppDataBase.getInstance(getApplicationContext()).daoJuego().getIdArmaTipo(clase.getId(), 0);
                     AppDataBase.getInstance(getApplicationContext()).daoClases().actualizarIdArmas(idArmaPrinc, idArmaSec, clase.getId());
                 } else{
-                    //Este borrar clases funciona perfectamente (comprobado con AppInspector)
                     AppDataBase.getInstance(getApplicationContext()).daoClases().borrarClase(clase.getNombre(), usuarioRecuperado);
                 }
             });
-            finish();//se supone que vuelve a la Activity anterior
+            finish();
         });
 
-        /* Boton para acceder a los accesorios de la clase en cuestión */
         bPrimaria = findViewById(R.id.bAccesoriosArmaPrincipal);
         bPrimaria.setOnClickListener(v -> {
             Intent accesorios = new Intent(DetalleClaseActivity.this,AccesoriosActivity.class);
             startActivity(accesorios);
         });
+
         mRepository = ArmasRepository.getInstance(AppDataBase.getInstance(this).daoJuego(), ArmaNetworkDataSource.getInstance());
-        mRepository.getCurrentArma().observe(this, new Observer<List<RepoArmas>>() {
-            @Override
-            public void onChanged(List<RepoArmas> repoArmas) {
-                onReposLoaded(repoArmas);
-            }
-        });
+        mRepository.getCurrentArma().observe(this, this::onReposLoaded);
+
+        AppContainer appContainer = ((MyApplication) getApplication()).appContainer;
+
+        ArmasViewModel mArmasViewModel = new ViewModelProvider((ViewModelStoreOwner) this, (ViewModelProvider.Factory) appContainer.factory).get(ArmasViewModel.class);
+
+        mArmasViewModel.getRepos().observe(this, repos -> mAdapter.swap(repos));
+
     }
 
     public void onReposLoaded(List<RepoArmas> armas){
         runOnUiThread(() -> mAdapter.swap(armas));
     }
 
-    //Dependiendo el atributo weapon del arma recibida muestra una imagen u otra en función del enlace con las funciones de Picasso
     public void actualizarImgPrimaria(Armas arma){
         switch (arma.getName()) {
             case "Ak-47":
@@ -216,7 +214,6 @@ public class DetalleClaseActivity extends AppCompatActivity {
         }
     }
 
-    //Dependiendo el atributo weapon del arma recibida muestra una imagen u otra en función del enlace con las funciones de Picasso
     public void actualizarImgSecundaria(Armas arma){
         switch (arma.getName()){
             case "1911":

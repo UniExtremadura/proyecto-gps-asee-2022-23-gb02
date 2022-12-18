@@ -9,7 +9,6 @@ import androidx.room.Query;
 import java.util.List;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
-/* Este dao nos permite hacer con la clase Usuarios las operaciones CRUD */
 
 @Dao
 public interface DaoUsuarios {

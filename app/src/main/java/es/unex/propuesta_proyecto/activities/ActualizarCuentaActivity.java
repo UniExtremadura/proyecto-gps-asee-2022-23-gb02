@@ -18,13 +18,11 @@ import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
-/* Esta clase actualiza la cuenta del usuario */
-
 public class ActualizarCuentaActivity extends AppCompatActivity {
 
     TextView username;
     EditText password;
-    Button actualizar,eliminar;//HACER onCLICK()
+    Button actualizar,eliminar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,19 +34,17 @@ public class ActualizarCuentaActivity extends AppCompatActivity {
             actionBar.setTitle("Perfil");
         }
 
-        username = findViewById(R.id.tvUsuarioActualizar);//username es un Edit Text
-        password = findViewById(R.id.etContraseñaActualizar);//password es un Edit Text
+        username = findViewById(R.id.tvUsuarioActualizar);
+        password = findViewById(R.id.etContraseñaActualizar);
         actualizar = findViewById(R.id.bActualizarCuenta);
         eliminar = findViewById(R.id.bEliminarCuenta);
 
-        Bundle parametros = getIntent().getExtras();//extrae el Bundle de la Intent recibida y la guarda en "parametros".
-        String usuario = parametros.getString("usuario");//extrae del Bundle el String con la clave "usuario".
-        String contrasena = parametros.getString("password");//extrae del Bundle el String con la clave "pass"
+        Bundle parametros = getIntent().getExtras();
+        String usuario = parametros.getString("usuario");
+        String contrasena = parametros.getString("password");
 
-        username.setText(usuario);//hace que se muestre en el EditText "username" el String pasado por parametros. En este caso es el nombre del usuario.
-        password.setText(contrasena);//hace que se muestre en el EditText "password" el String pasado por parametros. En este caso es la contraseña del usuario.
-
-        /* Cuando se hace click en el boton actualiza */
+        username.setText(usuario);
+        password.setText(contrasena);
 
         actualizar.setOnClickListener(v -> AppExecutors.getInstance().diskIO().execute(() -> {
             Usuarios checkUser;
@@ -62,8 +58,6 @@ public class ActualizarCuentaActivity extends AppCompatActivity {
             }
         }));
 
-        /* Cuando se hace click en el botón elimina */
-
         eliminar.setOnClickListener(v -> AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -75,9 +69,7 @@ public class ActualizarCuentaActivity extends AppCompatActivity {
             }
         }));
 
-    }//Fin onCreate
-
-    /* Cuando se hace click en el botón se desplaza con el intent*/
+    }
 
     public void cuentaActualizada(View view){
         Intent cuentaAct = new Intent(this, ClasesActivity.class);

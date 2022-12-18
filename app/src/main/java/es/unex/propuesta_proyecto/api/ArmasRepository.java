@@ -21,8 +21,6 @@ public class ArmasRepository {
 
     private static final String LOG_TAG = ArmasRepository.class.getSimpleName();
 
-
-    //Patrón Singleton
     private static ArmasRepository sInstance;
     private final DaoJuego nArmasDao;
     private final ArmaNetworkDataSource nArmaNetworkDataSource;
@@ -77,7 +75,6 @@ public class ArmasRepository {
 
 
     public LiveData<List<RepoArmas>> getCurrentArma() {
-        //Return LiveData from Room. Use Transformation to get owner
         return Transformations.switchMap(userFilterLiveData, new Function<String, LiveData<List<RepoArmas>>>() {
             @Override
             public LiveData<List<RepoArmas>> apply(String input) {
@@ -90,7 +87,6 @@ public class ArmasRepository {
         Long lastFetchTimeMillis = lastUpdateTimeMillisMap.get(username);
         lastFetchTimeMillis = lastFetchTimeMillis == null ? 0L : lastFetchTimeMillis;
         long timeFromLastFetch = System.currentTimeMillis() - lastFetchTimeMillis;
-        //Implement cache policy: When time has passed or no repos in cache
         return nArmasDao.getNumberArmasUsuario(username)== 0 || timeFromLastFetch > MIN_TIME_FROM_LAST_FETCH_MILLIS;
     }
 }

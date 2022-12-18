@@ -16,8 +16,6 @@ import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
-/* Esta clase permite al usuario registrarse, introduciendo una contraseña y nombre de usuario (con previo registro) */
-
 public class LoginActivity extends AppCompatActivity {
 
     EditText username,password;
@@ -37,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
             actionBar.setTitle("Login");
         }
 
-        //Fin onClick()
         btnLogin.setOnClickListener(v -> {
 
             String user = username.getText().toString();
@@ -46,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
             if(user.equals("")||pass.equals(""))
                 Toast.makeText(LoginActivity.this,"Por favor, rellene todos los campos", Toast.LENGTH_SHORT).show();
             else{
-                //Fin run() del onClick()
                 AppExecutors.getInstance().diskIO().execute(() -> {
                     Usuarios usuario;
                     usuario = AppDataBase.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(user);
@@ -67,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
-    }//Fin onCreate()
+    }
 
 
     private void guardarPreferencias(){

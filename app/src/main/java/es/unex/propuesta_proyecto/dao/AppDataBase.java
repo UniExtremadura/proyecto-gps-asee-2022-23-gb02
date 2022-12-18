@@ -11,7 +11,6 @@ import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
-/* Base de datos encargada de gestionar las Armas */
 
 @Database(entities = {Armas.class, Accesorio.class, Usuarios.class, Clases.class}, version = 1)
 public abstract class AppDataBase extends RoomDatabase {

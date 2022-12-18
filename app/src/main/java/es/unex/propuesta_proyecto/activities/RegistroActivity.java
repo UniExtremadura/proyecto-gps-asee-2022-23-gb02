@@ -13,8 +13,6 @@ import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
-/* Esta clase permita al usuario registrarse */
-
 public class RegistroActivity extends AppCompatActivity {
 
     EditText username,password,repassword;
@@ -30,13 +28,12 @@ public class RegistroActivity extends AppCompatActivity {
             actionBar.setTitle("Registro");
         }
 
-        username = findViewById(R.id.etUsuario);//EditText
-        password = findViewById(R.id.etContraseña);//EditText
-        repassword = findViewById(R.id.etContraseña1);//EditText
-        signup = findViewById(R.id.bCrearCuenta);//Button
-        signin = findViewById(R.id.bTengoCuenta);//Button
+        username = findViewById(R.id.etUsuario);
+        password = findViewById(R.id.etContraseña);
+        repassword = findViewById(R.id.etContraseña1);
+        signup = findViewById(R.id.bCrearCuenta);
+        signin = findViewById(R.id.bTengoCuenta);
 
-        /* Este boton permita al usuario registrarse, es decir, si ha completado bien los campos, se registrará de manera exitosa, en caso contrario, saltará error */
 
         signup.setOnClickListener(v -> {
 
@@ -68,8 +65,6 @@ public class RegistroActivity extends AppCompatActivity {
             }
 
         });
-
-        /* Intent para desplazarse al inicio de sesión (Si ya se tiene cuenta) */
 
         signin.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(),LoginActivity.class);

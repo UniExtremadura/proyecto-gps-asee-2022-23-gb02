@@ -4,8 +4,6 @@ package es.unex.propuesta_proyecto.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/* Repositorio (convertido de JSON a Java), utilizado para obtener los datos de la api*/
-
 public class RepoArmas {
 
     @SerializedName("Type")
