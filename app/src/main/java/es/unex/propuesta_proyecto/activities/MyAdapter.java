@@ -21,13 +21,13 @@ import es.unex.propuesta_proyecto.api.AppExecutors;
 import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
-import es.unex.propuesta_proyecto.model.Repo;
+import es.unex.propuesta_proyecto.model.RepoArmas;
 
 /* Esta clase permite meter las armas en el recyclerView de la clase ArmasPrincipalesActivity y ArmasSecundariasActivity */
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    private List<Repo> mDataset;
+    private List<RepoArmas> mDataset;
     private static String usuarioGlobal;
     private static String claseGlobal;
     private static int armaPrincipal;
@@ -65,7 +65,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         ProgressBar pbControlArma;
         Context context;
 
-        public Repo mItem;
+        public RepoArmas mItem;
 
         public MyViewHolder(View v) {
             super(v);
@@ -195,7 +195,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(List<Repo> myDataset, OnListInteractionListener listener) {
+    public MyAdapter(List<RepoArmas> myDataset, OnListInteractionListener listener) {
         mDataset = myDataset;
         mListener = listener;
     }
@@ -229,7 +229,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     // Se le pasa el repositorio por parametros y lo añade a mDataset, almacenando los datos de la api.
 
-    public void swap(List<Repo> dataset){
+    public void swap(List<RepoArmas> dataset){
         mDataset.add(dataset.get(0));
         notifyDataSetChanged();
     }

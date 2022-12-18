@@ -15,19 +15,26 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+
 import com.squareup.picasso.Picasso;
 import java.util.List;
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
+import es.unex.propuesta_proyecto.api.ArmaNetworkDataSource;
+import es.unex.propuesta_proyecto.api.ArmasRepository;
 import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
+import es.unex.propuesta_proyecto.model.RepoArmas;
 
 /* Esta clase se encarga de mostrar todos los detalles de las armas, además desde ella se acceden a los accesorios, se pueden editar las armas, intercambiandolas con la API, pulsando
     el botón de editar.
  */
 public class DetalleClaseActivity extends AppCompatActivity {
 
+    private ArmasRepository mRepository;
+    private MyAdapter mAdapter;
     Button bPrimaria;
     ImageView imgPrimaria, imgSecundaria,bBorrar;
     String usuarioRecuperado, contrasenaRecuperada;
@@ -131,6 +138,17 @@ public class DetalleClaseActivity extends AppCompatActivity {
             Intent accesorios = new Intent(DetalleClaseActivity.this,AccesoriosActivity.class);
             startActivity(accesorios);
         });
+        mRepository = ArmasRepository.getInstance(AppDataBase.getInstance(this).daoJuego(), ArmaNetworkDataSource.getInstance());
+        mRepository.getCurrentArma().observe(this, new Observer<List<RepoArmas>>() {
+            @Override
+            public void onChanged(List<RepoArmas> repoArmas) {
+                onReposLoaded(repoArmas);
+            }
+        });
+    }
+
+    public void onReposLoaded(List<RepoArmas> armas){
+        runOnUiThread(() -> mAdapter.swap(armas));
     }
 
     //Dependiendo el atributo weapon del arma recibida muestra una imagen u otra en función del enlace con las funciones de Picasso
