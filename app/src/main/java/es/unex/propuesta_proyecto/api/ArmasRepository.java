@@ -3,8 +3,10 @@ package es.unex.propuesta_proyecto.api;
 
 import android.util.Log;
 
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -57,7 +59,7 @@ public class ArmasRepository {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                if(isFetchNeeded(cod)){
+                if(isFetchNeeded(username)){
                     doFetchArma(cod, username);
                 }
             }
@@ -75,15 +77,20 @@ public class ArmasRepository {
 
 
     public LiveData<List<RepoArmas>> getCurrentArma() {
-        // TODO - Return LiveData from Room. Use Transformation to get owner
-        return new MutableLiveData<>();
+        //Return LiveData from Room. Use Transformation to get owner
+        return Transformations.switchMap(userFilterLiveData, new Function<String, LiveData<List<RepoArmas>>>() {
+            @Override
+            public LiveData<List<RepoArmas>> apply(String input) {
+                return nArmasDao.obtenerArmasPorNombreUsuarioRep(input);
+            }
+        });
     }
 
-    private boolean isFetchNeeded(int cod) {
-        Long lastFetchTimeMillis = lastUpdateTimeMillisMap.get(cod);
+    private boolean isFetchNeeded(String username) {
+        Long lastFetchTimeMillis = lastUpdateTimeMillisMap.get(username);
         lastFetchTimeMillis = lastFetchTimeMillis == null ? 0L : lastFetchTimeMillis;
         long timeFromLastFetch = System.currentTimeMillis() - lastFetchTimeMillis;
-        // TODO - Implement cache policy: When time has passed or no repos in cache
-        return true;
+        //Implement cache policy: When time has passed or no repos in cache
+        return nArmasDao.getNumberArmasUsuario(username)== 0 || timeFromLastFetch > MIN_TIME_FROM_LAST_FETCH_MILLIS;
     }
 }

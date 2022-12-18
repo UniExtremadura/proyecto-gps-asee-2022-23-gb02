@@ -8,6 +8,7 @@ import androidx.room.Query;
 import java.util.List;
 
 import es.unex.propuesta_proyecto.model.Armas;
+import es.unex.propuesta_proyecto.model.RepoArmas;
 
 /* Este dao nos permite hacer con la clase Armas las operaciones CRUD */
 
@@ -29,6 +30,12 @@ public interface DaoJuego {
 
     @Query("SELECT * FROM Armas WHERE usuario = :nombreUsuario")
     abstract List<Armas> obtenerArmasPorNombreUsuario(String nombreUsuario);
+
+    @Query("SELECT * FROM Armas WHERE usuario = :nombreUsuario")
+    abstract  LiveData<List<RepoArmas>> obtenerArmasPorNombreUsuarioRep(String nombreUsuario);
+
+    @Query("SELECT COUNT(*) FROM Armas WHERE usuario = :usuario")
+    int getNumberArmasUsuario ( String usuario);
 
     @Query("SELECT * FROM Armas WHERE idClase = :idClase and usuario = :nombreUsuario")
     abstract List<Armas> obtenerArmasPorClaseyNombre(int idClase, String nombreUsuario);
