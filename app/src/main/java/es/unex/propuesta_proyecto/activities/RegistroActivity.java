@@ -1,5 +1,6 @@
 package es.unex.propuesta_proyecto.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
+import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Usuarios;
-
-/* Esta clase permita al usuario registrarse */
 
 public class RegistroActivity extends AppCompatActivity {
 
@@ -24,13 +23,17 @@ public class RegistroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_cuenta);
 
-        username = findViewById(R.id.etUsuario);//EditText
-        password = findViewById(R.id.etContraseña);//EditText
-        repassword = findViewById(R.id.etContraseña1);//EditText
-        signup = findViewById(R.id.bCrearCuenta);//Button
-        signin = findViewById(R.id.bTengoCuenta);//Button
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Registro");
+        }
 
-        /* Este boton permita al usuario registrarse, es decir, si ha completado bien los campos, se registrará de manera exitosa, en caso contrario, saltará error */
+        username = findViewById(R.id.etUsuario);
+        password = findViewById(R.id.etContraseña);
+        repassword = findViewById(R.id.etContraseña1);
+        signup = findViewById(R.id.bCrearCuenta);
+        signin = findViewById(R.id.bTengoCuenta);
+
 
         signup.setOnClickListener(v -> {
 
@@ -43,10 +46,10 @@ public class RegistroActivity extends AppCompatActivity {
                 if(pass.equals(repass)){
                     AppExecutors.getInstance().diskIO().execute(() -> {
                         Usuarios usuario;
-                        usuario = AppDatabaseUsuarios.getInstance(RegistroActivity.this).daoUsuarios().comprobarUsuario(user);
+                        usuario = AppDataBase.getInstance(RegistroActivity.this).daoUsuarios().comprobarUsuario(user);
                         if(usuario == null){
                             usuario = new Usuarios(user,pass);
-                            AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().insertarUsuario(usuario);
+                            AppDataBase.getInstance(getApplicationContext()).daoUsuarios().insertarUsuario(usuario);
                             Intent actClasses = new Intent(getApplicationContext(), LoginActivity.class);
                             runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Se ha registrado!", Toast.LENGTH_SHORT).show());
                             startActivity(actClasses);
@@ -62,8 +65,6 @@ public class RegistroActivity extends AppCompatActivity {
             }
 
         });
-
-        /* Intent para desplazarse al inicio de sesión (Si ya se tiene cuenta) */
 
         signin.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
