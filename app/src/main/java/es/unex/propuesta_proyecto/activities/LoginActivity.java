@@ -1,5 +1,6 @@
 package es.unex.propuesta_proyecto.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -12,11 +13,8 @@ import android.widget.EditText;
 import android.widget.Toast;//Los Toast deben ser lanzados desde el hilo de la Activity, no en un hilo secundario
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
-import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
+import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Usuarios;
-
-/* Esta clase permite al usuario registrarse, introduciendo una contraseña y nombre de usuario (con previo registro) */
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,8 +30,11 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.etContraseñaLogin);
         btnLogin = findViewById(R.id.bIniciarSesion);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Login");
+        }
 
-        //Fin onClick()
         btnLogin.setOnClickListener(v -> {
 
             String user = username.getText().toString();
@@ -42,10 +43,9 @@ public class LoginActivity extends AppCompatActivity {
             if(user.equals("")||pass.equals(""))
                 Toast.makeText(LoginActivity.this,"Por favor, rellene todos los campos", Toast.LENGTH_SHORT).show();
             else{
-                //Fin run() del onClick()
                 AppExecutors.getInstance().diskIO().execute(() -> {
                     Usuarios usuario;
-                    usuario = AppDatabaseUsuarios.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(user);
+                    usuario = AppDataBase.getInstance(getApplicationContext()).daoUsuarios().comprobarUsuario(user);
                     if(usuario != null){
                         if(usuario.getName().equals(user) && usuario.getPassword().equals(pass)){
                             runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Ha iniciado sesión!", Toast.LENGTH_SHORT).show());
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
-    }//Fin onCreate()
+    }
 
 
     private void guardarPreferencias(){

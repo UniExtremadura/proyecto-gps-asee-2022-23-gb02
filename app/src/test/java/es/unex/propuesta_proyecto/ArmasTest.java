@@ -14,13 +14,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
+import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.dao.DaoJuego;
 import es.unex.propuesta_proyecto.model.Armas;
 
 @RunWith(AndroidJUnit4.class)
 public class ArmasTest {
-    private AppDatabaseArmas armasDB;
+    private AppDataBase armasDB;
     private DaoJuego dao_armas;
 
     @Rule
@@ -29,7 +29,7 @@ public class ArmasTest {
     @Before
     public void crearArmasDB(){
         Context context = ApplicationProvider.getApplicationContext();
-        armasDB = Room.inMemoryDatabaseBuilder(context, AppDatabaseArmas.class).allowMainThreadQueries().build();
+        armasDB = Room.inMemoryDatabaseBuilder(context, AppDataBase.class).allowMainThreadQueries().build();
         dao_armas = armasDB.daoJuego();
     }
 
@@ -41,7 +41,7 @@ public class ArmasTest {
 
     @Test
     public void insertarArmaTest(){
-        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1, "AK-47");
+        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1);
         dao_armas.insertarArmas(a);
         Armas aRecup = dao_armas.obtenerArmas().get(0);
         Assert.assertEquals(aRecup.getName(), a.getName());
@@ -49,16 +49,16 @@ public class ArmasTest {
 
     @Test
     public void actualizarArmaTest(){
-        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1, "AK-47");
+        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1);
         dao_armas.insertarArmas(a);
-        dao_armas.actualizarArma("TestActualizar", "Weapon", "Base",64,23,12,5,87,65, 1, 1, 1, "AK-47");
+        dao_armas.actualizarArma("TestActualizar", "Weapon", "Base",64,23,12,5,87,65, 1, 1, 1);
         Armas aRecup = dao_armas.obtenerArmas().get(0);
         Assert.assertEquals(aRecup.getName(), "TestActualizar");
     }
 
     @Test
     public void borrarArmaTest(){
-        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1, "AK-47");
+        Armas a = new Armas("AK-47","Weapon","Base",64,23,12,5,87,65,"Fusil de asalto","Carlos",1, 1);
         dao_armas.insertarArmas(a);
         dao_armas.borrarArma(1);
         Assert.assertEquals(dao_armas.obtenerArmas().size(), 0);

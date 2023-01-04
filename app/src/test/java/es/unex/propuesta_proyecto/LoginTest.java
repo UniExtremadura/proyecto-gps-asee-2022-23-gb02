@@ -14,14 +14,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import es.unex.propuesta_proyecto.dao.AppDatabaseUsuarios;
-import es.unex.propuesta_proyecto.dao.DaoJuego;
+import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.dao.DaoUsuarios;
 import es.unex.propuesta_proyecto.model.Usuarios;
 
 @RunWith(AndroidJUnit4.class)
 public class LoginTest {
-    private AppDatabaseUsuarios loginDB;
+    private AppDataBase loginDB;
     private DaoUsuarios dao_to_test;
 
     @Rule
@@ -30,7 +29,7 @@ public class LoginTest {
     @Before
     public void loginTestDB(){
         Context context = ApplicationProvider.getApplicationContext(); // Se obtiene el contexto de la aplicación
-        loginDB = Room.inMemoryDatabaseBuilder(context,AppDatabaseUsuarios.class).allowMainThreadQueries().build();
+        loginDB = Room.inMemoryDatabaseBuilder(context,AppDataBase.class).allowMainThreadQueries().build();
         dao_to_test = loginDB.daoUsuarios();
     }
 
