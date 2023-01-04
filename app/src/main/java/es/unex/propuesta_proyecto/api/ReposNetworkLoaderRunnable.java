@@ -3,7 +3,7 @@ package es.unex.propuesta_proyecto.api;
 import java.io.IOException;
 import java.util.List;
 
-import es.unex.propuesta_proyecto.model.Repo;
+import es.unex.propuesta_proyecto.model.RepoArmas;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -27,7 +27,7 @@ public class ReposNetworkLoaderRunnable implements Runnable{
 
         ClaseApi clase = retrofit.create(ClaseApi.class);
         try {
-            List<Repo> repos = clase.listRepos(mCode).execute().body();
+            List<RepoArmas> repos = clase.listRepos(mCode).execute().body();
             AppExecutors.getInstance().mainThread().execute(() -> mOnReposLoadedListener.onReposLoaded(repos));
         } catch (IOException e) {
             e.printStackTrace();

@@ -2,60 +2,57 @@ package es.unex.propuesta_proyecto.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import es.unex.propuesta_proyecto.R;
 import es.unex.propuesta_proyecto.api.AppExecutors;
-import es.unex.propuesta_proyecto.dao.AppDatabaseArmas;
-import es.unex.propuesta_proyecto.dao.AppDatabaseClases;
+import es.unex.propuesta_proyecto.dao.AppDataBase;
 import es.unex.propuesta_proyecto.model.Armas;
 import es.unex.propuesta_proyecto.model.Clases;
-import es.unex.propuesta_proyecto.model.Repo;
+import es.unex.propuesta_proyecto.model.RepoArmas;
 
-/* Esta clase permite meter las armas en el recyclerView de la clase ArmasPrincipalesActivity y ArmasSecundariasActivity */
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
-
-    private List<Repo> mDataset;
+    private List<RepoArmas> mDataset;
     private static String usuarioGlobal;
     private static String claseGlobal;
-    private static int armaIdGlobal;
-    private static String weaponGlobal;
+    private static int armaPrincipal;
 
-    public interface OnListInteractionListener{
+    public interface OnListInteractionListener {
         public void onListInteraction(String url);
     }
 
     public OnListInteractionListener mListener;
 
 
-    public void usuarioActivo(String usuario){
+    public void usuarioActivo(String usuario) {
         usuarioGlobal = usuario;
     }
 
-    public void claseActiva(String clase){
+    public void claseActiva(String clase) {
         claseGlobal = clase;
     }
 
-    public void pasarIdArma(int armaId) {this.armaIdGlobal = armaId;}
+    public void pasarIdArma(int principal) {
+        this.armaPrincipal = principal;
+    }
 
-    public void pasarWeapon(String weapon) {this.weaponGlobal = weapon;}
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+
         TextView tvNombre;
         ImageView ivArma;
         ProgressBar pbPrecisionArma;
@@ -66,7 +63,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         ProgressBar pbControlArma;
         Context context;
 
-        public Repo mItem;
+        public RepoArmas mItem;
 
         public MyViewHolder(View v) {
             super(v);
@@ -80,123 +77,108 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             pbMovilidadArma = itemView.findViewById(R.id.pbMovilidadArma);
             pbControlArma = itemView.findViewById(R.id.pbControlArma);
 
-            /* Este método se encarga de cambiar las armas principales y secundarias. Una vez que el usuario pulse en el nombre del arma (Dentro de la lista mostrada por la API en Armas
-            Principales (Activity) o Armas Secundarias (Activity), le conducirá a la pantalla de DetalleClaseActivity, donde le intercambiará el arma anterior por el arma seleccionado */
-
             tvNombre.setOnClickListener(v1 -> AppExecutors.getInstance().diskIO().execute(() -> {
-                Intent navegarADetalles = new Intent(context,DetalleClaseActivity.class);
-                navegarADetalles.putExtra("className",claseGlobal); // Pasamos la clase al detallesActivity a través del intent
-                // usuarioGlobal es el usuario que está loggeado en este instante.
-                Armas armasUsuario = AppDatabaseArmas.getInstance(context).daoJuego().obtenerArmaUsuario(tvNombre.getText().toString(),usuarioGlobal); // Se coge el arma actual del usuario
-                 List<Clases> clasesUsuario = AppDatabaseClases.getInstance(context).daoClases().obtenerClasesUsuario(usuarioGlobal); // Lista de clases del usuario
-                 if(clasesUsuario != null){
-                     for(int i = 0; i < clasesUsuario.size(); i++){
-                         int claseActual = clasesUsuario.get(i).getId(); // Recupera la id de la clase actual.
-                         if(clasesUsuario.get(i).getNombre().equals(claseGlobal)){ // compara todas las clases hasta encontrar en la que está
-                             if(armasUsuario != null) { //  tiene ese arma el usuario se actualiza, si no se inserta.
-                                 int armaActual = armasUsuario.getId();
-                                 //Se ejecuta en el hilo principal porque realiza cambios en la pantalla en tiempo de ejecución
-                                 AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(weaponGlobal, ivArma));
-                                 AppDatabaseArmas.getInstance(context).daoJuego().actualizarArma(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),armaActual,claseActual, armasUsuario.getPrincipal(), weaponGlobal);
-                             } else {
-                                 Armas insertarArma = new Armas();
-                                 if( armaIdGlobal == 1){
-                                     insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, 1, weaponGlobal);
-                                     AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(weaponGlobal, ivArma));
-                                     insertarArma.setWeapon(weaponGlobal);
-                                 }else{
-                                     if( armaIdGlobal == 0){
-                                         insertarArma = new Armas(tvNombre.getText().toString(),"","",pbPrecisionArma.getProgress(),pbDanoArma.getProgress(),pbAlcanceArma.getProgress(),pbCadenciaArma.getProgress(),pbMovilidadArma.getProgress(),pbControlArma.getProgress(),"",usuarioGlobal,claseActual, 0, weaponGlobal);
-                                         AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(weaponGlobal, ivArma));
-                                         insertarArma.setWeapon(weaponGlobal);
-                                     }
-                                 }
-                                 AppDatabaseArmas.getInstance(context).daoJuego().insertarArmas(insertarArma);
-                             }
-                         }
-                     }
-                 }
-                 context.startActivity(navegarADetalles);
+                Intent navegarADetalles = new Intent(context, DetalleClaseActivity.class);
+                navegarADetalles.putExtra("className", claseGlobal);
+                Armas armasUsuario = AppDataBase.getInstance(context).daoJuego().obtenerArmaUsuario(tvNombre.getText().toString(), usuarioGlobal);
+                List<Clases> clasesUsuario = AppDataBase.getInstance(context).daoClases().obtenerClasesUsuario(usuarioGlobal);
+                if (clasesUsuario != null) {
+                    for (int i = 0; i < clasesUsuario.size(); i++) {
+                        int claseActual = clasesUsuario.get(i).getId();
+                        if (clasesUsuario.get(i).getNombre().equals(claseGlobal)) {
+                                Armas insertarArma = new Armas();
+                                AppDataBase.getInstance(context).daoJuego().borrarArmasUsuario(claseActual, usuarioGlobal, armaPrincipal);
+                                if (armaPrincipal == 1) {
+                                    insertarArma = new Armas(tvNombre.getText().toString(), "", "", pbPrecisionArma.getProgress(), pbDanoArma.getProgress(), pbAlcanceArma.getProgress(), pbCadenciaArma.getProgress(), pbMovilidadArma.getProgress(), pbControlArma.getProgress(), "", usuarioGlobal, claseActual, 1);
+                                    AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(tvNombre.getText().toString(), ivArma));
+                                } else {
+                                    if (armaPrincipal == 0) {
+                                        insertarArma = new Armas(tvNombre.getText().toString(), "", "Base", pbPrecisionArma.getProgress(), pbDanoArma.getProgress(), pbAlcanceArma.getProgress(), pbCadenciaArma.getProgress(), pbMovilidadArma.getProgress(), pbControlArma.getProgress(), "", usuarioGlobal, claseActual, 0);
+                                        AppExecutors.getInstance().mainThread().execute(() -> pasarURLimg(tvNombre.getText().toString(), ivArma));
+                                    }
+                                }
+                                AppDataBase.getInstance(context).daoJuego().insertarArmas(insertarArma);
+                            }
+                        }
+                    }
+                context.startActivity(navegarADetalles);
             }));
 
         }
     }
 
-    //Dependiendo del nombre del arma recibido como parámetro muestra una imagen u otra en función del enlace con las funciones de Picasso
-    //sobre el objeto ImageView recibido por parámetro
-
     public static void pasarURLimg(String nombreArma, ImageView ivArma){
         switch (nombreArma){
-            case "ak-47":
+            case "Ak-47":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_ak-47.webp").into(ivArma);
                 break;
-            case "aug":
+            case "Aug":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_aug.webp").into(ivArma);
                 break;
-            case "fn-scar-17":
+            case "Fn Scar L7":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_fn-scar-17.webp").into(ivArma);
                 break;
-            case "m4a1":
+            case "M4a1":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_m4a1.webp").into(ivArma);
                 break;
             case "725":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_725.webp").into(ivArma);
                 break;
-            case "model-680":
+            case "Model 680":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_model-680.webp").into(ivArma);
                 break;
-            case "r9-0-shotgun":
+            case "R9-O":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_r9-0-shotgun.webp").into(ivArma);
                 break;
-            case "origin-12-shotgun":
+            case "Origin 12 Shotgun":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_origin-12-shotgun.webp").into(ivArma);
                 break;
-            case "dragunov":
+            case "Dragunov":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_dragunov.webp").into(ivArma);
                 break;
-            case "ebr-14":
+            case "Ebr-14":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_ebr-14.webp").into(ivArma);
                 break;
-            case "hdr":
+            case "Hdr":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_hdr.webp").into(ivArma);
                 break;
-            case "kar98k":
+            case "Kar98k":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_kar98k.webp").into(ivArma);
                 break;
-            case "mg34":
+            case "M634":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_mg34.webp").into(ivArma);
                 break;
-            case "m91":
+            case "M91":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_m91.webp").into(ivArma);
                 break;
-            case "pkm":
+            case "Pkm":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_pkm.webp").into(ivArma);
                 break;
-            case "mp5":
+            case "Mp5":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_mp5.webp").into(ivArma);
                 break;
-            case "mp7":
+            case "Mp7":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_mp7.webp").into(ivArma);
                 break;
-            case "p90":
+            case "P90":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_p90.webp").into(ivArma);
                 break;
-            case "uzi":
+            case "Uzi":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_uzi.webp").into(ivArma);
                 break;
             case "1911":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_1911.webp").into(ivArma);
                 break;
-            case "x16":
+            case "X16":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_x16.webp").into(ivArma);
                 break;
-            case "50-gs":
+            case ".50 GS":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_50-gs.webp").into(ivArma);
                 break;
-            case "combat-knife":
+            case "Combat Knife":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_combat-knife.webp").into(ivArma);
                 break;
-            case "riot-shield":
+            case "Riot Shield":
                 Picasso.get().load("https://www.gamesatlas.com/images/jch-optimize/ng/images_cod-modern-warfare_weapons_riot-shield.webp").into(ivArma);
                 break;
             default:
@@ -204,9 +186,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset) (Constructor de MyAdapter)
-
-    public MyAdapter(List<Repo> myDataset, OnListInteractionListener listener) {
+    public MyAdapter(List<RepoArmas> myDataset, OnListInteractionListener listener) {
         mDataset = myDataset;
         mListener = listener;
     }
@@ -220,8 +200,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         return new MyAdapter.MyViewHolder(view);
     }
 
-    // Modificación de atributos del Dataset de la api.
-
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
         holder.tvNombre.setText(mDataset.get(position).getName());
@@ -233,14 +211,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         holder.pbControlArma.setProgress(Integer.parseInt(mDataset.get(position).getControl()));
     }
 
-    // Devuelve el tamaño de mDataset
 
     @Override
     public int getItemCount() { return mDataset.size();}
 
-    // Se le pasa el repositorio por parametros y lo añade a mDataset, almacenando los datos de la api.
 
-    public void swap(List<Repo> dataset){
+    public void swap(List<RepoArmas> dataset){
         mDataset.add(dataset.get(0));
         notifyDataSetChanged();
     }

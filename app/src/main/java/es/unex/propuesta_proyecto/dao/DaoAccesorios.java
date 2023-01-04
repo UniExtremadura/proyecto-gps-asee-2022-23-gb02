@@ -9,7 +9,6 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.model.Accesorio;
 
-/* Este dao nos permite hacer con la clase Accesorios las operaciones CRUD */
 
 @Dao
 public interface DaoAccesorios {

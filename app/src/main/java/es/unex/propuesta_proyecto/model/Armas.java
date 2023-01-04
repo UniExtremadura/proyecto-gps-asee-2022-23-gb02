@@ -1,12 +1,9 @@
 package es.unex.propuesta_proyecto.model;
-
-
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-/* Esta clase define los atributos y metodos de la tabla de Armas en Room */
+
 @Entity(tableName = "Armas")
 public class Armas {
 
@@ -38,11 +35,9 @@ public class Armas {
     private int idClase;
     @ColumnInfo(name="principal")
     private int principal;
-    @ColumnInfo(name="weapon")
-    private String weapon;
 
 
-    public Armas(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String tipoArma, String usuario,int idClase, int principal, String weapon) {
+    public Armas(String name, String type, String subtype, int accuracy, int damage, int range, int fire_rate, int mobility, int control, String tipoArma, String usuario,int idClase, int principal) {
         this.name = name;
         this.type = type;
         this.subtype = subtype;
@@ -56,11 +51,10 @@ public class Armas {
         this.usuario = usuario;
         this.idClase = idClase;
         this.principal = principal;
-        this.weapon = weapon;
     }
 
     @Ignore
-    public Armas() { //cuando hay varios constructores validos, Room escoge por defecto el que no tiene argumentos porque hemos declarado los getter y setter. Sin embargo, si no usamos nunca alguno, le podemos poner @Ignore
+    public Armas() {
         this.name = "";
         this.type = "";
         this.subtype = "";
@@ -73,7 +67,6 @@ public class Armas {
         this.tipoArma="";
         this.usuario = "";
         this.idClase = 0;
-        this.weapon = "";
     }
 
     public int getId() {
@@ -180,11 +173,4 @@ public class Armas {
         this.principal = principal;
     }
 
-    public String getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(String weapon) {
-        this.weapon = weapon;
-    }
 }

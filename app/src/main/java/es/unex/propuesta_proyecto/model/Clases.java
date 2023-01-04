@@ -5,7 +5,6 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-/* Esta clase define los atributos y metodos de la tabla de Clases en Room */
 
 @Entity(tableName = "Clases")
 public class Clases {

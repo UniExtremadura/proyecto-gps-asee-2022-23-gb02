@@ -9,7 +9,6 @@ import java.util.List;
 
 import es.unex.propuesta_proyecto.model.Clases;
 
-/* Este dao nos permite hacer con la clase Clases las operaciones CRUD */
 
 @Dao
 public interface DaoClases {
@@ -26,9 +25,12 @@ public interface DaoClases {
     @Insert
     void insertarClase(Clases clase);
 
-    @Query("DELETE FROM Clases WHERE nombre = :nombre")
-    void borrarClase(String nombre);
+    @Query("DELETE FROM Clases WHERE nombre = :nombre AND usuario = :usuario")
+    void borrarClase(String nombre, String usuario);
+
+    @Query("UPDATE Clases SET idArmaPrincipal = :idPrincipal, idArmaSecundaria = :idSecundaria WHERE id = :id")
+    void actualizarIdArmas (int idPrincipal, int idSecundaria, int id);
 
     @Query("UPDATE Clases SET idArmaPrincipal = :idArmaPrincipal, idArmaSecundaria = :idArmaSecundaria WHERE nombre = :nombreClase AND usuario = :usuario")
-    void actualizarArma(String nombreClase,String usuario,int idArmaPrincipal, int idArmaSecundaria);
+    void actualizarClase(String nombreClase,String usuario,int idArmaPrincipal, int idArmaSecundaria);
 }
